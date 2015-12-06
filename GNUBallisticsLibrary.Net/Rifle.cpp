@@ -34,13 +34,16 @@ ShotInfo^ Rifle::SolveShot(
 			windSpeed, 
 			windAngle,
 			&solution);
-		
+
+		double elevationClickMultiplier = 1 / scopeInfo->ElevationClicksPerMOA;
+		double windageClickMultiplier = 1 / scopeInfo->WindageClicksPerMOA;
+
 		shotInfo->ElevationMOA = GetMOA(solution, range);
 		shotInfo->WindageMOA = GetWindageMOA(solution, range);
 		shotInfo->TimeToTargetSec = GetTime(solution, range);
 		shotInfo->ImpactVelocity = GetVelocity(solution, range); 
-		shotInfo->ElevationClicks = shotInfo->ElevationMOA * scopeInfo->ElevationClicksPerMOA;
-		shotInfo->WindageClicks = shotInfo->WindageMOA * scopeInfo->WindageClicksPerMOA;
+		shotInfo->ElevationClicks = shotInfo->ElevationMOA * elevationClickMultiplier;
+		shotInfo->WindageClicks = shotInfo->WindageMOA * windageClickMultiplier;
 		shotInfo->Range = range;
 	}
 	finally{
