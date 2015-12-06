@@ -53,6 +53,6 @@ public:
 		double shootingAngle,
 		double windSpeed,
 		double windAngle,
-		int range,
+		double range,
 		AtmosphericInfo^ atmInfo);
 };

@@ -12,7 +12,7 @@ namespace Sharp.Ballistics.Abstractions
             double shootingAngle, 
             double windSpeed,
             double windAngle,
-            int range,
+            double range,
             AtmosphericInfo atmInfo);
     }
 }

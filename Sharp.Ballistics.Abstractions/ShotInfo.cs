@@ -8,6 +8,10 @@ namespace Sharp.Ballistics.Abstractions
 {
     public class ShotInfo
     {
+        public double BulletDrop { get; set; }
+
+        public double WindDrift { get; set; }
+
         public double ElevationMOA { get; set; }
 
         public double ElevationClicks { get; set; }

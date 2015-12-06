@@ -7,7 +7,7 @@ ShotInfo^ Rifle::SolveShot(
 	double shootingAngle,
 	double windSpeed,
 	double windAngle,
-	int range,
+	double range,
 	AtmosphericInfo^ atmInfo) {
 
 	ShotInfo^ shotInfo = gcnew ShotInfo();
@@ -37,7 +37,9 @@ ShotInfo^ Rifle::SolveShot(
 
 		double elevationClickMultiplier = 1 / scopeInfo->ElevationClicksPerMOA;
 		double windageClickMultiplier = 1 / scopeInfo->WindageClicksPerMOA;
-
+		
+		shotInfo->BulletDrop = GetPath(solution, range);
+		shotInfo->WindDrift = GetWindage(solution, range);
 		shotInfo->ElevationMOA = GetMOA(solution, range);
 		shotInfo->WindageMOA = GetWindageMOA(solution, range);
 		shotInfo->TimeToTargetSec = GetTime(solution, range);
