@@ -285,7 +285,7 @@ double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle, double*
 			ptr[10*n+2]=-RadtoMOA(atan(y/x));			// Correction in MOA
 			ptr[10*n+3]=t+dt;							// Time in s
 			ptr[10*n+4]=Windage(crosswind,Vi,x,t+dt); 	// Windage in inches
-			ptr[10*n+5]=RadtoMOA(atan(ptr[10*n+4]) / (12 * x));	// Windage in MOA
+			ptr[10*n+5]=RadtoMOA(atan(ptr[10*n+4] / (12 * x)));	// Windage in MOA
 			ptr[10*n+6]=v;								// Velocity (combined)
 			ptr[10*n+7]=vx;							// Velocity (x)
 			ptr[10*n+8]=vy;							// Velocity (y)
