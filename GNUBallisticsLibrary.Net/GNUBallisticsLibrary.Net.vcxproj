@@ -137,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gnu_ballistics.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Rifle.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
@@ -151,12 +150,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="app.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sharp.Ballistics.Abstractions\Sharp.Ballistics.Abstractions.csproj">
