@@ -17,8 +17,18 @@ namespace Sharp.Ballistics.Calculator
         private readonly AppBootstrapper bootstrapper;
         public App()
         {
-            bootstrapper = new AppBootstrapper();
-            bootstrapper.Initialize();
+            try {
+                bootstrapper = new AppBootstrapper();
+                bootstrapper.Initialize();
+            }
+            catch (Exception)
+            {
+                //precaution
+                if (bootstrapper != null)
+                    bootstrapper.Dispose();
+                throw;
+            }
+
             Exit += OnExit;
         }
 

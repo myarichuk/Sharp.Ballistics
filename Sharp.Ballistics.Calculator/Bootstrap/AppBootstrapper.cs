@@ -6,13 +6,15 @@ using Sharp.Ballistics.Calculator.ViewModels;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using System.Windows;
+using Castle.Windsor.Installer;
+using Sharp.Ballistics.Calculator.Models;
 
 namespace Sharp.Ballistics.Calculator.Bootstrap
 {
     
     public class AppBootstrapper : BootstrapperBase
     {
-		private WindsorContainer _container;
+		private WindsorContainer container;
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
@@ -21,23 +23,29 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
 
         protected override void Configure()
 		{
-            _container = new WindsorContainer();
+            container = new WindsorContainer();
 
-		    _container.AddFacility<EventRegistrationFacility>();
+		    container.AddFacility<EventRegistrationFacility>();
             
-            _container.Register(
+            container.Register(
 		        Component.For<IWindowManager>().ImplementedBy<WindowManager>().LifestyleSingleton(),
 		        Component.For<IEventAggregator>().ImplementedBy<EventAggregator>().LifestyleSingleton(),
                 Classes.FromThisAssembly().InSameNamespaceAs<ShellViewModel>()
                                           .WithServiceDefaultInterfaces()
                                           .WithServiceSelf()
+                                          .LifestyleTransient(),
+                Classes.FromThisAssembly().InSameNamespaceAs<RiflesModel>()
+                                          .WithServiceDefaultInterfaces()
+                                          .WithServiceSelf()
                                           .LifestyleTransient()
-		        );
+                );
+
+            container.Install(FromAssembly.This());
 		}
 
         internal void Dispose()
         {
-            _container.Dispose();
+            container.Dispose();
         }
 
         protected override void BuildUp(object instance)
@@ -48,14 +56,14 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
 		{
             if (string.IsNullOrEmpty(key))
             {
-                return _container.Resolve(serviceType);
+                return container.Resolve(serviceType);
             }
-		    return _container.Resolve(key, serviceType);
+		    return container.Resolve(key, serviceType);
 		}
 
 		protected override IEnumerable<object> GetAllInstances(Type serviceType)
 		{
-			return _container.ResolveAll(serviceType).Cast<object>();
+			return container.ResolveAll(serviceType).Cast<object>();
 		}
 	}
 }

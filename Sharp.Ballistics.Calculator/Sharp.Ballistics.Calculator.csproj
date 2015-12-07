@@ -95,6 +95,9 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrap\AppBootstrapper.cs" />
     <Compile Include="Bootstrap\EventRegistrationFacility.cs" />
+    <Compile Include="Bootstrap\RavenDBInstaller.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Models\RiflesModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
