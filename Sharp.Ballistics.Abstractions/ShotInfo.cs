@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitsNet;
 
 namespace Sharp.Ballistics.Abstractions
 {
     public class ShotInfo
     {
-        public double BulletDrop { get; set; }
+        public Length BulletDrop { get; set; }
 
-        public double WindDrift { get; set; }
+        public Length WindDrift { get; set; }
 
         public double ElevationMOA { get; set; }
 
@@ -22,8 +23,8 @@ namespace Sharp.Ballistics.Abstractions
 
         public double TimeToTargetSec { get; set; }
 
-        public double ImpactVelocity { get; set; }
+        public Speed ImpactVelocity { get; set; }
 
-        public int Range { get; set; }
+        public Length Range { get; set; }
     }
 }

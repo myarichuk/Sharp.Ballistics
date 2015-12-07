@@ -5,5 +5,6 @@
         public string Name { get; set; }
 
         public AtmosphericInfo ZeroingConditions { get; set; }
+
     }
 }

@@ -3,11 +3,13 @@
 #include <stdlib.h>
 #include "Rifle.h"
 
+using namespace UnitsNet;
+
 ShotInfo^ Rifle::SolveShot(
 	double shootingAngle,
-	double windSpeed,
+	Speed windSpeed,
 	double windAngle,
-	double range,
+	Length range,
 	AtmosphericInfo^ atmInfo) {
 
 	ShotInfo^ shotInfo = gcnew ShotInfo();
@@ -18,32 +20,32 @@ ShotInfo^ Rifle::SolveShot(
 	if (atmInfo != nullptr)
 	{
 		bc = AtmCorrect(ammoInfo->BC,
-			rifleInfo->ZeroingConditions->Altitude,
-			rifleInfo->ZeroingConditions->Barometer,
-			rifleInfo->ZeroingConditions->Temperature,
+			rifleInfo->ZeroingConditions->Altitude.Feet,
+			rifleInfo->ZeroingConditions->Barometer.Psi * 2.03602, //convert to Hg,
+			rifleInfo->ZeroingConditions->Temperature.DegreesFahrenheit,
 			rifleInfo->ZeroingConditions->RelativeHumidity);
 	}
 
 	try {
 		SolveAll((int)ammoInfo->DragFunction,
 			bc,
-			ammoInfo->MuzzleVelocity, 
-			scopeInfo->Height,
+			ammoInfo->MuzzleVelocity.FeetPerSecond, 
+			scopeInfo->Height.Inches,
 			shootingAngle,
-			zerAngle,
-			windSpeed, 
+			zeroAngle,
+			windSpeed.MilesPerHour, 
 			windAngle,
 			&solution);
 
 		double elevationClickMultiplier = 1 / scopeInfo->ElevationClicksPerMOA;
 		double windageClickMultiplier = 1 / scopeInfo->WindageClicksPerMOA;
 		
-		shotInfo->BulletDrop = GetPath(solution, range);
-		shotInfo->WindDrift = GetWindage(solution, range);
-		shotInfo->ElevationMOA = GetMOA(solution, range);
-		shotInfo->WindageMOA = GetWindageMOA(solution, range);
-		shotInfo->TimeToTargetSec = GetTime(solution, range);
-		shotInfo->ImpactVelocity = GetVelocity(solution, range); 
+		shotInfo->BulletDrop = Length::FromInches(GetPath(solution, range.Yards));
+		shotInfo->WindDrift = Length::FromInches(GetWindage(solution, range.Yards));
+		shotInfo->ElevationMOA = GetMOA(solution, range.Yards);
+		shotInfo->WindageMOA = GetWindageMOA(solution, range.Yards);
+		shotInfo->TimeToTargetSec = GetTime(solution, range.Yards);
+		shotInfo->ImpactVelocity = Speed::FromFeetPerSecond(GetVelocity(solution, range.Yards)); 
 		shotInfo->ElevationClicks = shotInfo->ElevationMOA * elevationClickMultiplier;
 		shotInfo->WindageClicks = shotInfo->WindageMOA * windageClickMultiplier;
 		shotInfo->Range = range;

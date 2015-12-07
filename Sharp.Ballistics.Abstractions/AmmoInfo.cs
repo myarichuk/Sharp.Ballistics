@@ -1,4 +1,6 @@
-﻿namespace Sharp.Ballistics.Abstractions
+﻿using UnitsNet;
+
+namespace Sharp.Ballistics.Abstractions
 {
     public class AmmoInfo
     {
@@ -10,6 +12,6 @@
 
         public string Name { get; set; }
         
-        public double MuzzleVelocity { get; set; }    
+        public Speed MuzzleVelocity { get; set; }    
     }
 }

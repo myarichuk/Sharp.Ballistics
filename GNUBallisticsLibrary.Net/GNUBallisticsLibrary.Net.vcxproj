@@ -134,6 +134,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnitsNet">
+      <HintPath>..\packages\UnitsNet.3.20.0\lib\net451\UnitsNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gnu_ballistics.h" />

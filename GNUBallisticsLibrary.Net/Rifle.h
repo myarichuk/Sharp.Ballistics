@@ -2,15 +2,16 @@
 
 using namespace System;
 using namespace Sharp::Ballistics::Abstractions;
+using namespace UnitsNet;
 
 #define ZERO_RANGE 100
-public ref class Rifle : IRifle {
+public ref class Rifle {
 private:
 	RifleInfo^ rifleInfo;
 	ScopeInfo^ scopeInfo;
 	AmmoInfo^ ammoInfo;
 
-	double zerAngle;
+	double zeroAngle;
 
 public:
 	Rifle(RifleInfo^ rifleInfo, ScopeInfo^ scopeInfo, AmmoInfo^ ammoInfo)
@@ -30,15 +31,15 @@ public:
 		this->scopeInfo = scopeInfo;
 		this->ammoInfo = ammoInfo;
 
-		zerAngle = ZeroAngle((int)ammoInfo->DragFunction,
+		zeroAngle = ZeroAngle((int)ammoInfo->DragFunction,
 			AtmCorrect(ammoInfo->BC,
-				rifleInfo->ZeroingConditions->Altitude,
-				rifleInfo->ZeroingConditions->Barometer,
-				rifleInfo->ZeroingConditions->Temperature,
+				rifleInfo->ZeroingConditions->Altitude.Feet,
+				rifleInfo->ZeroingConditions->Barometer.Psi * 2.03602, //convert to Hg
+				rifleInfo->ZeroingConditions->Temperature.DegreesFahrenheit,
 				rifleInfo->ZeroingConditions->RelativeHumidity),
-			ammoInfo->MuzzleVelocity,
-			scopeInfo->Height,
-			scopeInfo->ZeroDistance, 0);
+			ammoInfo->MuzzleVelocity.FeetPerSecond,
+			scopeInfo->Height.Inches,
+			scopeInfo->ZeroDistance.Yards, 0);
 	}
 
 	property String^ Name
@@ -49,10 +50,10 @@ public:
 		}
 	}
 
-	virtual ShotInfo^ SolveShot(
+	ShotInfo^ SolveShot(
 		double shootingAngle,
-		double windSpeed,
+		Speed windSpeed,
 		double windAngle,
-		double range,
+		Length range,
 		AtmosphericInfo^ atmInfo);
 };
