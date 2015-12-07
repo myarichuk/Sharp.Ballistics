@@ -9,17 +9,17 @@ So, how to use this?
                 Name = "My Rifle",
                 ZeroingConditions = new AtmosphericInfo
                 {
-                    Altitude = 0,
-                    Barometer = 29.53, //inches of Mercury (Hg), standard sea level pressure
+                    Altitude = Length.FromMeters(0), //sea level
+                    Barometer = Pressure.FromPsi(14.7), //sea level
                     RelativeHumidity = 0.5, //in percentage from 0.0 to 1.0 (0% - 100%)
-                    Temperature = 86 //farenheit -> 86F = 30C
+                    Temperature = Temperature.FromDegreesCelsius(30)
                 }
             };
 
             var ammoInfo = new AmmoInfo
             {
-                MuzzleVelocity = 2500, // ft/sec
-                BC = 0.5, 
+                MuzzleVelocity = Speed.FromMetersPerSecond(750), 
+                BC = 0.5,
                 DragFunction = DragFunction.G1,
                 Name = "My Ammo"
             };
@@ -27,19 +27,19 @@ So, how to use this?
             var scopeInfo = new ScopeInfo
             {
                 Name = "My Scope",
-                Height = 2, //inches
-                ZeroDistance = 100, //yards
+                Height = Length.FromCentimeters(5), 
+                ZeroDistance = Length.FromMeters(150), 
                 ElevationClicksPerMOA = 1,
                 WindageClicksPerMOA = 1
             };
-            
+
             var rifle = new Rifle(rifleInfo, scopeInfo, ammoInfo);
 
             var solution = rifle.SolveShot(
                 0.0, //shooting angle
-                3, //wind speed, miles/hour
+                Speed.FromKilometersPerHour(5), 
                 90, //wind direction angle (degrees)
-                328, //shooting range -> yards
+                Length.FromMeters(350), 
                 null);
 ```
 
@@ -47,6 +47,10 @@ Where ShotInfo is defined as
 ```c#
  public class ShotInfo
     {
+        public Length BulletDrop { get; set; }
+
+        public Length WindDrift { get; set; }
+
         public double ElevationMOA { get; set; }
 
         public double ElevationClicks { get; set; }
@@ -57,8 +61,8 @@ Where ShotInfo is defined as
 
         public double TimeToTargetSec { get; set; }
 
-        public double ImpactVelocity { get; set; }
+        public Speed ImpactVelocity { get; set; }
 
-        public int Range { get; set; }
+        public Length Range { get; set; }
     }
 ```
