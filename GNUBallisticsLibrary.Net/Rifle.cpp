@@ -4,8 +4,9 @@
 #include "Rifle.h"
 
 using namespace UnitsNet;
+using namespace System::Collections::Generic;
 
-ShotInfo^ Rifle::SolveShot(
+ShotInfo^ Rifle::Solve(
 	double shootingAngle,
 	Speed windSpeed,
 	double windAngle,
@@ -55,4 +56,18 @@ ShotInfo^ Rifle::SolveShot(
 	}
 
 	return shotInfo;
+}
+
+IEnumerable<ShotInfo^>^ Rifle::SolveMultiple(double shootingAngle,
+	Speed windSpeed,
+	double windAngle,
+	IEnumerable<Length>^ ranges,
+	AtmosphericInfo^ atmInfo) {
+
+	List<ShotInfo^>^ results = gcnew List<ShotInfo^>();
+
+	for each(auto range in ranges)
+		results->Add(Solve(shootingAngle, windSpeed, windAngle, range, atmInfo));
+
+	return results;
 }

@@ -3,9 +3,11 @@
 using namespace System;
 using namespace Sharp::Ballistics::Abstractions;
 using namespace UnitsNet;
+using namespace System::Collections::Generic;
 
 #define ZERO_RANGE 100
-public ref class Rifle {
+public ref class Rifle : IRifle 
+{
 private:
 	RifleInfo^ rifleInfo;
 	ScopeInfo^ scopeInfo;
@@ -42,7 +44,7 @@ public:
 			scopeInfo->ZeroDistance.Yards, 0);
 	}
 
-	property String^ Name
+	virtual property String^ Name
 	{
 		String^ get()
 		{
@@ -50,10 +52,40 @@ public:
 		}
 	}
 
-	ShotInfo^ SolveShot(
+	virtual property AtmosphericInfo^ ZeroingConditions
+	{
+		AtmosphericInfo^ get()
+		{
+			return rifleInfo->ZeroingConditions;
+		}
+	}
+
+	virtual property AmmoInfo^ Ammo
+	{
+		AmmoInfo^ get()
+		{
+			return ammoInfo;
+		}
+	}
+
+	virtual property ScopeInfo^ Scope
+	{
+		ScopeInfo^ get()
+		{
+			return scopeInfo;
+		}
+	}
+
+	virtual ShotInfo^ Solve(
 		double shootingAngle,
 		Speed windSpeed,
 		double windAngle,
 		Length range,
+		AtmosphericInfo^ atmInfo);
+
+	virtual IEnumerable<ShotInfo^>^ SolveMultiple(double shootingAngle,
+		Speed windSpeed,
+		double windAngle,
+		IEnumerable<Length>^ ranges,
 		AtmosphericInfo^ atmInfo);
 };
