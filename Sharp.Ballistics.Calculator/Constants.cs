@@ -10,5 +10,8 @@ namespace Sharp.Ballistics.Calculator
     {
         public const string DatabaseName = "Ballistics.Calculator";
         public const string DataFolder = "Data";
+
+        public const string UnitsConfigurationId = "BallisticsCalculator/UnitsConfig";
+        public const string GeneralConfigurationId = "BallisticsCalculator/GeneralConfig";
     }
 }
