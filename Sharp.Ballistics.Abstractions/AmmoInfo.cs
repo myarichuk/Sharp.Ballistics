@@ -2,8 +2,10 @@
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public class AmmoInfo
+    public class AmmoInfo : IHaveId
     {
+        public string Id { get; private set; }
+
         public DragFunction DragFunction { get; set; }
 
         //175 gr .308 Match-King HPBT BC -> 0.505

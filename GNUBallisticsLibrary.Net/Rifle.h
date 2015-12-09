@@ -15,8 +15,18 @@ private:
 
 	double zeroAngle;
 
+	String^ id;
 public:
+	Rifle() 
+	{
+	}
+
 	Rifle(RifleInfo^ rifleInfo, ScopeInfo^ scopeInfo, AmmoInfo^ ammoInfo)
+	{
+		Initialize(rifleInfo, scopeInfo, ammoInfo);
+	}
+
+	void Initialize(RifleInfo^ rifleInfo, ScopeInfo^ scopeInfo, AmmoInfo^ ammoInfo)
 	{
 		if (rifleInfo == nullptr)
 			throw gcnew System::ArgumentNullException("rifleInfo");
@@ -44,38 +54,6 @@ public:
 			scopeInfo->ZeroDistance.Yards, 0);
 	}
 
-	virtual property String^ Name
-	{
-		String^ get()
-		{
-			return rifleInfo->Name;
-		}
-	}
-
-	virtual property AtmosphericInfo^ ZeroingConditions
-	{
-		AtmosphericInfo^ get()
-		{
-			return rifleInfo->ZeroingConditions;
-		}
-	}
-
-	virtual property AmmoInfo^ Ammo
-	{
-		AmmoInfo^ get()
-		{
-			return ammoInfo;
-		}
-	}
-
-	virtual property ScopeInfo^ Scope
-	{
-		ScopeInfo^ get()
-		{
-			return scopeInfo;
-		}
-	}
-
 	virtual ShotInfo^ Solve(
 		double shootingAngle,
 		Speed windSpeed,
@@ -88,4 +66,71 @@ public:
 		double windAngle,
 		IEnumerable<Length>^ ranges,
 		AtmosphericInfo^ atmInfo);
+
+	virtual property String^ Name
+	{
+		String^ get()
+		{
+			if (rifleInfo == nullptr)
+				return nullptr;
+			return rifleInfo->Name;
+		}
+		void set(String^ val)
+		{
+			rifleInfo->Name = val;
+		}
+	}
+
+	virtual property AtmosphericInfo^ ZeroingConditions
+	{
+		AtmosphericInfo^ get()
+		{
+			if (rifleInfo == nullptr)
+				return nullptr;
+			return rifleInfo->ZeroingConditions;
+		}
+		void set(AtmosphericInfo^ val)
+		{
+			rifleInfo->ZeroingConditions = val;
+		}
+	}
+
+	virtual property AmmoInfo^ Ammo
+	{
+		AmmoInfo^ get()
+		{
+			return ammoInfo;
+		}
+
+		void set(AmmoInfo^ val)
+		{
+			ammoInfo = val;
+		}
+	}
+
+	virtual property ScopeInfo^ Scope
+	{
+		ScopeInfo^ get()
+		{
+			return scopeInfo;
+		}
+		void set(ScopeInfo^ val)
+		{
+			scopeInfo = val;
+		}
+	}
+
+	public:
+		virtual property String^ Id
+		{
+			String^ get()
+			{
+				return id;
+			}
+		private:
+			void set(String^ val)
+			{
+				id = val;
+			}
+		}
 };

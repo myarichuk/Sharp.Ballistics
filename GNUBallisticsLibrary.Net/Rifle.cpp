@@ -13,6 +13,9 @@ ShotInfo^ Rifle::Solve(
 	Length range,
 	AtmosphericInfo^ atmInfo) {
 
+	if (rifleInfo == nullptr || ammoInfo == nullptr || scopeInfo == nullptr)
+		throw gcnew System::Exception("Rifle is not initialized, run Initialize first");
+
 	ShotInfo^ shotInfo = gcnew ShotInfo();
 
 	double* solution;

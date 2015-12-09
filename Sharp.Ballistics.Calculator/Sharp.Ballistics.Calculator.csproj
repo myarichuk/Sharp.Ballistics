@@ -97,6 +97,10 @@
     <Compile Include="Bootstrap\EventRegistrationFacility.cs" />
     <Compile Include="Bootstrap\RavenDBInstaller.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Models\AmmoModel.cs" />
+    <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="Models\ScopesModel.cs" />
+    <Compile Include="Models\StoredItemModel.cs" />
     <Compile Include="Models\RiflesModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
@@ -142,10 +146,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GNUBallisticsLibrary.Net\GNUBallisticsLibrary.Net.vcxproj">
-      <Project>{fe0302ff-5a36-4dc6-9ab3-1d13cb04a2d6}</Project>
-      <Name>GNUBallisticsLibrary.Net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sharp.Ballistics.Abstractions\Sharp.Ballistics.Abstractions.csproj">
       <Project>{36ec668e-6ce2-4194-a60d-1db93a719ef5}</Project>
       <Name>Sharp.Ballistics.Abstractions</Name>

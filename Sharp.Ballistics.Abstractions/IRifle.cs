@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnitsNet;
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public interface IRifle
+    public interface IRifle : IHaveId
     {
-        string Name { get; }
+        string Name { get; set; }
 
-        AtmosphericInfo ZeroingConditions { get; }
+        AtmosphericInfo ZeroingConditions { get; set; }
 
-        AmmoInfo Ammo { get; }
+        AmmoInfo Ammo { get; set; }
 
-        ScopeInfo Scope { get; }
+        ScopeInfo Scope { get; set; }
 
         ShotInfo Solve(double shootingAngle, 
             Speed windSpeed, 

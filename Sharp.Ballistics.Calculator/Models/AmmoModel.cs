@@ -3,9 +3,9 @@ using Sharp.Ballistics.Abstractions;
 
 namespace Sharp.Ballistics.Calculator.Models
 {
-    public class RiflesModel : StoredItemModel<IRifle>
+    public class AmmoModel : StoredItemModel<AmmoInfo>
     {
-        public RiflesModel(IDocumentStore store) : base(store)
+        public AmmoModel(IDocumentStore store) : base(store)
         {
         }
     }

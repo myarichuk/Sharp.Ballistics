@@ -34,7 +34,7 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
                                           .WithServiceDefaultInterfaces()
                                           .WithServiceSelf()
                                           .LifestyleTransient(),
-                Classes.FromThisAssembly().InSameNamespaceAs<RiflesModel>()
+                Classes.FromThisAssembly().InNamespace("Sharp.Ballistics.Calculator.Models")
                                           .WithServiceDefaultInterfaces()
                                           .WithServiceSelf()
                                           .LifestyleTransient()

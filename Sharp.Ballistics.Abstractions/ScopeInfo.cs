@@ -1,8 +1,9 @@
-﻿using UnitsNet;
+﻿using System;
+using UnitsNet;
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public class ScopeInfo
+    public class ScopeInfo : IHaveId
     {
         public string Name { get; set; }
 
@@ -13,5 +14,7 @@ namespace Sharp.Ballistics.Abstractions
         public double ElevationClicksPerMOA { get; set; }
 
         public double WindageClicksPerMOA { get; set; }
+
+        public string Id { get; private set; }       
     }
 }

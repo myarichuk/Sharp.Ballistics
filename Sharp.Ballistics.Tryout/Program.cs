@@ -43,7 +43,7 @@ namespace Sharp.Ballistics.Tryout
 
             var rifle = new Rifle(rifleInfo, scopeInfo, ammoInfo);
 
-            var solution = rifle.SolveShot(
+            var solution = rifle.Solve(
                 0.0, //shooting angle
                 Speed.FromKilometersPerHour(5), 
                 90, //wind direction angle (degrees)
