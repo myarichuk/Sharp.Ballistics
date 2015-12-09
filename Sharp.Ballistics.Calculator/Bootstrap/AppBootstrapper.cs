@@ -7,11 +7,10 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using System.Windows;
 using Castle.Windsor.Installer;
-using Sharp.Ballistics.Calculator.Models;
 
 namespace Sharp.Ballistics.Calculator.Bootstrap
 {
-    
+
     public class AppBootstrapper : BootstrapperBase
     {
 		private WindsorContainer container;

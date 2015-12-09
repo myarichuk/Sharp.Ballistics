@@ -1,5 +1,4 @@
-﻿using System;
-using UnitsNet;
+﻿using UnitsNet;
 
 namespace Sharp.Ballistics.Abstractions
 {
