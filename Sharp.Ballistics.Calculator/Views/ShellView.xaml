@@ -3,7 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Background="White">
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="ActiveFunction" Orientation="Horizontal" Grid.Row="0" Margin="5">
+        </StackPanel>
+        <ContentControl Grid.Row="1" Margin="5" x:Name="CurrentScreen" />
     </Grid>
 
 </Window>

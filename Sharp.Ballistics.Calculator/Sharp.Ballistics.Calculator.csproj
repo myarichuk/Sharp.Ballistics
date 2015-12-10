@@ -105,11 +105,18 @@
     <Compile Include="Bootstrap\RavenDBInstaller.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Models\AmmoModel.cs" />
+    <Compile Include="Models\CalculatorModel.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\ScopesModel.cs" />
     <Compile Include="Models\StoredItemModel.cs" />
     <Compile Include="Models\RiflesModel.cs" />
     <Compile Include="Models\UnitsConfiguration.cs" />
+    <Compile Include="ViewModels\AmmoViewModel.cs" />
+    <Compile Include="ViewModels\CalculatorViewModel.cs" />
+    <Compile Include="ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\FunctionScreen.cs" />
+    <Compile Include="ViewModels\RiflesViewModel.cs" />
+    <Compile Include="ViewModels\ScopesViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -161,6 +168,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="scope.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ballistic_calc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\configuration.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
