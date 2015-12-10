@@ -39,6 +39,10 @@ ShotInfo^ Rifle::Solve(
 			zeroAngle,
 			windSpeed.MilesPerHour, 
 			windAngle,
+			ammoInfo->Length.Inches,
+			ammoInfo->Caliber.Inches,
+			ammoInfo->WeightGrains,
+			rifleInfo->BarrelTwist.Inches,
 			&solution);
 
 		double elevationClickMultiplier = 1 / scopeInfo->ElevationClicksPerMOA;
@@ -46,6 +50,7 @@ ShotInfo^ Rifle::Solve(
 		
 		shotInfo->BulletDrop = Length::FromInches(GetPath(solution, range.Yards));
 		shotInfo->WindDrift = Length::FromInches(GetWindage(solution, range.Yards));
+		shotInfo->SpinDrift = Length::FromInches(GetSpinDrift(solution, range.Yards));
 		shotInfo->ElevationMOA = GetMOA(solution, range.Yards);
 		shotInfo->WindageMOA = GetWindageMOA(solution, range.Yards);
 		shotInfo->TimeToTargetSec = GetTime(solution, range.Yards);

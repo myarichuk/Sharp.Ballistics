@@ -73,6 +73,9 @@ double Windage(double WindSpeed, double Vi, double x, double t);
 		
 */
 
+//Calculate Miller's Stability Factor, useful for calculating spin drift
+double StabilityFactor(double BulletLength, double Caliber, double BulletWeight, double BarrelTwist); 
+																										 
 // Functions to resolve any wind / angle combination into headwind and crosswind components.
 // Source is in "_windage.c"
 double HeadWind(double WindSpeed, double WindAngle);
@@ -113,7 +116,9 @@ double ZeroAngle(int DragFunction, double DragCoefficient, double Vi, double Sig
 // A function to generate a ballistic solution table in 1 yard increments, up to __BCOMP_MAXRANGE__.
 // Source is in "_solve.c"
 int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHeight, \
-			double ShootingAngle, double ZeroAngle, double WindSpeed, double WindAngle, double** Solution);
+	double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle, \
+	double BulletLength, double Caliber, double BulletWeight, double BarrelTwist, \
+	double** Solution);
 /* Arguments:
 		DragFunction:  The drag function you wish to use for the solution (G1, G2, G3, G5, G6, G7, or G8)
 		DragCoefficient:  The coefficient of drag for the projectile you wish to model.
@@ -130,6 +135,10 @@ int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHe
 					90 degrees is from right to left
 					180 degrees is a straight tailwind
 					-90 or 270 degrees is from left to right.
+		BulletLength: A bullet length in inches
+		Caliber: A bullet's diameter in inches
+		BulletWeight: A bullet's weight in grains
+		BarrelTwist: Barrel twist -> how many twists per length unit are there
 		Solution:	A pointer provided for accessing the solution after it has been generated.
 					Memory for this pointer is allocated in the function, so the user does not need
 					to worry about it.  This solution can be passed to the retrieval functions to get
@@ -143,6 +152,7 @@ int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHe
 
 
 // Functions for retrieving data from a solution generated with SolveAll()
+double GetSpinDrift(double* sln, int yardage); //Returns spin drift, in inches
 double GetRange(double* sln, int yardage); // Returns range, in yards.
 double GetPath(double* sln, int yardage); // Returns projectile path, in inches, relative to the line of sight.
 double GetMOA(double* sln, int yardage); // Returns an estimated elevation correction for achieving a zero at this range.

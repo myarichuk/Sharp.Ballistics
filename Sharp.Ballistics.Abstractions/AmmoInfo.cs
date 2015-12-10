@@ -15,5 +15,11 @@ namespace Sharp.Ballistics.Abstractions
         public string Name { get; set; }
         
         public Speed MuzzleVelocity { get; set; }    
+
+        public Length Caliber { get; set; }
+
+        public Length Length { get; set; } //1.240 inches -> Sierra MatchKing HPBT 175gr
+
+        public double WeightGrains { get; set; }
     }
 }

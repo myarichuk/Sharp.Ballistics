@@ -236,9 +236,18 @@ double GetVy(double* sln, int yardage){
 	else return 0;
 }
 
+double GetSpinDrift(double* sln, int yardage) {
+	double size = sln[__BCOMP_MAXRANGE__ * 10 + 1];
+	if (yardage<size) {
+		return sln[10 * yardage + 9];
+	}
+	else return 0;
+}
 
 int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHeight, \
-double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle, double** Solution){
+	double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle,\
+	double BulletLength, double Caliber, double BulletWeight, double BarrelTwist, \
+	double** Solution){
 
 	double* ptr;
         ptr = (double*)malloc(10*__BCOMP_MAXRANGE__*sizeof(double)+2048);
@@ -280,16 +289,18 @@ double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle, double*
 
 
 		if (x/3>=n){
+			double s = StabilityFactor(BulletLength, Caliber, BulletWeight, BarrelTwist);
+			double spinDrift = 1.25*(s + 1.2)*pow(t + dt, 1.83);
 			ptr[10*n+0]=x/3;							// Range in yds
 			ptr[10*n+1]=y*12;							// Path in inches
 			ptr[10*n+2]=-RadtoMOA(atan(y/x));			// Correction in MOA
 			ptr[10*n+3]=t+dt;							// Time in s
-			ptr[10*n+4]=Windage(crosswind,Vi,x,t+dt); 	// Windage in inches
+			ptr[10*n+4]=Windage(crosswind,Vi,x,t+dt) + spinDrift; // Windage in inches
 			ptr[10*n+5]=RadtoMOA(atan(ptr[10*n+4] / (12 * x)));	// Windage in MOA
 			ptr[10*n+6]=v;								// Velocity (combined)
 			ptr[10*n+7]=vx;							// Velocity (x)
 			ptr[10*n+8]=vy;							// Velocity (y)
-			ptr[10*n+9]=0;								// Reserved
+			ptr[10*n+9]= spinDrift; // spin-drift
 			n++;	
 		}	
 		
@@ -306,6 +317,13 @@ double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle, double*
 	*Solution = ptr;
 	
 	return n;
+}
+
+double StabilityFactor(double BulletLength, double Caliber, double BulletWeight, double BarrelTwist)
+{
+	double l = BulletLength / Caliber;
+	double t = BarrelTwist / Caliber;
+	return (30 * BulletWeight) / (pow(t, 2)*pow(Caliber, 3)*l*(1 + pow(l, 2)));
 }
 
 double Windage(double WindSpeed, double Vi, double xx, double t){

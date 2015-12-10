@@ -8,6 +8,8 @@ namespace Sharp.Ballistics.Abstractions
 
         public Length WindDrift { get; set; }
 
+        public Length SpinDrift { get; set; }
+
         public double ElevationMOA { get; set; }
 
         public double ElevationClicks { get; set; }
@@ -21,5 +23,6 @@ namespace Sharp.Ballistics.Abstractions
         public Speed ImpactVelocity { get; set; }
 
         public Length Range { get; set; }
+
     }
 }
