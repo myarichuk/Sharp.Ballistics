@@ -7,9 +7,9 @@
             <RowDefinition Height="70" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel x:Name="ActiveFunction" Orientation="Horizontal" Grid.Row="0" Margin="5">
+        <StackPanel x:Name="Functions" Orientation="Horizontal" Grid.Row="0" Margin="5">
         </StackPanel>
-        <ContentControl Grid.Row="1" Margin="5" x:Name="CurrentScreen" />
+        <ContentControl Grid.Row="1" Margin="5" x:Name="CurrentFunction" />
     </Grid>
 
 </Window>
