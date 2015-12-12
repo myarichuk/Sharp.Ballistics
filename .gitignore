@@ -177,6 +177,7 @@ UpgradeLog*.htm
 # SQL Server files
 *.mdf
 *.ldf
+*.opendb
 
 # Business Intelligence projects
 *.rdl.data
