@@ -7,22 +7,24 @@ namespace Sharp.Ballistics.Abstractions
     {
         string Name { get; set; }
 
-        AtmosphericInfo ZeroingConditions { get; set; }
+        WeatherCondition ZeroingConditions { get; set; }
 
-        AmmoInfo Ammo { get; set; }
+        Ammunition Ammo { get; set; }
 
-        ScopeInfo Scope { get; set; }
+        Scope MountedScope { get; set; }
 
-        ShotInfo Solve(double shootingAngle, 
+        BallisticSolution Solve(double shootingAngle, 
             Speed windSpeed, 
             double windAngle, 
             Length range, 
-            AtmosphericInfo atmInfo);
+            WeatherCondition atmInfo,
+            ShotLocationInfo shotLocationInfo);
 
-        IEnumerable<ShotInfo> SolveMultiple(double shootingAngle, 
+        IEnumerable<BallisticSolution> SolveMultiple(double shootingAngle, 
             Speed windSpeed, 
             double windAngle, 
             IEnumerable<Length> range, 
-            AtmosphericInfo atmInfo);
+            WeatherCondition atmInfo,
+            ShotLocationInfo shotLocationInfo);
     }
 }

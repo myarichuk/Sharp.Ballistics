@@ -2,7 +2,7 @@
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public class ScopeInfo : IHaveId
+    public class Scope : IHaveId
     {
         public string Name { get; set; }
 

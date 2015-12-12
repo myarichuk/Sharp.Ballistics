@@ -2,7 +2,7 @@
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public class ShotInfo
+    public class BallisticSolution
     {
         public Length BulletDrop { get; set; }
 
@@ -10,13 +10,17 @@ namespace Sharp.Ballistics.Abstractions
 
         public Length SpinDrift { get; set; }
 
-        public double ElevationMOA { get; set; }
+        public double VerticalMOA { get; set; }
 
-        public double ElevationClicks { get; set; }
+        public double VerticalMils => VerticalMOA / 0.290888;
 
-        public double WindageMOA { get; set; }
+        public double VerticalClicks { get; set; }
 
-        public double WindageClicks { get; set; }
+        public double HorizontalMOA { get; set; }
+
+        public double HorizontalMils => HorizontalMOA / 0.290888;
+
+        public double HorizontalClicks { get; set; }
 
         public double TimeToTargetSec { get; set; }
 

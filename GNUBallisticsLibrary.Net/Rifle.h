@@ -5,120 +5,125 @@ using namespace Sharp::Ballistics::Abstractions;
 using namespace UnitsNet;
 using namespace System::Collections::Generic;
 
-#define ZERO_RANGE 100
-public ref class Rifle : IRifle 
+namespace GNUBallisticsLibrary
 {
-private:
-	RifleInfo^ rifleInfo;
-	ScopeInfo^ scopeInfo;
-	AmmoInfo^ ammoInfo;
 
-	double zeroAngle;
-
-	String^ id;
-public:
-	Rifle() 
+#define ZERO_RANGE 100
+	public ref class Rifle : IRifle
 	{
-	}
+	private:
+		RifleInfo^ rifleInfo;
+		Scope^ scopeInfo;
+		Ammunition^ ammoInfo;
 
-	Rifle(RifleInfo^ rifleInfo, ScopeInfo^ scopeInfo, AmmoInfo^ ammoInfo)
-	{
-		Initialize(rifleInfo, scopeInfo, ammoInfo);
-	}
+		double zeroAngle;
 
-	void Initialize(RifleInfo^ rifleInfo, ScopeInfo^ scopeInfo, AmmoInfo^ ammoInfo)
-	{
-		if (rifleInfo == nullptr)
-			throw gcnew System::ArgumentNullException("rifleInfo");
+		String^ id;
+	public:
+		Rifle()
+		{
+		}
 
-		if (rifleInfo->ZeroingConditions == nullptr)
-			throw gcnew System::ArgumentNullException("rifleInfo.ZeroingConditions");
+		Rifle(RifleInfo^ rifleInfo, Scope^ scopeInfo, Ammunition^ ammoInfo)
+		{
+			Initialize(rifleInfo, scopeInfo, ammoInfo);
+		}
 
-		if (scopeInfo == nullptr)
-			throw gcnew System::ArgumentNullException("scopeInfo");
-		if (ammoInfo == nullptr)
-			throw gcnew System::ArgumentNullException("ammoInfo");
-
-		this->rifleInfo = rifleInfo;
-		this->scopeInfo = scopeInfo;
-		this->ammoInfo = ammoInfo;
-
-		zeroAngle = ZeroAngle((int)ammoInfo->DragFunction,
-			AtmCorrect(ammoInfo->BC,
-				rifleInfo->ZeroingConditions->Altitude.Feet,
-				rifleInfo->ZeroingConditions->Barometer.Psi * 2.03602, //convert to Hg
-				rifleInfo->ZeroingConditions->Temperature.DegreesFahrenheit,
-				rifleInfo->ZeroingConditions->RelativeHumidity),
-			ammoInfo->MuzzleVelocity.FeetPerSecond,
-			scopeInfo->Height.Inches,
-			scopeInfo->ZeroDistance.Yards, 0);
-	}
-
-	virtual ShotInfo^ Solve(
-		double shootingAngle,
-		Speed windSpeed,
-		double windAngle,
-		Length range,
-		AtmosphericInfo^ atmInfo);
-
-	virtual IEnumerable<ShotInfo^>^ SolveMultiple(double shootingAngle,
-		Speed windSpeed,
-		double windAngle,
-		IEnumerable<Length>^ ranges,
-		AtmosphericInfo^ atmInfo);
-
-	virtual property String^ Name
-	{
-		String^ get()
+		void Initialize(RifleInfo^ rifleInfo, Scope^ scopeInfo, Ammunition^ ammoInfo)
 		{
 			if (rifleInfo == nullptr)
-				return nullptr;
-			return rifleInfo->Name;
-		}
-		void set(String^ val)
-		{
-			rifleInfo->Name = val;
-		}
-	}
+				throw gcnew System::ArgumentNullException("rifleInfo");
 
-	virtual property AtmosphericInfo^ ZeroingConditions
-	{
-		AtmosphericInfo^ get()
-		{
-			if (rifleInfo == nullptr)
-				return nullptr;
-			return rifleInfo->ZeroingConditions;
-		}
-		void set(AtmosphericInfo^ val)
-		{
-			rifleInfo->ZeroingConditions = val;
-		}
-	}
+			if (rifleInfo->ZeroingConditions == nullptr)
+				throw gcnew System::ArgumentNullException("rifleInfo.ZeroingConditions");
 
-	virtual property AmmoInfo^ Ammo
-	{
-		AmmoInfo^ get()
-		{
-			return ammoInfo;
+			if (scopeInfo == nullptr)
+				throw gcnew System::ArgumentNullException("scopeInfo");
+			if (ammoInfo == nullptr)
+				throw gcnew System::ArgumentNullException("ammoInfo");
+
+			this->rifleInfo = rifleInfo;
+			this->scopeInfo = scopeInfo;
+			this->ammoInfo = ammoInfo;
+
+			zeroAngle = ZeroAngle((int)ammoInfo->DragFunction,
+				AtmCorrect(ammoInfo->BC,
+					rifleInfo->ZeroingConditions->Altitude.Feet,
+					rifleInfo->ZeroingConditions->Barometer.Psi * 2.03602, //convert to Hg
+					rifleInfo->ZeroingConditions->Temperature.DegreesFahrenheit,
+					rifleInfo->ZeroingConditions->RelativeHumidity),
+				ammoInfo->MuzzleVelocity.FeetPerSecond,
+				scopeInfo->Height.Inches,
+				scopeInfo->ZeroDistance.Yards, 0);
 		}
 
-		void set(AmmoInfo^ val)
-		{
-			ammoInfo = val;
-		}
-	}
+		virtual BallisticSolution^ Solve(
+			double shootingAngle,
+			Speed windSpeed,
+			double windAngle,
+			Length range,
+			WeatherCondition^ atmInfo,
+			ShotLocationInfo^ shotLocationInfo);
 
-	virtual property ScopeInfo^ Scope
-	{
-		ScopeInfo^ get()
+		virtual IEnumerable<BallisticSolution^>^ SolveMultiple(double shootingAngle,
+			Speed windSpeed,
+			double windAngle,
+			IEnumerable<Length>^ ranges,
+			WeatherCondition^ atmInfo,
+			ShotLocationInfo^ shotLocationInfo);
+
+		virtual property String^ Name
 		{
-			return scopeInfo;
+			String^ get()
+			{
+				if (rifleInfo == nullptr)
+					return nullptr;
+				return rifleInfo->Name;
+			}
+			void set(String^ val)
+			{
+				rifleInfo->Name = val;
+			}
 		}
-		void set(ScopeInfo^ val)
+
+		virtual property WeatherCondition^ ZeroingConditions
 		{
-			scopeInfo = val;
+			WeatherCondition^ get()
+			{
+				if (rifleInfo == nullptr)
+					return nullptr;
+				return rifleInfo->ZeroingConditions;
+			}
+			void set(WeatherCondition^ val)
+			{
+				rifleInfo->ZeroingConditions = val;
+			}
 		}
-	}
+
+		virtual property Ammunition^ Ammo
+		{
+			Ammunition^ get()
+			{
+				return ammoInfo;
+			}
+
+			void set(Ammunition^ val)
+			{
+				ammoInfo = val;
+			}
+		}
+
+		virtual property Scope^ MountedScope
+		{
+			Scope^ get()
+			{
+				return scopeInfo;
+			}
+			void set(Scope^ val)
+			{
+				scopeInfo = val;
+			}
+		}
 
 	public:
 		virtual property String^ Id
@@ -133,4 +138,5 @@ public:
 				id = val;
 			}
 		}
-};
+	};
+}

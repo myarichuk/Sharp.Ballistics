@@ -17,6 +17,8 @@ enum __DragFunctions {G1=1,G2,G3,G4,G5,G6,G7,G8};
 
 // Angular conversion macros, pre-computed for speed on embedded systems.
 #define GNU_PI 3.141592653589 // Pi, more or less.
+#define EARTH_ROTATION_SPEED 0.00007292 //(rad/sec) angular speed of the Earth rotation 
+#define NO_CORIOLIS -10000
 #define DegtoMOA(deg) ((deg)*60)  // Converts degrees to minutes of angle
 #define DegtoRad(deg) ((deg)*0.01745329251994329576923690768489)	// Converts degrees to radians
 #define MOAtoDeg(moa) ((moa)*0.01666666666666666666666666666667) // Converts minutes of angle to degrees
@@ -118,6 +120,7 @@ double ZeroAngle(int DragFunction, double DragCoefficient, double Vi, double Sig
 int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHeight, \
 	double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle, \
 	double BulletLength, double Caliber, double BulletWeight, double BarrelTwist, \
+	double Latitude, double ShotAzimuth,
 	double** Solution);
 /* Arguments:
 		DragFunction:  The drag function you wish to use for the solution (G1, G2, G3, G5, G6, G7, or G8)
@@ -139,6 +142,10 @@ int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHe
 		Caliber: A bullet's diameter in inches
 		BulletWeight: A bullet's weight in grains
 		BarrelTwist: Barrel twist -> how many twists per length unit are there
+		Latitude:   Latitude (degrees) where the rifle is, for calculation of Coriolis effect. If Coriolis should
+					not be used needs to be equal -10000
+		ShotAzimuth: A direction where the shot is (degrees) -> for calculation of Coriolis effect. If Coriolis should
+					not be used needs to be equal -10000
 		Solution:	A pointer provided for accessing the solution after it has been generated.
 					Memory for this pointer is allocated in the function, so the user does not need
 					to worry about it.  This solution can be passed to the retrieval functions to get

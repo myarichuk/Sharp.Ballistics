@@ -9,6 +9,6 @@ namespace Sharp.Ballistics.Abstractions
         //1 twist per how many inches/mm -> for example, 1:12
         public Length BarrelTwist { get; set; }
 
-        public AtmosphericInfo ZeroingConditions { get; set; }
+        public WeatherCondition ZeroingConditions { get; set; }
     }
 }

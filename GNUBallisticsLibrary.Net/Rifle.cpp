@@ -5,77 +5,92 @@
 
 using namespace UnitsNet;
 using namespace System::Collections::Generic;
+namespace GNUBallisticsLibrary
+{
+	BallisticSolution^ Rifle::Solve(
+		double shootingAngle,
+		Speed windSpeed,
+		double windAngle,
+		Length range,
+		WeatherCondition^ atmInfo,
+		ShotLocationInfo^ shotLocationInfo) {
 
-ShotInfo^ Rifle::Solve(
-	double shootingAngle,
-	Speed windSpeed,
-	double windAngle,
-	Length range,
-	AtmosphericInfo^ atmInfo) {
+		if (rifleInfo == nullptr || ammoInfo == nullptr || scopeInfo == nullptr)
+			throw gcnew System::Exception("Rifle is not initialized, run Initialize first");
 
-	if (rifleInfo == nullptr || ammoInfo == nullptr || scopeInfo == nullptr)
-		throw gcnew System::Exception("Rifle is not initialized, run Initialize first");
+		BallisticSolution^ shotInfo = gcnew BallisticSolution();
 
-	ShotInfo^ shotInfo = gcnew ShotInfo();
+		double* solution;
 
-	double* solution;
+		double bc = ammoInfo->BC;
+		if (atmInfo != nullptr)
+		{
+			bc = AtmCorrect(ammoInfo->BC,
+				rifleInfo->ZeroingConditions->Altitude.Feet,
+				rifleInfo->ZeroingConditions->Barometer.Psi * 2.03602, //convert to Hg,
+				rifleInfo->ZeroingConditions->Temperature.DegreesFahrenheit,
+				rifleInfo->ZeroingConditions->RelativeHumidity);
+		}
 
-	double bc = ammoInfo->BC;
-	if (atmInfo != nullptr)
-	{
-		bc = AtmCorrect(ammoInfo->BC,
-			rifleInfo->ZeroingConditions->Altitude.Feet,
-			rifleInfo->ZeroingConditions->Barometer.Psi * 2.03602, //convert to Hg,
-			rifleInfo->ZeroingConditions->Temperature.DegreesFahrenheit,
-			rifleInfo->ZeroingConditions->RelativeHumidity);
+		auto latitude = NO_CORIOLIS;
+		auto shotAzimuth = NO_CORIOLIS;
+
+		if (shotLocationInfo != nullptr)
+		{
+			latitude = shotLocationInfo->Latitude;
+			shotAzimuth = shotLocationInfo->ShotAzimuth;
+		}
+
+		try {
+			SolveAll((int)ammoInfo->DragFunction,
+				bc,
+				ammoInfo->MuzzleVelocity.FeetPerSecond,
+				scopeInfo->Height.Inches,
+				shootingAngle,
+				zeroAngle,
+				windSpeed.MilesPerHour,
+				windAngle,
+				ammoInfo->Length.Inches,
+				ammoInfo->Caliber.Inches,
+				ammoInfo->WeightGrains,
+				rifleInfo->BarrelTwist.Inches,
+				latitude,
+				shotAzimuth,
+				&solution);
+
+			double verticalClickMultiplier = 1 / scopeInfo->ElevationClicksPerMOA;
+			double horizontalClickMultiplier = 1 / scopeInfo->WindageClicksPerMOA;
+
+			shotInfo->BulletDrop = Length::FromInches(GetPath(solution, range.Yards));
+			shotInfo->WindDrift = Length::FromInches(GetWindage(solution, range.Yards));
+			shotInfo->SpinDrift = Length::FromInches(GetSpinDrift(solution, range.Yards));
+			shotInfo->VerticalMOA = GetMOA(solution, range.Yards);
+			shotInfo->HorizontalMOA = GetWindageMOA(solution, range.Yards);
+			shotInfo->TimeToTargetSec = GetTime(solution, range.Yards);
+			shotInfo->ImpactVelocity = Speed::FromFeetPerSecond(GetVelocity(solution, range.Yards));
+			shotInfo->VerticalClicks = shotInfo->VerticalMOA * verticalClickMultiplier;
+			shotInfo->HorizontalClicks = shotInfo->HorizontalMOA * horizontalClickMultiplier;
+			shotInfo->Range = range;
+		}
+		finally{
+			free(solution);
+		}
+
+		return shotInfo;
 	}
 
-	try {
-		SolveAll((int)ammoInfo->DragFunction,
-			bc,
-			ammoInfo->MuzzleVelocity.FeetPerSecond, 
-			scopeInfo->Height.Inches,
-			shootingAngle,
-			zeroAngle,
-			windSpeed.MilesPerHour, 
-			windAngle,
-			ammoInfo->Length.Inches,
-			ammoInfo->Caliber.Inches,
-			ammoInfo->WeightGrains,
-			rifleInfo->BarrelTwist.Inches,
-			&solution);
+	IEnumerable<BallisticSolution^>^ Rifle::SolveMultiple(double shootingAngle,
+		Speed windSpeed,
+		double windAngle,
+		IEnumerable<Length>^ ranges,
+		WeatherCondition^ atmInfo,
+		ShotLocationInfo^ shotLocationInfo) {
 
-		double elevationClickMultiplier = 1 / scopeInfo->ElevationClicksPerMOA;
-		double windageClickMultiplier = 1 / scopeInfo->WindageClicksPerMOA;
-		
-		shotInfo->BulletDrop = Length::FromInches(GetPath(solution, range.Yards));
-		shotInfo->WindDrift = Length::FromInches(GetWindage(solution, range.Yards));
-		shotInfo->SpinDrift = Length::FromInches(GetSpinDrift(solution, range.Yards));
-		shotInfo->ElevationMOA = GetMOA(solution, range.Yards);
-		shotInfo->WindageMOA = GetWindageMOA(solution, range.Yards);
-		shotInfo->TimeToTargetSec = GetTime(solution, range.Yards);
-		shotInfo->ImpactVelocity = Speed::FromFeetPerSecond(GetVelocity(solution, range.Yards)); 
-		shotInfo->ElevationClicks = shotInfo->ElevationMOA * elevationClickMultiplier;
-		shotInfo->WindageClicks = shotInfo->WindageMOA * windageClickMultiplier;
-		shotInfo->Range = range;
+		List<BallisticSolution^>^ results = gcnew List<BallisticSolution^>();
+
+		for each(auto range in ranges)
+			results->Add(Solve(shootingAngle, windSpeed, windAngle, range, atmInfo, shotLocationInfo));
+
+		return results;
 	}
-	finally{
-		free(solution);
-	}
-
-	return shotInfo;
-}
-
-IEnumerable<ShotInfo^>^ Rifle::SolveMultiple(double shootingAngle,
-	Speed windSpeed,
-	double windAngle,
-	IEnumerable<Length>^ ranges,
-	AtmosphericInfo^ atmInfo) {
-
-	List<ShotInfo^>^ results = gcnew List<ShotInfo^>();
-
-	for each(auto range in ranges)
-		results->Add(Solve(shootingAngle, windSpeed, windAngle, range, atmInfo));
-
-	return results;
 }

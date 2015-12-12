@@ -247,6 +247,7 @@ double GetSpinDrift(double* sln, int yardage) {
 int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHeight, \
 	double ShootingAngle, double ZAngle, double WindSpeed, double WindAngle,\
 	double BulletLength, double Caliber, double BulletWeight, double BarrelTwist, \
+	double Latitude, double ShotAzimuth,\
 	double** Solution){
 
 	double* ptr;
@@ -291,16 +292,33 @@ int SolveAll(int DragFunction, double DragCoefficient, double Vi, double SightHe
 		if (x/3>=n){
 			double s = StabilityFactor(BulletLength, Caliber, BulletWeight, BarrelTwist);
 			double spinDrift = 1.25*(s + 1.2)*pow(t + dt, 1.83);
-			ptr[10*n+0]=x/3;							// Range in yds
-			ptr[10*n+1]=y*12;							// Path in inches
-			ptr[10*n+2]=-RadtoMOA(atan(y/x));			// Correction in MOA
+
+			double currentX = x;
+			double currentY = y;
+
+			double coriolisDrift = 0;
+			if (Latitude != NO_CORIOLIS)
+			{
+				currentX += (EARTH_ROTATION_SPEED * pow(x, 2) * sin(DegtoRad(Latitude))) / (x / (t + dt));
+			}
+
+			if (ShotAzimuth != NO_CORIOLIS)
+			{
+				double eotvosMultiplier = 1 - (2 * (EARTH_ROTATION_SPEED * Vi / GRAVITY) * cos(DegtoRad(Latitude)) * sin(DegtoRad(ShotAzimuth)));
+				currentY *= eotvosMultiplier;
+			}
+
+			ptr[10*n+0]= currentX / 3;							// Range in yds
+			ptr[10*n+1]= currentY * 12;							// Path in inches
+			ptr[10*n+2]=-RadtoMOA(atan(currentY / currentX));			// Correction in MOA
 			ptr[10*n+3]=t+dt;							// Time in s
-			ptr[10*n+4]=Windage(crosswind,Vi,x,t+dt) + spinDrift; // Windage in inches
-			ptr[10*n+5]=RadtoMOA(atan(ptr[10*n+4] / (12 * x)));	// Windage in MOA
+			ptr[10*n+4]=Windage(crosswind,Vi, currentX,t+dt) + spinDrift; // Windage in inches
+			ptr[10*n+5]=RadtoMOA(atan(ptr[10*n+4] / (12 * currentX)));	// Windage in MOA
 			ptr[10*n+6]=v;								// Velocity (combined)
 			ptr[10*n+7]=vx;							// Velocity (x)
 			ptr[10*n+8]=vy;							// Velocity (y)
-			ptr[10*n+9]= spinDrift; // spin-drift
+			ptr[10*n+9]= spinDrift; // spin-drift (in inches)
+
 			n++;	
 		}	
 		

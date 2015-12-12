@@ -44,15 +44,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmmoInfo.cs" />
-    <Compile Include="AtmosphericInfo.cs" />
+    <Compile Include="Ammunition.cs" />
+    <Compile Include="ShotLocationInfo.cs" />
+    <Compile Include="WeatherCondition.cs" />
     <Compile Include="DragFunction.cs" />
     <Compile Include="IHaveId.cs" />
     <Compile Include="IRifle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RifleInfo.cs" />
-    <Compile Include="ScopeInfo.cs" />
-    <Compile Include="ShotInfo.cs" />
+    <Compile Include="Scope.cs" />
+    <Compile Include="BallisticSolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

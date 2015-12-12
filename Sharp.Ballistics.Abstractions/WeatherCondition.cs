@@ -2,7 +2,7 @@
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public class AtmosphericInfo
+    public class WeatherCondition
     {
         //sea level -> 0 attitude, in feet
         public Length Altitude { get; set; }

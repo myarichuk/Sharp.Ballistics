@@ -24,8 +24,7 @@ namespace Sharp.Ballistics.Calculator
             catch (Exception)
             {
                 //precaution
-                if (bootstrapper != null)
-                    bootstrapper.Dispose();
+                bootstrapper?.Dispose();
                 throw;
             }
 

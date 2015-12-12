@@ -18,39 +18,27 @@ namespace Sharp.Ballistics.Calculator.Models
 
         public LengthUnit BulletOffsets { get; set; }
 
-        public static UnitsConfiguration Metric
+        public static UnitsConfiguration Metric => new UnitsConfiguration
         {
-            get
-            {
-                return new UnitsConfiguration
-                {
-                    Barometer = PressureUnit.Bar,
-                    BulletOffsets = LengthUnit.Centimeter,
-                    Distance = LengthUnit.Meter,
-                    MuzzleSpeed = SpeedUnit.MeterPerSecond,
-                    ScopeHeight = LengthUnit.Centimeter,
-                    Temperature = TemperatureUnit.DegreeCelsius,
-                    WindSpeed = SpeedUnit.KilometerPerHour
-                };
-            }
-        }
+            Barometer = PressureUnit.Bar,
+            BulletOffsets = LengthUnit.Centimeter,
+            Distance = LengthUnit.Meter,
+            MuzzleSpeed = SpeedUnit.MeterPerSecond,
+            ScopeHeight = LengthUnit.Centimeter,
+            Temperature = TemperatureUnit.DegreeCelsius,
+            WindSpeed = SpeedUnit.KilometerPerHour
+        };
 
-        public static UnitsConfiguration Imperial
+        public static UnitsConfiguration Imperial => new UnitsConfiguration
         {
-            get
-            {
-                return new UnitsConfiguration
-                {
-                    Barometer = PressureUnit.Psi,
-                    BulletOffsets = LengthUnit.Inch,
-                    Distance = LengthUnit.Yard,
-                    MuzzleSpeed = SpeedUnit.FootPerSecond,
-                    ScopeHeight = LengthUnit.Inch,
-                    Temperature = TemperatureUnit.DegreeFahrenheit,
-                    WindSpeed = SpeedUnit.MilePerHour
-                };
-            }
-        }
+            Barometer = PressureUnit.Psi,
+            BulletOffsets = LengthUnit.Inch,
+            Distance = LengthUnit.Yard,
+            MuzzleSpeed = SpeedUnit.FootPerSecond,
+            ScopeHeight = LengthUnit.Inch,
+            Temperature = TemperatureUnit.DegreeFahrenheit,
+            WindSpeed = SpeedUnit.MilePerHour
+        };
     }
 
 }

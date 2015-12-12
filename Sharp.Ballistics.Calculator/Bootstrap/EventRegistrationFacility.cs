@@ -23,8 +23,7 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
         void ComponentDestroyed(Castle.Core.ComponentModel model, object instance)
         {
             if (!(instance is IHandle)) return;
-            if (_eventAggregator == null) return;
-            _eventAggregator.Unsubscribe(instance);
+            _eventAggregator?.Unsubscribe(instance);
         }
 
     }
