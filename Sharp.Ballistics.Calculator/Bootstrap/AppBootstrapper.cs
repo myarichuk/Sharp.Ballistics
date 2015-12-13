@@ -7,6 +7,8 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using System.Windows;
 using Castle.Windsor.Installer;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.MicroKernel.Handlers;
 
 namespace Sharp.Ballistics.Calculator.Bootstrap
 {
@@ -25,14 +27,16 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
             container = new WindsorContainer();
 
 		    container.AddFacility<EventRegistrationFacility>();
-            
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel,true));
+            container.Register(Classes.FromThisAssembly().BasedOn<FunctionScreen>().WithServices(typeof(FunctionScreen)));
             container.Register(
 		        Component.For<IWindowManager>().ImplementedBy<WindowManager>().LifestyleSingleton(),
 		        Component.For<IEventAggregator>().ImplementedBy<EventAggregator>().LifestyleSingleton(),
                 Classes.FromThisAssembly().InSameNamespaceAs<ShellViewModel>()
                                           .WithServiceDefaultInterfaces()
+                                          .WithServiceBase()
                                           .WithServiceSelf()
-                                          .LifestyleTransient(),
+                                          .LifestyleTransient(),                
                 Classes.FromThisAssembly().InNamespace("Sharp.Ballistics.Calculator.Models")
                                           .WithServiceDefaultInterfaces()
                                           .WithServiceSelf()
@@ -52,13 +56,14 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
         }
 
         protected override object GetInstance(Type serviceType, string key)
-		{
+        {
             if (string.IsNullOrEmpty(key))
             {
                 return container.Resolve(serviceType);
             }
-		    return container.Resolve(key, serviceType);
-		}
+            return container.Resolve(key, serviceType);
+
+        }
 
 		protected override IEnumerable<object> GetAllInstances(Type serviceType)
 		{

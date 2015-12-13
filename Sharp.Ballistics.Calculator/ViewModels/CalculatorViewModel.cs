@@ -8,5 +8,20 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 {
     public class CalculatorViewModel : FunctionScreen
     {
+        public override int Order
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public override string IconFilename
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

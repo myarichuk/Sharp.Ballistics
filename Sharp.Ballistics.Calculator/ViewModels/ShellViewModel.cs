@@ -1,4 +1,7 @@
 using Caliburn.Micro;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
@@ -6,23 +9,19 @@ namespace Sharp.Ballistics.Calculator.ViewModels
     public class ShellViewModel : Conductor<FunctionScreen>
     {
         private readonly IWindowManager windowManager;
-        private FunctionScreen currentFunction;
-        public ShellViewModel(IWindowManager windowManager)
+        private readonly FunctionScreen[] screens;
+        public ShellViewModel(IWindowManager windowManager,FunctionScreen[] screens)
         {
             this.windowManager = windowManager;
+            this.screens = screens.OrderBy(x => x.Order).ToArray();
+            
         }
 
-        public FunctionScreen CurrentFunction
+        //since this is root VM, this should happen only once
+        protected override void OnActivate() 
         {
-            get
-            {
-                return currentFunction;
-            }
-            set
-            {
-                currentFunction = value;
-                NotifyOfPropertyChange(() => CurrentFunction);
-            }
+            ActiveItem = screens.FirstOrDefault();            
+            DisplayName = ActiveItem.DisplayName;
         }
     }
 }

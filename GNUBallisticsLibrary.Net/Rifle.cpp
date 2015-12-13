@@ -60,10 +60,12 @@ namespace GNUBallisticsLibrary
 
 			double verticalClickMultiplier = 1 / scopeInfo->ElevationClicksPerMOA;
 			double horizontalClickMultiplier = 1 / scopeInfo->WindageClicksPerMOA;
+			double spinDrift = GetSpinDrift(solution, range.Yards);
+			double windage = GetWindage(solution, range.Yards);
 
 			shotInfo->BulletDrop = Length::FromInches(GetPath(solution, range.Yards));
-			shotInfo->WindDrift = Length::FromInches(GetWindage(solution, range.Yards));
-			shotInfo->SpinDrift = Length::FromInches(GetSpinDrift(solution, range.Yards));
+			shotInfo->SpinDrift = Length::FromInches(spinDrift);
+			shotInfo->WindDrift = Length::FromInches(windage - spinDrift);
 			shotInfo->VerticalMOA = GetMOA(solution, range.Yards);
 			shotInfo->HorizontalMOA = GetWindageMOA(solution, range.Yards);
 			shotInfo->TimeToTargetSec = GetTime(solution, range.Yards);
