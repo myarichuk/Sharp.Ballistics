@@ -62,7 +62,7 @@ So, how to use this?
                 locationInfo);
 ```
 
-Where ShotInfo is defined as
+Where rifle.Solve() result is defined as
 ```c#
 public class BallisticSolution
     {
