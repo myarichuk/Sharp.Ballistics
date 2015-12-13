@@ -64,11 +64,11 @@ namespace Sharp.Ballistics.Tryout
 
             var solution = rifle.Solve(
                 0.0, //shooting angle
-                Speed.FromKilometersPerHour(0),
+                Speed.FromKilometersPerHour(10),
                 90, //wind direction angle (degrees)
                 Length.FromMeters(500),
-                null, 
-                null);
+                currentWeatherConditions, 
+                locationInfo);
         }
     }
 }
