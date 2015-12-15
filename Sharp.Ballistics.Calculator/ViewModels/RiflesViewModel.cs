@@ -16,12 +16,6 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             }
         }
 
-        public override string IconFilename
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public override string IconFilename => "rifle.png";
     }
 }

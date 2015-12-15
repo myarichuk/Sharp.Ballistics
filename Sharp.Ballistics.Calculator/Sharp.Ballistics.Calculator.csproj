@@ -122,6 +122,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AmmoView.xaml.cs">
       <DependentUpon>AmmoView.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,10 @@
     <Compile Include="Views\ScopesView.xaml.cs">
       <DependentUpon>ScopesView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AmmoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,10 +212,13 @@
     <Resource Include="scope.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ballistic_calc.png" />
+    <Resource Include="Images\calc.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\configuration.png" />
+    <Resource Include="Images\scope.png" />
+    <Resource Include="Images\config.png" />
+    <Resource Include="Images\ammo.png" />
+    <Resource Include="Images\rifle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

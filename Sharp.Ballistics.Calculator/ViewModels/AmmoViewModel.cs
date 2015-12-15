@@ -8,13 +8,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 {
     public class AmmoViewModel : FunctionScreen
     {
-        public override string IconFilename
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public override string IconFilename => "ammo.png";
 
         public override int Order
         {
