@@ -1,10 +1,6 @@
 ﻿using Caliburn.Micro;
 using Sharp.Ballistics.Calculator.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
@@ -17,21 +13,19 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         {
             this.model = model;
             this.eventAggregator = eventAggregator;
-            DisplayName = "Configuration";
+            DisplayName = "Units Configuration";
         }
 
         protected override void OnViewReady(object view)
         {
             model.Load();
             NotifyOfPropertyChange(() => Units);
-            OnChanges();
         }
 
         public override int Order => int.MaxValue;
         public override string IconFilename => "config.png";
 
         public UnitsConfiguration Units => model.Units;
-        public bool EnableSave => model.CanSave();
 
         public void Save()
         {
@@ -56,12 +50,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public void FormValueChanged()
         {
-            OnChanges();
         }
 
-        private void OnChanges()
-        {
-            NotifyOfPropertyChange(() => EnableSave);
-        }
     }
 }

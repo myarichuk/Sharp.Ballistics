@@ -5,11 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:util="clr-namespace:Sharp.Ballistics.Calculator"
              xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
              xmlns:unitsNet="clr-namespace:UnitsNet.Units;assembly=UnitsNet"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600">
+             mc:Ignorable="d" MinWidth="600" MinHeight="400">
     <UserControl.Resources>
+        <util:SpeedConverter x:Key="SpeedConverter" />
+        <util:LengthConverter x:Key="LengthConverter" />
+        <util:TemperatureConverter x:Key="TemperatureConverter" />
+        <util:PressureConverter x:Key="PressureConverter" />
+        <util:RemoveUndefinedConverter x:Key="RemoveUndefinedConverter"/>
         <ObjectDataProvider x:Key="lengthFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -22,51 +27,141 @@
                 <x:Type TypeName="unitsNet:SpeedUnit"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="pressureFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="unitsNet:PressureUnit"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="temperatureFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="unitsNet:TemperatureUnit"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel DataContext="{Binding Units}" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
-            <TextBlock Text="Distance Units" Margin="10" />
-            <ComboBox SelectedItem="{Binding Distance}"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="86*"/>
+                <RowDefinition Height="86*"/>
+                <RowDefinition Height="86*"/>
+                <RowDefinition Height="87*"/>
+                <RowDefinition Height="55"/>
+            </Grid.RowDefinitions>
+            <StackPanel DataContext="{Binding Units}" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Distance" Margin="10" />
+                <ComboBox SelectedItem="{Binding Distance}"
                       cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
                       HorizontalContentAlignment="Center" 
                       VerticalContentAlignment="Center" 
-                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}}"/>
-        </StackPanel>
-        
-        <StackPanel DataContext="{Binding Units}" Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
-            <TextBlock Text="Height of scope" Margin="10" />
-            <ComboBox SelectedItem="{Binding ScopeHeight}"
-                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
-                      HorizontalContentAlignment="Center" 
-                      VerticalContentAlignment="Center" 
-                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}}"/>
-        </StackPanel>
+                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource LengthConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
-        <StackPanel DataContext="{Binding Units}" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
-            <TextBlock Text="Speed of wind" Margin="10" />
-            <ComboBox SelectedItem="{Binding WindSpeed}"
+            <StackPanel DataContext="{Binding Units}" Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Height of scope" Margin="10" />
+                <ComboBox SelectedItem="{Binding ScopeHeight}"
                       cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
                       HorizontalContentAlignment="Center" 
                       VerticalContentAlignment="Center" 
-                      ItemsSource="{Binding Source={StaticResource speedFromEnum}}"/>
-        </StackPanel>
+                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource LengthConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
-        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="220,8">
-            <Button IsEnabled="{Binding EnableSave}" x:Name="Save" Content="Save" MinHeight="25" Width="150" Margin="5"/>
-        </StackPanel>
+            <StackPanel DataContext="{Binding Units}" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Wind speed" Margin="10" />
+                <ComboBox SelectedItem="{Binding WindSpeed}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource speedFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource SpeedConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel DataContext="{Binding Units}" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Muzzle veclocity" Margin="10" />
+                <ComboBox SelectedItem="{Binding MuzzleSpeed}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource speedFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource SpeedConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel DataContext="{Binding Units}" Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Temperature" Margin="10" />
+                <ComboBox SelectedItem="{Binding Temperature}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource temperatureFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource TemperatureConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel DataContext="{Binding Units}" Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Pressure" Margin="10" />
+                <ComboBox SelectedItem="{Binding Barometer}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource pressureFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource PressureConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel DataContext="{Binding Units}" Grid.Row="3" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Bullet Offset" Margin="10" />
+                <ComboBox SelectedItem="{Binding BulletOffsets}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource LengthConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <Button Grid.Row="4" Grid.ColumnSpan="2" x:Name="Save" DockPanel.Dock="Bottom"                   
+                Content="Save"
+                MaxWidth="150"
+                MinHeight="25" Margin="15" Height="25" Width="100" />
+
+        </Grid>
     </Grid>
 </UserControl>

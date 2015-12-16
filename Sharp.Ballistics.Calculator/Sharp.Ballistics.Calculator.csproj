@@ -103,8 +103,14 @@
     <Compile Include="Bootstrap\AppBootstrapper.cs" />
     <Compile Include="Bootstrap\AppEvent.cs" />
     <Compile Include="Bootstrap\EventRegistrationFacility.cs" />
+    <Compile Include="Converters\DistanceConverter.cs" />
+    <Compile Include="Converters\HumanizeConverter.cs" />
     <Compile Include="Bootstrap\RavenDBInstaller.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Converters\RemoveUndefinedConverter.cs" />
+    <Compile Include="Converters\PressureConverter.cs" />
+    <Compile Include="Converters\TemperatureConverter.cs" />
+    <Compile Include="Converters\SpeedConverter.cs" />
     <Compile Include="Models\AmmoModel.cs" />
     <Compile Include="Models\CalculatorModel.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />

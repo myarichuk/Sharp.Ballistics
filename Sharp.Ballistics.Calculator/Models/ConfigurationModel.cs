@@ -18,10 +18,10 @@ namespace Sharp.Ballistics.Calculator.Models
             using (var session = documentStore.OpenSession())
             {
                 var unitsConfig = session.Load<UnitsConfiguration>(Constants.UnitsConfigurationId);
-                unitsConfig = IsValidUnitsConfig(unitsConfig) ? unitsConfig : null;
+                if (unitsConfig != null && !IsValidUnitsConfig(unitsConfig))
+                    unitsConfig = null;
 
                 units = unitsConfig ?? UnitsConfiguration.Metric;
-                Interlocked.Exchange(ref units, unitsConfig);
             }
         }
 
