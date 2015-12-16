@@ -3,10 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
+             xmlns:unitsNet="clr-namespace:UnitsNet.Units;assembly=UnitsNet"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="lengthFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="unitsNet:LengthUnit"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="speedFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="unitsNet:SpeedUnit"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -17,9 +38,35 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Save" MinHeight="25" Width="50" Margin="5"/>
-            <Button Content="Cancel" MinHeight="25" Width="50" Margin="5"/>
+        <StackPanel DataContext="{Binding Units}" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+            <TextBlock Text="Distance Units" Margin="10" />
+            <ComboBox SelectedItem="{Binding Distance}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}}"/>
+        </StackPanel>
+        
+        <StackPanel DataContext="{Binding Units}" Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+            <TextBlock Text="Height of scope" Margin="10" />
+            <ComboBox SelectedItem="{Binding ScopeHeight}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}}"/>
+        </StackPanel>
+
+        <StackPanel DataContext="{Binding Units}" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+            <TextBlock Text="Speed of wind" Margin="10" />
+            <ComboBox SelectedItem="{Binding WindSpeed}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource speedFromEnum}}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="220,8">
+            <Button IsEnabled="{Binding EnableSave}" x:Name="Save" Content="Save" MinHeight="25" Width="150" Margin="5"/>
         </StackPanel>
     </Grid>
 </UserControl>

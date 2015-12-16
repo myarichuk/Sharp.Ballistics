@@ -101,6 +101,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrap\AppBootstrapper.cs" />
+    <Compile Include="Bootstrap\AppEvent.cs" />
     <Compile Include="Bootstrap\EventRegistrationFacility.cs" />
     <Compile Include="Bootstrap\RavenDBInstaller.cs" />
     <Compile Include="Constants.cs" />

@@ -25,7 +25,10 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <ContentControl Grid.Row="1" Margin="5" x:Name="ActiveItem" />
+        <StackPanel  Grid.Row="1" Margin="5" Orientation="Vertical">
+            <TextBlock FontSize="15" x:Name="ActiveItem_DisplayName" Margin="5" />
+            <ContentControl x:Name="ActiveItem" />
+        </StackPanel>
     </Grid>
 
 </Window>

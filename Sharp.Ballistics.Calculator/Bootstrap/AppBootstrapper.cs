@@ -40,7 +40,7 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
                 Classes.FromThisAssembly().InNamespace("Sharp.Ballistics.Calculator.Models")
                                           .WithServiceDefaultInterfaces()
                                           .WithServiceSelf()
-                                          .LifestyleTransient()
+                                          .LifestyleSingleton()
                 );
 
             container.Install(FromAssembly.This());

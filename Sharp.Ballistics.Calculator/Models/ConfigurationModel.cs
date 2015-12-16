@@ -1,4 +1,5 @@
 ﻿using Raven.Client;
+using System.Threading;
 
 namespace Sharp.Ballistics.Calculator.Models
 {
@@ -17,9 +18,28 @@ namespace Sharp.Ballistics.Calculator.Models
             using (var session = documentStore.OpenSession())
             {
                 var unitsConfig = session.Load<UnitsConfiguration>(Constants.UnitsConfigurationId);
-                Units = unitsConfig ?? UnitsConfiguration.Metric;
+                unitsConfig = IsValidUnitsConfig(unitsConfig) ? unitsConfig : null;
+
+                units = unitsConfig ?? UnitsConfiguration.Metric;
+                Interlocked.Exchange(ref units, unitsConfig);
             }
         }
+
+        private static bool IsValidUnitsConfig(UnitsConfiguration unitsConfig)
+        {
+            if (unitsConfig.Barometer == UnitsNet.Units.PressureUnit.Undefined ||
+               unitsConfig.BulletOffsets == UnitsNet.Units.LengthUnit.Undefined ||
+               unitsConfig.Distance == UnitsNet.Units.LengthUnit.Undefined ||
+               unitsConfig.MuzzleSpeed == UnitsNet.Units.SpeedUnit.Undefined ||
+               unitsConfig.ScopeHeight == UnitsNet.Units.LengthUnit.Undefined ||
+               unitsConfig.Temperature == UnitsNet.Units.TemperatureUnit.Undefined ||
+               unitsConfig.WindSpeed == UnitsNet.Units.SpeedUnit.Undefined)
+            return false;
+
+            return true;
+        }
+
+        public bool CanSave() => IsValidUnitsConfig(Units);
 
         public void Save()
         {
@@ -30,6 +50,7 @@ namespace Sharp.Ballistics.Calculator.Models
             }
         }
 
-        public UnitsConfiguration Units { get; private set; }
+        private UnitsConfiguration units;
+        public UnitsConfiguration Units => units;
     }
 }

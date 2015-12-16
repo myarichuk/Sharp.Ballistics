@@ -8,7 +8,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
     public class ShellViewModel : Conductor<FunctionScreen>
     {
-        private readonly IWindowManager windowManager;
+        private readonly IWindowManager windowManager;        
         private readonly FunctionScreen[] screens;
         public ShellViewModel(IWindowManager windowManager,FunctionScreen[] screens)
         {
