@@ -17,7 +17,6 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
                 var documentStore = new EmbeddableDocumentStore
                 {
                     DefaultDatabase = Constants.DatabaseName,
-                    DataDirectory = Constants.DataFolder,
                     UseEmbeddedHttpServer = true
                 };
 

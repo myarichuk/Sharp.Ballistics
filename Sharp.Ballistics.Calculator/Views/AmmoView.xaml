@@ -8,7 +8,22 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <Button Content="Add" x:Name="AddCartridge" Margin="0,10,0,0" Width="150" Height="25"/>
-            <ListView Margin="15,10,15,20" Height="350" x:Name="Cartridges" />
+            <ListView Margin="15,10,15,20" Height="350" ItemsSource="{Binding Cartridges}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <TextBlock Text="Name: " />
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                            <TextBlock Text=", " />
+                            <TextBlock Text="Drag Function: " />
+                            <TextBlock Text="{Binding DragFunction}" FontWeight="Bold" />
+                            <TextBlock Text=" (" />
+                            <TextBlock Text="{Binding Caliber}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                            <TextBlock Text=")" />
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </Grid>
 </UserControl>

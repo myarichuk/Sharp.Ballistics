@@ -52,8 +52,9 @@ namespace Sharp.Ballistics.Calculator.Models
             {
                 var indexName = RavenConstants.Constants.DocumentsByEntityNameIndex;
 
+                var tag = documentStore.Conventions.FindTypeTagName(typeof(T));
                 var query = session.Advanced.DocumentQuery<T>(indexName)
-                                            .Where($"Tag:{typeof(T).Name}");
+                                            .Where($"Tag:{tag}");
 
                 using (var stream = session.Advanced.Stream(query))
                 {

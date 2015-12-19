@@ -33,7 +33,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 #pragma warning restore CC0021 // Use nameof
             this.ammoModel = ammoModel;
             this.configurationModel = configurationModel;
-            this.windowManager = windowManager;            
+            this.windowManager = windowManager;
         }
 
         public IEnumerable<Cartridge> Cartridges => ammoModel.All();
