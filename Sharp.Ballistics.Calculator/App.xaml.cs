@@ -1,4 +1,5 @@
-﻿using Sharp.Ballistics.Calculator.Bootstrap;
+﻿using Caliburn.Micro;
+using Sharp.Ballistics.Calculator.Bootstrap;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,9 +18,17 @@ namespace Sharp.Ballistics.Calculator
         private readonly AppBootstrapper bootstrapper;
         public App()
         {
-            try {
+            try
+            {
                 bootstrapper = new AppBootstrapper();
                 bootstrapper.Initialize();
+
+                ConventionManager.ApplyValidation = (binding, viewModelType, property) =>
+                {
+                    binding.ValidatesOnExceptions = true;
+                    binding.ValidatesOnDataErrors = true;
+                    binding.ValidatesOnNotifyDataErrors = true;
+                };
             }
             catch (Exception)
             {

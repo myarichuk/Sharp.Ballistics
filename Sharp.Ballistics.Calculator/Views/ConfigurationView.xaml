@@ -157,6 +157,22 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
+
+            <StackPanel DataContext="{Binding Units}" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,7">
+                <TextBlock Text="Caliber" Margin="10" />
+                <ComboBox SelectedItem="{Binding Caliber}"
+                      cal:Message.Attach="[Event SelectionChanged]=[Action FormValueChanged()]"
+                      HorizontalContentAlignment="Center" 
+                      VerticalContentAlignment="Center" 
+                      ItemsSource="{Binding Source={StaticResource lengthFromEnum}, Converter={StaticResource RemoveUndefinedConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource LengthConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
             <Button Grid.Row="4" Grid.ColumnSpan="2" x:Name="Save" DockPanel.Dock="Bottom"                   
                 Content="Save"
                 MaxWidth="150"

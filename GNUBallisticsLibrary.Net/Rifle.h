@@ -14,7 +14,7 @@ namespace GNUBallisticsLibrary
 	private:
 		RifleInfo^ rifleInfo;
 		Scope^ scopeInfo;
-		Ammunition^ ammoInfo;
+		Cartridge^ ammoInfo;
 
 		double zeroAngle;
 
@@ -24,12 +24,12 @@ namespace GNUBallisticsLibrary
 		{
 		}
 
-		Rifle(RifleInfo^ rifleInfo, Scope^ scopeInfo, Ammunition^ ammoInfo)
+		Rifle(RifleInfo^ rifleInfo, Scope^ scopeInfo, Cartridge^ ammoInfo)
 		{
 			Initialize(rifleInfo, scopeInfo, ammoInfo);
 		}
 
-		void Initialize(RifleInfo^ rifleInfo, Scope^ scopeInfo, Ammunition^ ammoInfo)
+		void Initialize(RifleInfo^ rifleInfo, Scope^ scopeInfo, Cartridge^ ammoInfo)
 		{
 			if (rifleInfo == nullptr)
 				throw gcnew System::ArgumentNullException("rifleInfo");
@@ -100,14 +100,14 @@ namespace GNUBallisticsLibrary
 			}
 		}
 
-		virtual property Ammunition^ Ammo
+		virtual property Cartridge^ Ammo
 		{
-			Ammunition^ get()
+			Cartridge^ get()
 			{
 				return ammoInfo;
 			}
 
-			void set(Ammunition^ val)
+			void set(Cartridge^ val)
 			{
 				ammoInfo = val;
 			}

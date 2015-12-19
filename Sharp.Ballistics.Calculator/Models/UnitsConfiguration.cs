@@ -18,6 +18,8 @@ namespace Sharp.Ballistics.Calculator.Models
 
         public LengthUnit BulletOffsets { get; set; }
 
+        public LengthUnit Caliber { get; set; }
+
         public static UnitsConfiguration Metric => new UnitsConfiguration
         {
             Barometer = PressureUnit.Bar,
@@ -26,7 +28,8 @@ namespace Sharp.Ballistics.Calculator.Models
             MuzzleSpeed = SpeedUnit.MeterPerSecond,
             ScopeHeight = LengthUnit.Centimeter,
             Temperature = TemperatureUnit.DegreeCelsius,
-            WindSpeed = SpeedUnit.KilometerPerHour
+            WindSpeed = SpeedUnit.KilometerPerHour,
+            Caliber = LengthUnit.Millimeter
         };
 
         public static UnitsConfiguration Imperial => new UnitsConfiguration
@@ -37,7 +40,8 @@ namespace Sharp.Ballistics.Calculator.Models
             MuzzleSpeed = SpeedUnit.FootPerSecond,
             ScopeHeight = LengthUnit.Inch,
             Temperature = TemperatureUnit.DegreeFahrenheit,
-            WindSpeed = SpeedUnit.MilePerHour
+            WindSpeed = SpeedUnit.MilePerHour,
+            Caliber = LengthUnit.Inch
         };
     }
 

@@ -44,7 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ammunition.cs" />
+    <Compile Include="Cartridge.cs" />
     <Compile Include="ShotLocationInfo.cs" />
     <Compile Include="WeatherCondition.cs" />
     <Compile Include="DragFunction.cs" />

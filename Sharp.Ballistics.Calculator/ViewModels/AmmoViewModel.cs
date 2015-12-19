@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using Sharp.Ballistics.Abstractions;
+using Sharp.Ballistics.Calculator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +19,39 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             {
                 return 4;
             }
+        }
+
+        private readonly AmmoModel ammoModel;
+        private readonly IWindowManager windowManager;
+        private readonly ConfigurationModel configurationModel;
+        public AmmoViewModel(AmmoModel ammoModel, 
+                             ConfigurationModel configurationModel, 
+                             IWindowManager windowManager)
+        {
+#pragma warning disable CC0021 // Use nameof
+            DisplayName = "Cartridges";
+#pragma warning restore CC0021 // Use nameof
+            this.ammoModel = ammoModel;
+            this.configurationModel = configurationModel;
+            this.windowManager = windowManager;            
+        }
+
+        public IEnumerable<Cartridge> Cartridges => ammoModel.All();
+
+        public void AddCartridge()
+        {
+            var newCartridgeViewModel = new NewCartridgeViewModel(configurationModel);            
+            if(windowManager.ShowDialog(newCartridgeViewModel) ?? false)
+            {
+                ammoModel.InsertOrUpdate(newCartridgeViewModel.Cartridge);
+                NotifyOfPropertyChange(() => Cartridges);
+            }
+        }
+
+        public void RemoveCartridge(Cartridge cartridge)
+        {
+            ammoModel.Delete(cartridge);
+            NotifyOfPropertyChange(() => Cartridges);
         }
     }
 }

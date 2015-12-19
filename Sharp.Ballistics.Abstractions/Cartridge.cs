@@ -2,11 +2,11 @@
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public class Ammunition : IHaveId
+    public class Cartridge : IHaveId
     {
         public string Id { get; private set; }
 
-        public DragFunction DragFunction { get; set; }
+        public DragFunction DragFunction { get; set; } = DragFunction.G1;
 
         //175 gr .308 Match-King HPBT BC -> 0.505
         //note : BC factors in weight

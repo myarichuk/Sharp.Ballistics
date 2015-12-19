@@ -9,7 +9,7 @@ namespace Sharp.Ballistics.Abstractions
 
         WeatherCondition ZeroingConditions { get; set; }
 
-        Ammunition Ammo { get; set; }
+        Cartridge Ammo { get; set; }
 
         Scope MountedScope { get; set; }
 

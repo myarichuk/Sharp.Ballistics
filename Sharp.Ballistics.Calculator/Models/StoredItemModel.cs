@@ -1,8 +1,10 @@
 ﻿using Raven.Client;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Sharp.Ballistics.Abstractions;
 using Raven.Abstractions.Commands;
+using RavenConstants = Raven.Abstractions.Data;
 
 namespace Sharp.Ballistics.Calculator.Models
 {
@@ -47,12 +49,21 @@ namespace Sharp.Ballistics.Calculator.Models
         public IEnumerable<T> All()
         {
             using (var session = documentStore.OpenSession())
-            using (var stream = session.Advanced.Stream(session.Query<T>()))
             {
-                do
+                var indexName = RavenConstants.Constants.DocumentsByEntityNameIndex;
+
+                var query = session.Advanced.DocumentQuery<T>(indexName)
+                                            .Where($"Tag:{typeof(T).Name}");
+
+                using (var stream = session.Advanced.Stream(query))
                 {
-                    yield return stream.Current.Document;
-                } while (stream.MoveNext());
+                    while (stream.MoveNext())
+                    {
+                        if (stream.Current == null)
+                            yield break;
+                        yield return stream.Current.Document;
+                    }
+                }
             }
         }
                

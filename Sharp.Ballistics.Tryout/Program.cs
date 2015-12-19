@@ -26,7 +26,7 @@ namespace Sharp.Ballistics.Tryout
                 }
             };
 
-            var ammoInfo = new Ammunition
+            var ammoInfo = new Cartridge
             {
                 MuzzleVelocity = Speed.FromMetersPerSecond(790), 
                 BC = 0.505,
