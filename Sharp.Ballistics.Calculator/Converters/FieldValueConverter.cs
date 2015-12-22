@@ -22,9 +22,6 @@ namespace Sharp.Ballistics.Calculator.Converters
 
         protected FieldValueConverter(ConfigurationModel configurationModel)
         {
-            if (configurationModel == null)
-                throw new ArgumentNullException(nameof(configurationModel));
-
             this.configurationModel = configurationModel;
             this.configurationModel?.Initialize();
         }

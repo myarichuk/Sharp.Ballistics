@@ -49,12 +49,17 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public void AddCartridge()
         {
-            var newCartridgeViewModel = new NewCartridgeViewModel(configurationModel);            
+            var newCartridgeViewModel = new EditCartridgeViewModel(configurationModel);            
             if(windowManager.ShowDialog(newCartridgeViewModel) ?? false)
             {
                 ammoModel.InsertOrUpdate(newCartridgeViewModel.Cartridge);
                 NotifyOfPropertyChange(() => Cartridges);
             }
+        }
+
+        public void EditCartridge(Cartridge cartridge)
+        {
+
         }
 
         public void RemoveCartridge(Cartridge cartridge)

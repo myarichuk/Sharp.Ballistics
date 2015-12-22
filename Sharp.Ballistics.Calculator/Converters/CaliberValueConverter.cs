@@ -11,7 +11,7 @@ namespace Sharp.Ballistics.Calculator
         public CaliberValueConverter() :
             //I know, service locator is anti-pattern, couldn't think of something better here
             //For any suggestions, please don't hesitate to contact me :)
-            base(AppBootstrapper.Container.Resolve<ConfigurationModel>())
+            base(AppBootstrapper.Container?.Resolve<ConfigurationModel>())
         {
         }
 

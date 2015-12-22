@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
-    public class NewCartridgeViewModel : Screen
+    public class EditCartridgeViewModel : Screen
     {
         private readonly UnitsConfiguration units;
         private const double Epsilon = 0.01;
@@ -20,7 +20,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public Cartridge Cartridge { get; private set; }
 
-        public NewCartridgeViewModel(ConfigurationModel configurationModel)
+        public EditCartridgeViewModel(ConfigurationModel configurationModel)
         {
             Cartridge = new Cartridge();
             configurationModel.Initialize();

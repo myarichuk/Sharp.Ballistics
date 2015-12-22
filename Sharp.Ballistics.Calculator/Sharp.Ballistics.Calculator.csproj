@@ -145,7 +145,7 @@
     <Compile Include="ViewModels\CalculatorViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\FunctionScreen.cs" />
-    <Compile Include="ViewModels\NewCartridgeViewModel.cs" />
+    <Compile Include="ViewModels\EditCartridgeViewModel.cs" />
     <Compile Include="ViewModels\RiflesViewModel.cs" />
     <Compile Include="ViewModels\ScopesViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -165,8 +165,8 @@
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewCartridgeView.xaml.cs">
-      <DependentUpon>NewCartridgeView.xaml</DependentUpon>
+    <Compile Include="Views\EditCartridgeView.xaml.cs">
+      <DependentUpon>EditCartridgeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RiflesView.xaml.cs">
       <DependentUpon>RiflesView.xaml</DependentUpon>
@@ -190,7 +190,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewCartridgeView.xaml">
+    <Page Include="Views\EditCartridgeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,6 +260,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.1.29.3\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.3\build\dotnet\Fody.targets')" />

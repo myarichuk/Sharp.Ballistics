@@ -2,9 +2,9 @@
 
 namespace Sharp.Ballistics.Calculator.Views
 {
-    public partial class NewCartridgeView : Window
+    public partial class EditCartridgeView : Window
     {
-        public NewCartridgeView()
+        public EditCartridgeView()
         {
             InitializeComponent();
         }

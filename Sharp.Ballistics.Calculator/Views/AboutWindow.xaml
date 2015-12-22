@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
         mc:Ignorable="d"
-        Title="About" ResizeMode="NoResize" Height="270" Width="400">
+        Title="About" ResizeMode="NoResize" Height="270" Width="400" WindowStyle="ToolWindow">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock FontSize="20" HorizontalAlignment="Center">
