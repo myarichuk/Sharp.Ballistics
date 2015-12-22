@@ -49,7 +49,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public bool IsBusy { get; set; }
 
-        public string BusyText { get; set; }
+        public string BusyText { get; set; }      
 
         public void AddCartridge()
         {

@@ -17,7 +17,7 @@
         <toolkit:BusyIndicator BusyContent="{Binding BusyText}" IsBusy="{Binding IsBusy}">
             <StackPanel Orientation="Vertical">
                 <Button Content="Add" x:Name="AddCartridge" Margin="0,10,0,0" Width="150" Height="25"/>
-                <ListView Margin="15,10,15,20" Height="350" ItemsSource="{Binding Cartridges}">
+                <ListView cal:Message.Attach="[Event MouseDoubleClick] = [Action EditCartridge($this.SelectedItem)]" Margin="15,10,15,20" Height="350" ItemsSource="{Binding Cartridges}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
