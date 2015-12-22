@@ -44,7 +44,7 @@
                                         <TextBlock Text="grain" FontWeight="Bold" />
                                     </WrapPanel>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Margin="0,0,-190,0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                                <StackPanel Grid.Column="1" Margin="0,0,-185,0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
                                     <Button cal:Message.Attach="EditCartridge($dataContext)" Margin="3" Padding="5" Width="30" Height="30">
                                         <Image Source="/Sharp.Ballistics.Calculator;component/Images/edit-icon.png" />
                                     </Button>
