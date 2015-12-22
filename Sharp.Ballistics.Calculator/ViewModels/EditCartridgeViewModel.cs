@@ -20,12 +20,12 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public Cartridge Cartridge { get; private set; }
 
-        public EditCartridgeViewModel(ConfigurationModel configurationModel)
+        public EditCartridgeViewModel(ConfigurationModel configurationModel, Cartridge cartridgeToEdit = null)
         {
-            Cartridge = new Cartridge();
+            Cartridge = cartridgeToEdit ?? new Cartridge();
             configurationModel.Initialize();
             units = configurationModel.Units;
-            DisplayName = "New Cartridge Data";
+            DisplayName = "Cartridge Data";
         }
 
         public UnitsConfiguration Units => units;        

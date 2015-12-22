@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
         xmlns:util="clr-namespace:Sharp.Ballistics.Calculator"
@@ -9,7 +10,7 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:abstractions="clr-namespace:Sharp.Ballistics.Abstractions;assembly=Sharp.Ballistics.Abstractions"
-        mc:Ignorable="d" Height="300" Width="450" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="300" Width="450" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <util:SpeedConverter x:Key="SpeedUnitConverter" />
         <util:LengthConverter x:Key="LengthUnitConverter" />
@@ -34,40 +35,44 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
             <TextBlock Text="Name:" Margin="10" VerticalAlignment="Center" />
-            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[Name]}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,0,10" Width="120"/>
+            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[Name]}" 
+                     Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                     Margin="0,10,0,10" Width="120"/>
         </StackPanel>
 
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
             <TextBlock Text="Muzzle Velocity:" Margin="10" VerticalAlignment="Center" />
-            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[MuzzleVelocity]}" 
-                     Text="{Binding MuzzleVelocity, StringFormat={}{0:F3}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60"/>
+            <toolkit:DoubleUpDown Increment="1" 
+                     Value="{Binding MuzzleVelocity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60"/>
             <TextBlock Text="{Binding Units.MuzzleSpeed, Converter={StaticResource SpeedUnitConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
             <TextBlock Text="Ballistic Coefficient:" Margin="10" VerticalAlignment="Center" />
-            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[BC]}" 
-                     Text="{Binding Path=BC, StringFormat={}{0:F3}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
+            <toolkit:DoubleUpDown Increment=".005" 
+                     Maximum="1.0"
+                     Minimum="0.0"
+                     Value="{Binding Path=BC, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
         </StackPanel>
 
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text="Bullet Length:" Margin="10" VerticalAlignment="Center" />
-            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[Length]}"
-                     Text="{Binding Length,StringFormat={}{0:F3}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
+            <toolkit:DoubleUpDown Increment=".1" 
+                     Value="{Binding Length, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
             <TextBlock Text="{Binding Units.BulletOffsets, Converter={StaticResource LengthUnitConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text="Caliber:" Margin="10" VerticalAlignment="Center" />
-            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[Caliber]}"
-                     Text="{Binding Caliber,StringFormat={}{0:F3}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
+            <toolkit:DoubleUpDown Increment=".1" 
+                     Value="{Binding Caliber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
             <TextBlock Text="{Binding Units.Caliber, Converter={StaticResource LengthUnitConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Orientation="Horizontal">
             <TextBlock Text="Weight:" Margin="10" VerticalAlignment="Center" />
-            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[Weight]}" 
-                     Text="{Binding Cartridge.WeightGrains,StringFormat={}{0:F0}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
+            <toolkit:DoubleUpDown Increment="1" 
+                     Value="{Binding Cartridge.WeightGrains, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
             <TextBlock Text="grain" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 

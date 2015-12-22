@@ -46,7 +46,7 @@ namespace Sharp.Ballistics.Calculator.Models
             }
         }
 
-        public IEnumerable<T> All()
+        public IEnumerable<T> All(int start = 0, int take = 1024)
         {
             using (var session = documentStore.OpenSession())
             {
@@ -54,17 +54,12 @@ namespace Sharp.Ballistics.Calculator.Models
 
                 var tag = documentStore.Conventions.FindTypeTagName(typeof(T));
                 var query = session.Advanced.DocumentQuery<T>(indexName)
-                                            .Where($"Tag:{tag}");
+                                            .WaitForNonStaleResultsAsOfNow()
+                                            .Where($"Tag:{tag}")
+                                            .Skip(start)
+                                            .Take(take);
 
-                using (var stream = session.Advanced.Stream(query))
-                {
-                    while (stream.MoveNext())
-                    {
-                        if (stream.Current == null)
-                            yield break;
-                        yield return stream.Current.Document;
-                    }
-                }
+                return query.ToList();
             }
         }
                
