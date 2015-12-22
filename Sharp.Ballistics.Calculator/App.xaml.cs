@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using Sharp.Ballistics.Calculator.Bootstrap;
+using Sharp.Ballistics.Calculator.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,6 +19,7 @@ namespace Sharp.Ballistics.Calculator
         private readonly AppBootstrapper bootstrapper;
         public App()
         {
+            Exit += OnExit;
             try
             {
                 bootstrapper = new AppBootstrapper();
@@ -37,12 +39,11 @@ namespace Sharp.Ballistics.Calculator
                 throw;
             }
 
-            Exit += OnExit;
         }
 
         private void OnExit(object sender, ExitEventArgs e)
         {
-            bootstrapper.Dispose();
+            bootstrapper?.Dispose();
         }
     }
 }

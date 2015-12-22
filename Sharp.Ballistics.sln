@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharp.Ballistics.Tryout", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharp.Ballistics.Calculator", "Sharp.Ballistics.Calculator\Sharp.Ballistics.Calculator.csproj", "{AEFE7A5D-6810-46F9-97D2-9EEAAF8AB634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharp.Ballistics.Portable", "Sharp.Ballistics.Portable\Sharp.Ballistics.Portable.csproj", "{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharp.Ballistics.Training", "Sharp.Ballistics.Training\Sharp.Ballistics.Training.csproj", "{2DD765F3-09C0-48E0-949F-94FD7D5928BD}"
 EndProject
 Global
@@ -72,18 +70,6 @@ Global
 		{AEFE7A5D-6810-46F9-97D2-9EEAAF8AB634}.Release|x64.Build.0 = Release|Any CPU
 		{AEFE7A5D-6810-46F9-97D2-9EEAAF8AB634}.Release|x86.ActiveCfg = Release|Any CPU
 		{AEFE7A5D-6810-46F9-97D2-9EEAAF8AB634}.Release|x86.Build.0 = Release|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Debug|x64.Build.0 = Debug|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Debug|x86.Build.0 = Debug|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Release|x64.ActiveCfg = Release|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Release|x64.Build.0 = Release|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Release|x86.ActiveCfg = Release|Any CPU
-		{087504B4-AA3C-428C-BF12-ECDC7B47BE7A}.Release|x86.Build.0 = Release|Any CPU
 		{2DD765F3-09C0-48E0-949F-94FD7D5928BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2DD765F3-09C0-48E0-949F-94FD7D5928BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD765F3-09C0-48E0-949F-94FD7D5928BD}.Debug|x64.ActiveCfg = Debug|Any CPU

@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
-    public class AmmoViewModel : FunctionScreen
+    public class AmmoViewModel : FunctionScreen, IHandle<AppEvent>
     {
+        private readonly IEventAggregator eventAggregator;
+
         public override string IconFilename => "ammo.png";
 
         public override int Order
@@ -26,15 +28,22 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         private readonly ConfigurationModel configurationModel;
         public AmmoViewModel(AmmoModel ammoModel, 
                              ConfigurationModel configurationModel, 
-                             IWindowManager windowManager)
-        {
+                             IWindowManager windowManager,
+                             IEventAggregator eventAggregator)
+        {            
 #pragma warning disable CC0021 // Use nameof
             DisplayName = "Cartridges";
 #pragma warning restore CC0021 // Use nameof
             this.ammoModel = ammoModel;
             this.configurationModel = configurationModel;
             this.windowManager = windowManager;
+
+            configurationModel.Initialize();
+            this.eventAggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
         }
+
+        public UnitsConfiguration Units => configurationModel.Units;
 
         public IEnumerable<Cartridge> Cartridges => ammoModel.All();
 
@@ -52,6 +61,14 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         {
             ammoModel.Delete(cartridge);
             NotifyOfPropertyChange(() => Cartridges);
+        }
+
+        public void Handle(AppEvent message)
+        {
+            if(message.MessageType == Constants.ConfigurationChangedMessage)
+            {
+                Refresh();
+            }
         }
     }
 }

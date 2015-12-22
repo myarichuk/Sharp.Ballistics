@@ -15,7 +15,9 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
 
     public class AppBootstrapper : BootstrapperBase
     {
-		private WindsorContainer container;
+		private static WindsorContainer container;
+
+        public static WindsorContainer Container => container;
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {

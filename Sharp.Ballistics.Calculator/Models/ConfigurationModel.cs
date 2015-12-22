@@ -1,4 +1,5 @@
 ﻿using Raven.Client;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Sharp.Ballistics.Calculator.Models
@@ -7,10 +8,20 @@ namespace Sharp.Ballistics.Calculator.Models
     public class ConfigurationModel
     {
         private readonly IDocumentStore documentStore;
-
+        private int isInitialized;
         public ConfigurationModel(IDocumentStore documentStore)
         {
             this.documentStore = documentStore;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Initialize()
+        {
+            //make sure it is initialized only once 
+            if (Interlocked.CompareExchange(ref isInitialized, 1, 0) == 1)
+                return;
+
+            Load();
         }
 
         public void Load()
@@ -34,7 +45,7 @@ namespace Sharp.Ballistics.Calculator.Models
                unitsConfig.ScopeHeight == UnitsNet.Units.LengthUnit.Undefined ||
                unitsConfig.Temperature == UnitsNet.Units.TemperatureUnit.Undefined ||
                unitsConfig.WindSpeed == UnitsNet.Units.SpeedUnit.Undefined)
-            return false;
+                return false;
 
             return true;
         }
@@ -51,6 +62,13 @@ namespace Sharp.Ballistics.Calculator.Models
         }
 
         private UnitsConfiguration units;
-        public UnitsConfiguration Units => units;
+        public UnitsConfiguration Units
+        {
+            get
+            {
+                Initialize();
+                return units;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnitsNet.Units;
+using Fasterflect;
 
 namespace Sharp.Ballistics.Calculator.Models
 {
@@ -19,6 +20,8 @@ namespace Sharp.Ballistics.Calculator.Models
         public LengthUnit BulletOffsets { get; set; }
 
         public LengthUnit Caliber { get; set; }
+
+        public dynamic this[string unitTypeName] => this.GetPropertyValue(unitTypeName);
 
         public static UnitsConfiguration Metric => new UnitsConfiguration
         {

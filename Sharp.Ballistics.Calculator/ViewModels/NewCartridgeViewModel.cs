@@ -23,7 +23,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         public NewCartridgeViewModel(ConfigurationModel configurationModel)
         {
             Cartridge = new Cartridge();
-            configurationModel.Load();
+            configurationModel.Initialize();
             units = configurationModel.Units;
             DisplayName = "New Cartridge Data";
         }
