@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,14 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         }
 
         public override string IconFilename => "rifle.png";
+
+        public bool IsBusy { get; set; }
+
+        public bool BusyText { get; set; }
+
+        public RiflesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        {
+
+        }
     }
 }

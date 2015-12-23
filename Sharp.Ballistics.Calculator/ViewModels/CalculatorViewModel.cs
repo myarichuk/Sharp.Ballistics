@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,10 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         }
 
         public override string IconFilename => "calc.png";
+
+        public CalculatorViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        {
+
+        }
     }
 }

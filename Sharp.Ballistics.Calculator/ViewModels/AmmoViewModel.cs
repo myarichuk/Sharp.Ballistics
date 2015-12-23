@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
-    public class AmmoViewModel : FunctionScreen, IHandle<AppEvent>
+    public class AmmoViewModel : FunctionScreen
     {
         private readonly IEventAggregator eventAggregator;
 
@@ -30,6 +30,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                              ConfigurationModel configurationModel, 
                              IWindowManager windowManager,
                              IEventAggregator eventAggregator)
+            :base(eventAggregator)
         {            
 #pragma warning disable CC0021 // Use nameof
             DisplayName = "Cartridges";
@@ -40,7 +41,6 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
             configurationModel.Initialize();
             this.eventAggregator = eventAggregator;
-            eventAggregator.Subscribe(this);
         }
 
         public UnitsConfiguration Units => configurationModel.Units;
@@ -101,12 +101,6 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             NotifyOfPropertyChange(() => Cartridges);
         }
 
-        public void Handle(AppEvent message)
-        {
-            if(message.MessageType == Constants.ConfigurationChangedMessage)
-            {
-                Refresh();
-            }
-        }
+       
     }
 }

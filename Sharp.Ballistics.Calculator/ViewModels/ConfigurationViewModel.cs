@@ -10,6 +10,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         private readonly ConfigurationModel model;
         private readonly IEventAggregator eventAggregator;
         public ConfigurationViewModel(ConfigurationModel model, IEventAggregator eventAggregator)
+            :base(eventAggregator)
         {
             this.model = model;
             this.eventAggregator = eventAggregator;
