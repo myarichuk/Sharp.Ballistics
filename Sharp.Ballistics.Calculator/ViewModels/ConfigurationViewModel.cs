@@ -23,7 +23,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             NotifyOfPropertyChange(() => Units);
         }
 
-        public override int Order => int.MaxValue;
+        public override int Order => int.MaxValue - 1;
         public override string IconFilename => "config.png";
 
         public UnitsConfiguration Units => model.Units;

@@ -18,9 +18,9 @@ namespace Sharp.Ballistics.Calculator.Views
     /// <summary>
     /// Interaction logic for About.xaml
     /// </summary>
-    public partial class About : Window
+    public partial class AboutView : UserControl
     {
-        public About()
+        public AboutView()
         {
             InitializeComponent();
         }
@@ -29,11 +29,6 @@ namespace Sharp.Ballistics.Calculator.Views
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
-        }
-
-        private void Ok_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        }      
     }
 }
