@@ -9,6 +9,7 @@ using System.Windows;
 using Castle.Windsor.Installer;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.Handlers;
+using System.Windows.Input;
 
 namespace Sharp.Ballistics.Calculator.Bootstrap
 {
@@ -20,7 +21,7 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
         public static WindsorContainer Container => container;
 
         protected override void OnStartup(object sender, StartupEventArgs e)
-        {
+        {            
             DisplayRootViewFor<ShellViewModel>();
         }
 
@@ -46,7 +47,25 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
                 );
 
             container.Install(FromAssembly.This());
-		}
+
+            ConventionManager.ApplyValidation = (binding, viewModelType, property) =>
+            {
+                binding.ValidatesOnExceptions = true;
+                binding.ValidatesOnDataErrors = true;
+                binding.ValidatesOnNotifyDataErrors = true;
+            };
+
+            //credit to http://stackoverflow.com/a/16731847
+            MessageBinder.SpecialValues.Add("$pressedkey", (context) =>
+            {
+                var keyArgs = context.EventArgs as KeyEventArgs;
+
+                if (keyArgs != null)
+                    return keyArgs.Key;
+
+                return null;
+            });
+        }
 
         internal void Dispose()
         {

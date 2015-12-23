@@ -5,11 +5,13 @@
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         xmlns:util="clr-namespace:Sharp.Ballistics.Calculator"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:abstractions="clr-namespace:Sharp.Ballistics.Abstractions;assembly=Sharp.Ballistics.Abstractions"
-        mc:Ignorable="d" Height="300" Width="450" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="300" Width="450" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
+        cal:Message.Attach="[Event KeyDown] = [Action KeyPressed($pressedKey)]">
     <Window.Resources>
         <util:SpeedConverter x:Key="SpeedUnitConverter" />
         <util:LengthConverter x:Key="LengthUnitConverter" />

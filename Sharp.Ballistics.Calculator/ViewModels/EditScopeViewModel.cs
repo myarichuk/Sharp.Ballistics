@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows;
 using UnitsNet;
 using System.Linq;
+using System.Windows.Input;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
@@ -102,6 +103,14 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             }
             else
                 callback?.Invoke(true);
+        }
+
+        public void KeyPressed(Key key)
+        {
+            if (key == Key.Enter)
+                Save();
+            else if (key == Key.Escape)
+                Cancel();
         }
 
         public void Save()

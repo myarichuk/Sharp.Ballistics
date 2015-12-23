@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Sharp.Ballistics.Calculator
 {
@@ -24,13 +25,6 @@ namespace Sharp.Ballistics.Calculator
             {
                 bootstrapper = new AppBootstrapper();
                 bootstrapper.Initialize();
-
-                ConventionManager.ApplyValidation = (binding, viewModelType, property) =>
-                {
-                    binding.ValidatesOnExceptions = true;
-                    binding.ValidatesOnDataErrors = true;
-                    binding.ValidatesOnNotifyDataErrors = true;
-                };
             }
             catch (Exception)
             {
