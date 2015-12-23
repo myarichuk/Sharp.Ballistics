@@ -7,7 +7,6 @@
         xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
         xmlns:util="clr-namespace:Sharp.Ballistics.Calculator"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:cal="http://www.caliburnproject.org"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:abstractions="clr-namespace:Sharp.Ballistics.Abstractions;assembly=Sharp.Ballistics.Abstractions"
         mc:Ignorable="d" Height="300" Width="450" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
@@ -35,8 +34,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
             <TextBlock Text="Name:" Margin="10" VerticalAlignment="Center" />
-            <TextBox util:ValidationBehavior.HasError="{Binding ValidationErrors[Name]}" 
-                     Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                      Margin="0,10,0,10" Width="120"/>
         </StackPanel>
 

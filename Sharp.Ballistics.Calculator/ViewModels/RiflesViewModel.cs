@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using Sharp.Ballistics.Abstractions;
+using Sharp.Ballistics.Calculator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,8 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 {
     public class RiflesViewModel : FunctionScreen
     {
+        private readonly RiflesModel riflesModel;
+
         public override int Order
         {
             get
@@ -23,9 +27,13 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public bool BusyText { get; set; }
 
-        public RiflesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public RiflesViewModel(RiflesModel riflesModel,IEventAggregator eventAggregator) : base(eventAggregator)
         {
-
+            DisplayName = "Rifles";
+            this.riflesModel = riflesModel;
+            
         }
+
+        public IEnumerable<IRifle> Rifles => riflesModel.All();
     }
 }

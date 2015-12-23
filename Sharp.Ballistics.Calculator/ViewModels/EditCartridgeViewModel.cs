@@ -115,7 +115,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public Dictionary<string, bool> ValidationErrors { get; set; } = new Dictionary<string, bool>();
 
-        public bool HasErrors => ValidationErrors.Any(x => x.Value);
+        public bool HasErrors => String.IsNullOrWhiteSpace(Name) || ValidationErrors.Any(x => x.Value);
 
         public override void CanClose(Action<bool> callback)
         {

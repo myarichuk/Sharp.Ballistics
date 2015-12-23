@@ -168,6 +168,7 @@
     <Compile Include="ViewModels\AmmoViewModel.cs" />
     <Compile Include="ViewModels\CalculatorViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\EditScopeViewModel.cs" />
     <Compile Include="ViewModels\FunctionScreen.cs" />
     <Compile Include="ViewModels\EditCartridgeViewModel.cs" />
     <Compile Include="ViewModels\RiflesViewModel.cs" />
@@ -192,6 +193,9 @@
     <Compile Include="Views\EditCartridgeView.xaml.cs">
       <DependentUpon>EditCartridgeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditScopeView.xaml.cs">
+      <DependentUpon>EditScopeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RiflesView.xaml.cs">
       <DependentUpon>RiflesView.xaml</DependentUpon>
     </Compile>
@@ -215,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditCartridgeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditScopeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
