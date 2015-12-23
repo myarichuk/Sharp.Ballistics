@@ -8,6 +8,7 @@ using System.Reflection;
 using UnitsNet.Serialization.JsonNet;
 using System;
 using Raven.Imports.Newtonsoft.Json;
+using System.Windows;
 
 namespace Sharp.Ballistics.Calculator.Bootstrap
 {   
@@ -18,19 +19,30 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
         {
             container.Register(Component.For<IDocumentStore>().UsingFactoryMethod(() =>
             {
-                var documentStore = new EmbeddableDocumentStore
-                {
-                    DefaultDatabase = Constants.DatabaseName,
-                    UseEmbeddedHttpServer = true
-                };
+                EmbeddableDocumentStore documentStore = null;
+                try {
+                    documentStore = new EmbeddableDocumentStore
+                    {
+                        UseEmbeddedHttpServer = true,
+                        DefaultDatabase = Constants.DatabaseName
+                    };
 
-                documentStore.Initialize();
-                documentStore.Conventions.CustomizeJsonSerializer = serializer =>
-                {
-                    serializer.Converters.Add(new UnitsNetJsonConverter());
-                };
+                    documentStore.Initialize();
+                    documentStore.DatabaseCommands
+                                 .GlobalAdmin.EnsureDatabaseExists(Constants.DatabaseName);
 
-                IndexCreation.CreateIndexes(Assembly.GetExecutingAssembly(), documentStore);
+                    documentStore.Conventions.CustomizeJsonSerializer = serializer =>
+                    {
+                        serializer.Converters.Add(new UnitsNetJsonConverter());
+                    };
+                }
+                catch(Exception e)
+                {
+                    //ravendb failed to initialize - cannot continue
+                    MessageBox.Show(e.ToString());
+                    Application.Current.Shutdown(-1);
+                }
+
                 return documentStore;
             }).LifestyleSingleton());
         }

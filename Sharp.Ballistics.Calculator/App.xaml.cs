@@ -21,6 +21,7 @@ namespace Sharp.Ballistics.Calculator
         public App()
         {
             Exit += OnExit;
+            DispatcherUnhandledException += UnhandledException;
             try
             {
                 bootstrapper = new AppBootstrapper();
@@ -33,6 +34,12 @@ namespace Sharp.Ballistics.Calculator
                 throw;
             }
 
+        }
+
+        private void UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.ToString());
+            Shutdown(-1);
         }
 
         private void OnExit(object sender, ExitEventArgs e)
