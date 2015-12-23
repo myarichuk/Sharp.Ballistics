@@ -1,0 +1,59 @@
+﻿<Window x:Class="Sharp.Ballistics.Calculator.Views.EditScopeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:util="clr-namespace:Sharp.Ballistics.Calculator"
+        xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
+        mc:Ignorable="d" 
+        Height="300" Width="450" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
+        cal:Message.Attach="[Event KeyDown] = [Action KeyPressed($pressedKey)]">
+    <Window.Resources>
+        <util:LengthConverter x:Key="LengthUnitConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Name:" Margin="10" VerticalAlignment="Center" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                     Margin="0,10,0,10" Width="120"/>
+        </StackPanel>
+        <StackPanel  VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="Zero Distance:" Margin="10" VerticalAlignment="Center" />
+            <toolkit:DoubleUpDown Increment="25" 
+                     Value="{Binding ZeroDistance, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60"/>
+            <TextBlock Text="{Binding Units.Distance, Converter={StaticResource LengthUnitConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel  VerticalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="Height Above Rifle:" Margin="10" VerticalAlignment="Center" />
+            <toolkit:DoubleUpDown Increment="1" 
+                     Value="{Binding ScopeHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60"/>
+            <TextBlock Text="{Binding Units.ScopeHeight, Converter={StaticResource LengthUnitConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel  VerticalAlignment="Center" Grid.Row="3" Orientation="Horizontal">
+            <TextBlock Text="Elevation:" Margin="10" VerticalAlignment="Center" />
+            <toolkit:DoubleUpDown Increment="0.25" 
+                     Value="{Binding ElevationClicksPerMOA, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60"/>
+            <TextBlock Text="Clicks Per MOA" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel  VerticalAlignment="Center" Grid.Row="4" Orientation="Horizontal">
+            <TextBlock Text="Windage:" Margin="10" VerticalAlignment="Center" />
+            <toolkit:DoubleUpDown Increment="0.25" 
+                     Value="{Binding WindageClicksPerMOA, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60"/>
+            <TextBlock Text="Clicks Per MOA" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="Save" Content="Save" Width="80" Height="20" Margin="5"/>
+            <Button x:Name="Cancel" Content="Cancel" Width="80" Height="20" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

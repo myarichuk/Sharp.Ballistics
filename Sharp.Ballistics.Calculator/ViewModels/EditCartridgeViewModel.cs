@@ -6,9 +6,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnitsNet;
 using System.Windows;
-using System.ComponentModel;
-using System.Collections;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
