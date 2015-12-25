@@ -86,6 +86,17 @@ namespace GNUBallisticsLibrary
 			}
 		}
 
+		virtual property Length BarrelTwist {
+			Length get()
+			{
+				return rifleInfo->BarrelTwist;
+			}
+			void set(Length value)
+			{
+				rifleInfo->BarrelTwist = value;
+			}
+		}
+
 		virtual property WeatherCondition^ ZeroingConditions
 		{
 			WeatherCondition^ get()

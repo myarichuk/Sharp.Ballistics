@@ -16,5 +16,15 @@ namespace Sharp.Ballistics.Abstractions
         
         //Ranges from 0.00 to 1.00, where 1.00 is 100% humidity
         public double RelativeHumidity { get; set; }
+
+        private static WeatherCondition @default;
+        public static WeatherCondition Default => @default ?? 
+                                                  (@default = new WeatherCondition
+                                                  {
+                                                      Temperature = Temperature.FromDegreesCelsius(25),
+                                                      Barometer = Pressure.FromPsi(14.503782),
+                                                      RelativeHumidity = 0.5,
+                                                      Altitude = Length.FromMeters(0)
+                                                  });
     }
 }

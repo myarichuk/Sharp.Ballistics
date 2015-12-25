@@ -7,14 +7,8 @@ namespace Sharp.Ballistics.Calculator
     //credit : http://stackoverflow.com/a/8471269
     public class RoutedEventTrigger : EventTriggerBase<DependencyObject>
     {
-        RoutedEvent _routedEvent;
-        public RoutedEvent RoutedEvent
-        {
-            get { return _routedEvent; }
-            set { _routedEvent = value; }
-        }
+        public RoutedEvent RoutedEvent { get; set; }
 
-        public RoutedEventTrigger() { }
         protected override void OnAttached()
         {
             var behavior = base.AssociatedObject as Behavior;

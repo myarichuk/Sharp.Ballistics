@@ -11,6 +11,44 @@
               MinWidth="600" MinHeight="400">
     <Grid>
         <toolkit:BusyIndicator BusyContent="{Binding BusyText}" IsBusy="{Binding IsBusy}">
+            <StackPanel Orientation="Vertical">
+                <Button Content="Add" x:Name="AddRifle" Margin="0,10,0,0" Width="150" Height="25"/>
+                <ListView cal:Message.Attach="[Event MouseDoubleClick] = [Action EditRifle($this.SelectedItem)]"
+                          Margin="15,10,15,20" Height="350" ItemsSource="{Binding Rifles}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical" Width="550">
+                                    <WrapPanel>
+                                        <TextBlock Text="Name: "/>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBlock Text="Cartridge: "/>
+                                        <TextBlock Text="{Binding Cartridge.Name}" FontWeight="Bold"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <TextBlock Text="Scope: "/>
+                                        <TextBlock Text="{Binding Scope.Name}" FontWeight="Bold"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="0,0,-185,0" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                                    <Button cal:Message.Attach="EditRifle($dataContext)" Margin="3" Padding="5" Width="30" Height="30">
+                                        <Image Source="/Sharp.Ballistics.Calculator;component/Images/edit-icon.png" />
+                                    </Button>
+                                    <Button cal:Message.Attach="RemoveRifle($dataContext)" Margin="3" Padding="5" Width="30" Height="30">
+                                        <Image Source="/Sharp.Ballistics.Calculator;component/Images/delete-icon.png" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
         </toolkit:BusyIndicator>
     </Grid>
 </UserControl>

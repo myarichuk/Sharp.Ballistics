@@ -3,16 +3,13 @@ using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Raven.Client;
 using Raven.Client.Embedded;
-using Raven.Client.Indexes;
-using System.Reflection;
 using UnitsNet.Serialization.JsonNet;
 using System;
-using Raven.Imports.Newtonsoft.Json;
 using System.Windows;
 
 namespace Sharp.Ballistics.Calculator.Bootstrap
-{   
-    
+{
+
     public class RavenDBInstaller : IWindsorInstaller
     {       
         void IWindsorInstaller.Install(IWindsorContainer container, IConfigurationStore store)

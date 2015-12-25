@@ -2,6 +2,7 @@
 using Sharp.Ballistics.Calculator.Models;
 using System;
 using System.Windows;
+using Humanizer;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
@@ -14,7 +15,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         {
             this.model = model;
             this.eventAggregator = eventAggregator;
-            DisplayName = "Units Configuration";
+            DisplayName = "Configuration";
         }
 
         protected override void OnViewReady(object view)
@@ -26,7 +27,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         public override int Order => int.MaxValue - 1;
         public override string IconFilename => "config.png";
 
-        public UnitsConfiguration Units => model.Units;
+        public UnitsConfiguration Units => model.Units;      
 
         public void Save()
         {
@@ -47,11 +48,6 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             }
 
             MessageBox.Show("Saved configuration.","Message", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        public void FormValueChanged()
-        {
-        }
-
+        }       
     }
 }

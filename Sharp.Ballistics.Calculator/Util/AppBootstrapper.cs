@@ -60,16 +60,13 @@ namespace Sharp.Ballistics.Calculator.Bootstrap
             {
                 var keyArgs = context.EventArgs as KeyEventArgs;
 
-                if (keyArgs != null)
-                    return keyArgs.Key;
-
-                return null;
+                return keyArgs?.Key;
             });
         }
 
         internal void Dispose()
         {
-            container.Dispose();
+            container?.Dispose();
         }
 
         protected override void BuildUp(object instance)

@@ -181,7 +181,7 @@ namespace UnitsNet.Serialization.JsonNet
             // Read static BaseUnit property value
             Enum baseUnitEnumValue = (Enum)baseUnitPropInfo.GetValue(null, null);
             Type baseUnitType = baseUnitEnumValue.GetType();
-            string baseUnit = string.Format("{0}.{1}", baseUnitType.Name, baseUnitEnumValue);
+            string baseUnit = $"{baseUnitType.Name}.{baseUnitEnumValue}";
 
             serializer.Serialize(writer, new ValueUnit
             {

@@ -9,13 +9,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 {
     public class CalculatorViewModel : FunctionScreen
     {
-        public override int Order
-        {
-            get
-            {
-                return 1;
-            }
-        }
+        public override int Order => 1;
 
         public override string IconFilename => "calc.png";
 

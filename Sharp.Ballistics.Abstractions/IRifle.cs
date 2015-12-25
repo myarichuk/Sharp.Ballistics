@@ -7,6 +7,8 @@ namespace Sharp.Ballistics.Abstractions
     {
         string Name { get; set; }
 
+        Length BarrelTwist { get; set; }
+
         WeatherCondition ZeroingConditions { get; set; }
 
         Cartridge Ammo { get; set; }

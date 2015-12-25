@@ -21,6 +21,8 @@ namespace Sharp.Ballistics.Calculator.Models
 
         public LengthUnit Caliber { get; set; }
 
+        public LengthUnit BarrelTwist { get; set; }
+
         public dynamic this[string unitTypeName] => this.GetPropertyValue(unitTypeName);
 
         public static UnitsConfiguration Metric => new UnitsConfiguration
@@ -32,7 +34,8 @@ namespace Sharp.Ballistics.Calculator.Models
             ScopeHeight = LengthUnit.Centimeter,
             Temperature = TemperatureUnit.DegreeCelsius,
             WindSpeed = SpeedUnit.KilometerPerHour,
-            Caliber = LengthUnit.Millimeter
+            Caliber = LengthUnit.Millimeter,
+            BarrelTwist = LengthUnit.Inch
         };
 
         public static UnitsConfiguration Imperial => new UnitsConfiguration
@@ -44,7 +47,8 @@ namespace Sharp.Ballistics.Calculator.Models
             ScopeHeight = LengthUnit.Inch,
             Temperature = TemperatureUnit.DegreeFahrenheit,
             WindSpeed = SpeedUnit.MilePerHour,
-            Caliber = LengthUnit.Inch
+            Caliber = LengthUnit.Inch,
+            BarrelTwist = LengthUnit.Inch
         };
     }
 

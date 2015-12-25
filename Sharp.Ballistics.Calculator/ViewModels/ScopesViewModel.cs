@@ -12,13 +12,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         private readonly IWindowManager windowManager;
         private readonly ScopesModel scopesModel;
 
-        public override int Order
-        {
-            get
-            {
-                return 3;
-            }
-        }
+        public override int Order => 3;
 
         public override string IconFilename => "scope.png";
 

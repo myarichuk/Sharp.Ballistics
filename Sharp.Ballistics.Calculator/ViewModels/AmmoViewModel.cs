@@ -15,13 +15,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public override string IconFilename => "ammo.png";
 
-        public override int Order
-        {
-            get
-            {
-                return 4;
-            }
-        }
+        public override int Order => 4;
 
         private readonly AmmoModel ammoModel;
         private readonly IWindowManager windowManager;

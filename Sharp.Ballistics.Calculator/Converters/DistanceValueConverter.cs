@@ -3,11 +3,11 @@ using UnitsNet.Units;
 
 namespace Sharp.Ballistics.Calculator
 {
-    public class CaliberValueConverter : FieldValueConverter<LengthUnit, Length>
-    {
+    public class DistanceValueConverter : FieldValueConverter<LengthUnit, Length>
+    {        
         protected override LengthUnit GetRelevantUnitType()
         {
-            return Units.Caliber;
+            return Units.Distance;
         }
     }
 }

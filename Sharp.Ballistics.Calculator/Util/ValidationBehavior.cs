@@ -100,10 +100,7 @@ namespace Sharp.Ballistics.Calculator
         private static void OnHasErrorChanged(object sender, EventArgs e)
         {
             var d = sender as DependencyObject;
-            if (d != null)
-            {
-                d.SetValue(HasErrorProperty, d.GetValue(System.Windows.Controls.Validation.HasErrorProperty));
-            }
+            d?.SetValue(HasErrorProperty, d.GetValue(System.Windows.Controls.Validation.HasErrorProperty));
         }
 
         #endregion
