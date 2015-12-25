@@ -1,6 +1,9 @@
 # Sharp.Ballistics
-This repository is essentially a .Net port of an excellent GNU Ballistics Library, which can be found here : <br/> http://sourceforge.net/projects/ballisticslib/
+This repository contains a .Net port of an excellent GNU Ballistics Library, which can be found here : <br/> http://sourceforge.net/projects/ballisticslib/
 <br/>
+Also, there are apps that use this ported library. 
+* Sharp.Ballistics.Calculator - Desktop ballistic calculator
+* Sharp.Ballistics.Training - Shooting range "simulator" for practicing long-range shooting calculations
 
 So, how to use this? 
 ```c#
