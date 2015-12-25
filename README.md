@@ -5,7 +5,8 @@ Also, there are apps that use this ported library.
 * Sharp.Ballistics.Calculator - Desktop ballistic calculator
 * Sharp.Ballistics.Training - Shooting range "simulator" for practicing long-range shooting calculations
 
-So, how to use this? 
+Show me some code!
+Below is an example of how GnuBallisticsLibrary.Net can be used
 ```c#
             var rifleInfo = new RifleInfo
             {
