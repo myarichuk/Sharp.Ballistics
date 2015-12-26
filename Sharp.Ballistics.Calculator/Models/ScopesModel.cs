@@ -1,5 +1,7 @@
 ﻿using Raven.Client;
 using Sharp.Ballistics.Abstractions;
+using System;
+using System.Linq;
 
 namespace Sharp.Ballistics.Calculator.Models
 {
@@ -7,6 +9,18 @@ namespace Sharp.Ballistics.Calculator.Models
     {
         public ScopesModel(IDocumentStore store) : base(store)
         {
+        }
+
+        public Scope ByName(string name)
+        {
+            using (var session = documentStore.OpenSession())
+            {
+                return session.Query<Scope>()
+                              .FirstOrDefault(c =>
+                                    c.Name.Equals(name,
+                                        StringComparison.InvariantCultureIgnoreCase))
+;
+            }
         }
     }
 }

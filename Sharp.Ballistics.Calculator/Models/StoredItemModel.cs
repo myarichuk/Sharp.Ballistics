@@ -10,7 +10,7 @@ namespace Sharp.Ballistics.Calculator.Models
 {
     public abstract class StoredItemModel<T> where T : class, IHaveId
     {
-        private readonly IDocumentStore documentStore;
+        protected readonly IDocumentStore documentStore;
 
         protected StoredItemModel(IDocumentStore documentStore)
         {

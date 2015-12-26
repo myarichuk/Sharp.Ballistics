@@ -8,13 +8,14 @@
         xmlns:util="clr-namespace:Sharp.Ballistics.Calculator"
         xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
         mc:Ignorable="d"
-        Height="300" Width="550" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
+        Height="300" Width="600" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen"
         cal:Message.Attach="[Event KeyDown] = [Action KeyPressed($pressedKey)]">
     <Window.Resources>
         <util:EnumHumanizeConverter x:Key="EnumHumanizeConverter"/>
         <util:LengthConverter x:Key="DistanceUnitConverter" />
         <util:PressureConverter x:Key="PressureUnitConverter" />
         <util:TemperatureConverter x:Key="TemperatureUnitConverter" />
+        <util:CaliberValueConverter x:Key="CaliberValueConverter" />
         <util:DistanceValueConverter x:Key="DistanceValueConverter" />
         <util:PressureValueConverter x:Key="PressureValueConverter" />
         <util:TemperatureValueConverter x:Key="TemperatureValueConverter" />
@@ -61,6 +62,11 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <TextBlock Text="(" VerticalAlignment="Center" Margin="5,0,1,0"/>
+            <TextBlock Text="{Binding Cartridge.Caliber, Converter={StaticResource CaliberValueConverter}}" VerticalAlignment="Center" Margin="1,0,1,0"/>
+            <TextBlock Text="{Binding Units.Caliber, Converter={StaticResource DistanceUnitConverter}}" 
+                       VerticalAlignment="Center" Margin="1,0,1,0"/>
+            <TextBlock Text=")" VerticalAlignment="Center" Margin="1,0,1,0"/>
         </StackPanel>
 
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal">

@@ -39,6 +39,8 @@ namespace Sharp.Ballistics.Abstractions
 
         public override int GetHashCode()
         {
+            if (string.IsNullOrWhiteSpace(Id))
+                return base.GetHashCode();
             return Id.GetHashCode();
         }
 

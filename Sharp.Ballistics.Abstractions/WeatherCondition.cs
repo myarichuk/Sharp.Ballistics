@@ -1,8 +1,9 @@
-﻿using UnitsNet;
+﻿using System;
+using UnitsNet;
 
 namespace Sharp.Ballistics.Abstractions
 {
-    public class WeatherCondition
+    public class WeatherCondition : IEquatable<WeatherCondition>
     {
         //sea level -> 0 attitude, in feet
         public Length Altitude { get; set; }
@@ -26,5 +27,45 @@ namespace Sharp.Ballistics.Abstractions
                                                       RelativeHumidity = 0.5,
                                                       Altitude = Length.FromMeters(0)
                                                   });
+
+        public bool Equals(WeatherCondition other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Altitude.Equals(other.Altitude) && 
+                Barometer.Equals(other.Barometer) && 
+                Temperature.Equals(other.Temperature) && 
+                RelativeHumidity.Equals(other.RelativeHumidity);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((WeatherCondition) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Altitude.GetHashCode();
+                hashCode = (hashCode*397) ^ Barometer.GetHashCode();
+                hashCode = (hashCode*397) ^ Temperature.GetHashCode();
+                hashCode = (hashCode*397) ^ RelativeHumidity.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        public static bool operator ==(WeatherCondition left, WeatherCondition right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(WeatherCondition left, WeatherCondition right)
+        {
+            return !Equals(left, right);
+        }
     }
 }

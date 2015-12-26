@@ -12,21 +12,25 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 {
     public class EditCartridgeViewModel : Screen
     {
-        private readonly UnitsConfiguration units;
+        private readonly AmmoModel cartridgesModel;
+        private readonly UnitSettings units;
         private const double Epsilon = 0.01;
-        private bool IsCanceling;
+        private bool isCanceling;
 
         public Cartridge Cartridge { get; private set; }
 
-        public EditCartridgeViewModel(ConfigurationModel configurationModel, Cartridge cartridgeToEdit = null)
+        public EditCartridgeViewModel(ConfigurationModel configurationModel, 
+                                      AmmoModel cartridgesModel,
+                                      Cartridge cartridgeToEdit = null)
         {
             Cartridge = cartridgeToEdit ?? new Cartridge();
             configurationModel.Initialize();
             units = configurationModel.Units;
             DisplayName = "Cartridge Data";
+            this.cartridgesModel = cartridgesModel;
         }
 
-        public UnitsConfiguration Units => units;        
+        public UnitSettings Units => units;        
 
         public IEnumerable<dynamic> Errors { get; set; }
 
@@ -113,11 +117,18 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public Dictionary<string, bool> ValidationErrors { get; set; } = new Dictionary<string, bool>();
 
-        public bool HasErrors => String.IsNullOrWhiteSpace(Name) || ValidationErrors.Any(x => x.Value);
+        public bool HasErrors => string.IsNullOrWhiteSpace(Name) || ValidationErrors.Any(x => x.Value);
 
         public override void CanClose(Action<bool> callback)
         {
-            if (HasErrors && !IsCanceling)
+            var cartridgeWithTheSameName = cartridgesModel.ByName(Cartridge.Name);
+            if (cartridgeWithTheSameName != null && !isCanceling)
+            {
+                MessageBox.Show("Cartridge with the same name already exists.",
+                   "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                callback?.Invoke(false);
+            }
+            else if (HasErrors && !isCanceling)
             {
                 MessageBox.Show("Please fill-out all fields for the cartridge before saving",
                    "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -142,7 +153,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public void Cancel()
         {
-            IsCanceling = true;
+            isCanceling = true;
             TryClose(false);
         }            
     }

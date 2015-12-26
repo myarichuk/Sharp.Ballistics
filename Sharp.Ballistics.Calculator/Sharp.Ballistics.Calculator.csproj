@@ -146,6 +146,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\DistanceValueConverter.cs" />
     <Compile Include="Converters\CaliberValueConverter.cs" />
     <Compile Include="Converters\EnumHumanizeConverter.cs" />
@@ -153,10 +154,12 @@
     <Compile Include="Converters\EnumPluralizeConverter.cs" />
     <Compile Include="Converters\PressureValueConverter.cs" />
     <Compile Include="Converters\TemperatureValueConverter.cs" />
+    <Compile Include="Models\CalculatorSettings.cs" />
     <Compile Include="Models\Rifle.cs" />
     <Compile Include="Util\AppBootstrapper.cs" />
     <Compile Include="Util\AppEvent.cs" />
     <Compile Include="Util\EventRegistrationFacility.cs" />
+    <Compile Include="Util\RifleChangedEvent.cs" />
     <Compile Include="Util\RoutedEventTrigger.cs" />
     <Compile Include="Util\UnitsNetJsonNetConverter.cs" />
     <Compile Include="Util\ValidationBehavior.cs" />
@@ -174,7 +177,7 @@
     <Compile Include="Models\ScopesModel.cs" />
     <Compile Include="Models\StoredItemModel.cs" />
     <Compile Include="Models\RiflesModel.cs" />
-    <Compile Include="Models\UnitsConfiguration.cs" />
+    <Compile Include="Models\UnitSettings.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AmmoViewModel.cs" />
     <Compile Include="ViewModels\CalculatorViewModel.cs" />
@@ -323,6 +326,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\warning-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\warning-nonlisted-bullet.png" />
+    <Resource Include="Images\warning-nonlisted-scope.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

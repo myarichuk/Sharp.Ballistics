@@ -30,17 +30,20 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public abstract int Order { get; }
 
-        protected FunctionScreen(IEventAggregator eventAggregator)
+        protected IEventAggregator Messenger { get; }
+
+        protected FunctionScreen(IEventAggregator eventsAggregator)
         {
-            eventAggregator.Subscribe(this);
+            this.Messenger = eventsAggregator;
+            eventsAggregator.Subscribe(this);
         }
 
-        public void Handle(AppEvent message)
+        public virtual void Handle(AppEvent message)
         {
-            if (message.MessageType == Constants.ConfigurationChangedMessage)
+            if (message.Type == Constants.ConfigurationChangedMessage)
             {
                 Refresh();
-            }
+            }            
         }
     }
 }

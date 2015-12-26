@@ -3,7 +3,7 @@ using Fasterflect;
 
 namespace Sharp.Ballistics.Calculator.Models
 {
-    public class UnitsConfiguration
+    public class UnitSettings
     {
         public LengthUnit Distance { get; set; }
 
@@ -25,7 +25,7 @@ namespace Sharp.Ballistics.Calculator.Models
 
         public dynamic this[string unitTypeName] => this.GetPropertyValue(unitTypeName);
 
-        public static UnitsConfiguration Metric => new UnitsConfiguration
+        public static UnitSettings Metric => new UnitSettings
         {
             Barometer = PressureUnit.Bar,
             BulletOffsets = LengthUnit.Centimeter,
@@ -38,7 +38,7 @@ namespace Sharp.Ballistics.Calculator.Models
             BarrelTwist = LengthUnit.Inch
         };
 
-        public static UnitsConfiguration Imperial => new UnitsConfiguration
+        public static UnitSettings Imperial => new UnitSettings
         {
             Barometer = PressureUnit.Psi,
             BulletOffsets = LengthUnit.Inch,

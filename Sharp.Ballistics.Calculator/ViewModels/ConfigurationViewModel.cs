@@ -9,12 +9,10 @@ namespace Sharp.Ballistics.Calculator.ViewModels
     public class ConfigurationViewModel : FunctionScreen
     {
         private readonly ConfigurationModel model;
-        private readonly IEventAggregator eventAggregator;
-        public ConfigurationViewModel(ConfigurationModel model, IEventAggregator eventAggregator)
-            :base(eventAggregator)
+        public ConfigurationViewModel(ConfigurationModel model, IEventAggregator eventsAggregator)
+            :base(eventsAggregator)
         {
             this.model = model;
-            this.eventAggregator = eventAggregator;
             DisplayName = "Configuration";
         }
 
@@ -27,7 +25,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         public override int Order => int.MaxValue - 1;
         public override string IconFilename => "config.png";
 
-        public UnitsConfiguration Units => model.Units;      
+        public UnitSettings Units => model.Units;      
 
         public void Save()
         {
@@ -36,9 +34,9 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                 model.Save();
 
                 //signal about changes to all who might be interested
-                eventAggregator.PublishOnBackgroundThread(new AppEvent
+                Messenger.PublishOnBackgroundThread(new AppEvent
                 {
-                    MessageType = Constants.ConfigurationChangedMessage
+                    Type = Constants.ConfigurationChangedMessage
                 });
             }
             catch(Exception e)

@@ -17,7 +17,7 @@ namespace Sharp.Ballistics.Calculator
     public abstract class FieldValueConverter<UnitType,UnitValueType> : IValueConverter
         where UnitType : struct, IComparable, IFormattable
     {
-        protected UnitsConfiguration Units => configurationModel.Units;
+        protected UnitSettings Units => configurationModel.Units;
         private readonly ConfigurationModel configurationModel;
         private static DependencyObject designModeIndicator = new DependencyObject();
 

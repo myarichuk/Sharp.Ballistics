@@ -8,7 +8,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public override int Order => int.MaxValue;
 
-        public AboutViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public AboutViewModel(IEventAggregator eventsAggregator) : base(eventsAggregator)
         {
             DisplayName = "About Sharp.Ballistics.Calculator";
         }

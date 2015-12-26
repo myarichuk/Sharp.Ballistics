@@ -65,7 +65,8 @@
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text="Caliber:" Margin="10" VerticalAlignment="Center" />
             <toolkit:DoubleUpDown Increment=".1" 
-                     Value="{Binding Caliber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0,10,5,10" Width="60" />
+                     Value="{Binding Caliber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                  Margin="0,10,5,10" Width="60" />
             <TextBlock Text="{Binding Units.Caliber, Converter={StaticResource LengthUnitConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </StackPanel>
 

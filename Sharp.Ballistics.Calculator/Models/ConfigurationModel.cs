@@ -28,15 +28,18 @@ namespace Sharp.Ballistics.Calculator.Models
         {
             using (var session = documentStore.OpenSession())
             {
-                var unitsConfig = session.Load<UnitsConfiguration>(Constants.UnitsConfigurationId);
+                var unitsConfig = session.Load<UnitSettings>(Constants.UnitsConfigurationId);
                 if (unitsConfig != null && !IsValidUnitsConfig(unitsConfig))
                     unitsConfig = null;
 
-                units = unitsConfig ?? UnitsConfiguration.Metric;
+                units = unitsConfig ?? UnitSettings.Metric;
+
+                calculatorSettings = session.Load<CalculatorSettings>(Constants.CalculatorSettingsId) 
+                                        ?? new CalculatorSettings();
             }
         }
 
-        private static bool IsValidUnitsConfig(UnitsConfiguration unitsConfig)
+        private static bool IsValidUnitsConfig(UnitSettings unitsConfig)
         {
             if (unitsConfig.Barometer == UnitsNet.Units.PressureUnit.Undefined ||
                unitsConfig.BulletOffsets == UnitsNet.Units.LengthUnit.Undefined ||
@@ -57,17 +60,28 @@ namespace Sharp.Ballistics.Calculator.Models
             using (var session = documentStore.OpenSession())
             {
                 session.Store(Units, Constants.UnitsConfigurationId);
+                session.Store(CalculatorSettings, Constants.CalculatorSettingsId);
                 session.SaveChanges();
             }
         }
 
-        private UnitsConfiguration units;
-        public UnitsConfiguration Units
+        private UnitSettings units;
+        public UnitSettings Units
         {
             get
             {
                 Initialize();
                 return units;
+            }
+        }
+
+        private CalculatorSettings calculatorSettings;
+        public CalculatorSettings CalculatorSettings
+        {
+            get
+            {
+                Initialize();
+                return calculatorSettings;                
             }
         }
     }

@@ -21,6 +21,12 @@
             </Hyperlink> 
             </TextBlock>
             <TextBlock FontStyle="Italic" Margin="20,0,0,0" TextWrapping="Wrap">
+                Data storage powered by awesome <Hyperlink x:Name="RavenDBHyperlink" NavigateUri="http://ravendb.net/" RequestNavigate="Hyperlink_RequestNavigate">
+                RavenDB
+            </Hyperlink>
+                Database
+            </TextBlock>
+            <TextBlock FontStyle="Italic" Margin="20,0,0,0" TextWrapping="Wrap">
                 Created by <Hyperlink NavigateUri="https://github.com/myarichuk/" RequestNavigate="Hyperlink_RequestNavigate">Michael Yarichuk</Hyperlink>, 2015
             </TextBlock>
         </StackPanel>

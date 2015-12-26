@@ -39,7 +39,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         }       
 
         public Rifle Rifle => rifle;
-        public UnitsConfiguration Units => configurationModel.Units;
+        public UnitSettings Units => configurationModel.Units;
 
         public IEnumerable<Scope> Scopes => scopesModel.All();
         public IEnumerable<Cartridge> Cartridges => cartridgesModel.All();
@@ -125,7 +125,19 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public override void CanClose(Action<bool> callback)
         {
-            if (HasErrors && !isCanceling)
+            if(cartridgesModel.ByName(rifle.Cartridge.Name) == null && !isCanceling)
+            {
+                MessageBox.Show("This rifle is using unlisted (deleted?) cartridge, please select one that is listed",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                callback?.Invoke(false);
+            }
+            else if (scopesModel.ByName(rifle.Scope.Name) == null && !isCanceling)
+            {
+                MessageBox.Show("This rifle is using unlisted (deleted?) scope, please select one that is listed",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                callback?.Invoke(false);
+            }
+            else if (HasErrors && !isCanceling)
             {
                 if(rifle != null && rifle.BarrelTwist.As(LengthUnit.Inch) <= 0)
                     MessageBox.Show("Please make sure that barrel twist is higher than zero before saving",

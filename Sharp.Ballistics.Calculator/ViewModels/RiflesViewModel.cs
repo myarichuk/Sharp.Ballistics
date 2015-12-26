@@ -1,6 +1,8 @@
 ﻿using Caliburn.Micro;
 using Sharp.Ballistics.Calculator.Models;
+using Sharp.Ballistics.Calculator.Util;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
@@ -26,7 +28,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                                AmmoModel cartridgesModel,
                                ScopesModel scopesModel,
                                IWindowManager windowManager,
-                               IEventAggregator eventAggregator) : base(eventAggregator)
+                               IEventAggregator eventsAggregator) : base(eventsAggregator)
         {
             DisplayName = "Rifles";
             this.riflesModel = riflesModel;
@@ -35,6 +37,8 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             this.scopesModel = scopesModel;
             this.windowManager = windowManager;
         }
+
+        public UnitSettings Units => configurationModel.Units;
 
         public IEnumerable<Models.Rifle> Rifles => riflesModel.All();
 
@@ -56,7 +60,16 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
                     riflesModel.InsertOrUpdate(newRifleViewModel.Rifle);
                     NotifyOfPropertyChange(() => Rifles);
+
                     Refresh();
+                    Messenger.PublishOnBackgroundThread(new AppEvent
+                    {
+                        Type = Constants.ConfigurationChangedMessage
+                    });
+                    Messenger.PublishOnBackgroundThread(new RifleChangedEvent
+                    {
+                        ChangedRifle = newRifleViewModel.Rifle
+                    });
 
                     IsBusy = false;
                     NotifyOfPropertyChange(() => IsBusy);
@@ -81,9 +94,21 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                     NotifyOfPropertyChange(() => IsBusy);
                     NotifyOfPropertyChange(() => BusyText);
 
+                    editRifleViewModel.Rifle.IsUsingNonListedAmmo = false;
+                    editRifleViewModel.Rifle.IsUsingNonListedScope = false;
                     riflesModel.InsertOrUpdate(editRifleViewModel.Rifle);
                     NotifyOfPropertyChange(() => Rifles);
                     Refresh();
+
+                    Messenger.PublishOnBackgroundThread(new AppEvent
+                    {
+                        Type = Constants.ConfigurationChangedMessage
+                    });
+
+                    Messenger.PublishOnBackgroundThread(new RifleChangedEvent
+                    {
+                        ChangedRifle = editRifleViewModel.Rifle
+                    });
 
                     IsBusy = false;
                     NotifyOfPropertyChange(() => IsBusy);
@@ -91,10 +116,41 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             }
         }
 
+        public override void Handle(AppEvent message)
+        {
+            base.Handle(message);
+            
+            if(message.Type == Constants.ScopeRemovedMessage)
+            {
+                var removedScopeName = (string)message.Parameters[Constants.ChangedItemName];
+                var relevantRifles = riflesModel.RiflesByScopeName(removedScopeName).ToArray();
+
+                foreach (var rifle in relevantRifles)
+                    rifle.IsUsingNonListedScope = true;
+
+                riflesModel.InsertOrUpdate(relevantRifles);
+            }
+
+            if(message.Type == Constants.CartridgeRemovedMessage)
+            {
+                var removedCartridgeName = (string)message.Parameters[Constants.ChangedItemName];
+                var relevantRifles = riflesModel.RiflesByCartridgeName(removedCartridgeName).ToArray();
+
+                foreach (var rifle in relevantRifles)
+                    rifle.IsUsingNonListedAmmo = true;
+
+                riflesModel.InsertOrUpdate(relevantRifles);
+            }
+        }
+
         public void RemoveRifle(Models.Rifle rifle)
         {
             riflesModel.Delete(rifle);
             NotifyOfPropertyChange(() => Rifles);
-        }
+            Messenger.PublishOnBackgroundThread(new AppEvent
+            {
+                Type = Constants.RifleRemovedMessage
+            });
+        }        
     }
 }

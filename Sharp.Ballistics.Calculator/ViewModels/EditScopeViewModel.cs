@@ -12,18 +12,20 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 {
     public class EditScopeViewModel : Screen
     {
+        private readonly ScopesModel scopesModel;
         private readonly Scope scope;
         private readonly ConfigurationModel configurationModel;
         private bool isCanceling;
-        public EditScopeViewModel(ConfigurationModel configurationModel, Scope scopeToEdit = null)
+        public EditScopeViewModel(ConfigurationModel configurationModel, ScopesModel scopesModel, Scope scopeToEdit = null)
         {
             this.configurationModel = configurationModel;
             scope = scopeToEdit ?? new Scope();
             DisplayName = "Edit Scope";
+            this.scopesModel = scopesModel;
         }
 
         public Scope Scope => scope;
-        public UnitsConfiguration Units => configurationModel.Units;
+        public UnitSettings Units => configurationModel.Units;
 
         public string Name
         {
@@ -95,7 +97,14 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public override void CanClose(Action<bool> callback)
         {
-            if (HasErrors && !isCanceling)
+            var scopeWithTheSameName = scopesModel.ByName(scope.Name);
+            if(scopeWithTheSameName != null && !isCanceling)
+            {
+                MessageBox.Show("Scope with the same name already exists.",
+                   "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                callback?.Invoke(false);
+            }
+            else if (HasErrors && !isCanceling)
             {
                 MessageBox.Show("Please fill-out all fields for the scope before saving",
                    "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
