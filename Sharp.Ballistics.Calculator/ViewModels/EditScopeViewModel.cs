@@ -16,10 +16,12 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         private readonly Scope scope;
         private readonly ConfigurationModel configurationModel;
         private bool isCanceling;
+        private readonly bool isNew;
         public EditScopeViewModel(ConfigurationModel configurationModel, ScopesModel scopesModel, Scope scopeToEdit = null)
         {
             this.configurationModel = configurationModel;
             scope = scopeToEdit ?? new Scope();
+            isNew = scopeToEdit == null;
             DisplayName = "Edit Scope";
             this.scopesModel = scopesModel;
         }
@@ -98,7 +100,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         public override void CanClose(Action<bool> callback)
         {
             var scopeWithTheSameName = scopesModel.ByName(scope.Name);
-            if(scopeWithTheSameName != null && !isCanceling)
+            if(scopeWithTheSameName != null && !isCanceling && isNew)
             {
                 MessageBox.Show("Scope with the same name already exists.",
                    "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);

@@ -16,7 +16,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         private readonly UnitSettings units;
         private const double Epsilon = 0.01;
         private bool isCanceling;
-
+        private readonly bool isNew;
         public Cartridge Cartridge { get; private set; }
 
         public EditCartridgeViewModel(ConfigurationModel configurationModel, 
@@ -24,6 +24,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                                       Cartridge cartridgeToEdit = null)
         {
             Cartridge = cartridgeToEdit ?? new Cartridge();
+            isNew = cartridgeToEdit == null;
             configurationModel.Initialize();
             units = configurationModel.Units;
             DisplayName = "Cartridge Data";
@@ -122,7 +123,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         public override void CanClose(Action<bool> callback)
         {
             var cartridgeWithTheSameName = cartridgesModel.ByName(Cartridge.Name);
-            if (cartridgeWithTheSameName != null && !isCanceling)
+            if (cartridgeWithTheSameName != null && !isCanceling && isNew) 
             {
                 MessageBox.Show("Cartridge with the same name already exists.",
                    "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
