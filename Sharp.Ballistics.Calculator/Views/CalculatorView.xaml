@@ -59,32 +59,42 @@
                 </Grid.RowDefinitions>
                 <GroupBox Grid.Row="0" Header="Weather Conditions">
                     <StackPanel>
-                        <!-- TODO : do not forget to add units to the weather variables,  -->
-                        <!--  so it will look like Temperature (Celcius) : [textbox] -->
-                        <CheckBox Content="Weather different from one when the rifle was zeroed" Margin="5"/>
+                        <CheckBox x:Name="IsUsingDifferentWeather" Content="Weather different from one when the rifle was zeroed" Margin="5"/>
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal" Margin="5">
                                 <TextBlock Text="Temperature (" />
                                 <TextBlock Text="{Binding Units.Temperature,Converter={StaticResource TemperatureUnitConverter}}" />
                                 <TextBlock Text=") "/>
-                                <toolkit:DoubleUpDown Increment="1" Minimum="-250" Maximum="250"/>
+                                <toolkit:DoubleUpDown Value="{Binding CurrentWeather.Temperature,Converter={StaticResource TemperatureValueConverter}}" 
+                                                      IsEnabled="{Binding IsUsingDifferentWeather}"
+                                                      Increment="1" Minimum="-250" Maximum="250"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="15,5,5,5">
                                 <TextBlock Text="Pressure (" />
                                 <TextBlock Text="{Binding Units.Barometer,Converter={StaticResource PressureUnitConverter}}" />
                                 <TextBlock Text=") " />
-                                <toolkit:DoubleUpDown Increment="1" Minimum="0"/>
+                                <toolkit:DoubleUpDown Value="{Binding CurrentWeather.Barometer, Converter={StaticResource PressureValueConverter}}" 
+                                                      IsEnabled="{Binding IsUsingDifferentWeather}" 
+                                                      Increment="1" Minimum="0"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="15,5,5,5">
                                 <TextBlock Text="Altitude (" />
                                 <TextBlock Text="{Binding Units.Distance,Converter={StaticResource DistanceUnitConverter}}" />
                                 <TextBlock Text=") "/>
-                                <toolkit:DoubleUpDown Increment="1" Minimum="-1000" Maximum="1000"/>
+                                <toolkit:DoubleUpDown Value="{Binding CurrentWeather.Altitude,Converter={StaticResource DistanceValueConverter}}" 
+                                                      IsEnabled="{Binding IsUsingDifferentWeather}" 
+                                                      Increment="1" Minimum="-1000" Maximum="1000"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="15,5,5,5">
                                 <TextBlock Text="Relative Humidity (0.0 -> 1.0) " />
-                                <toolkit:DoubleUpDown Increment="0.1" Minimum="0" Maximum="1"/>
+                                <toolkit:DoubleUpDown Value="{Binding CurrentWeather.RelativeHumidity}" 
+                                                      IsEnabled="{Binding IsUsingDifferentWeather}" 
+                                                      Increment="0.01" Minimum="0.0" Maximum="1"/>
                             </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button x:Name="InitializeCurrentWeatherWithZeroingWeather" IsEnabled="{Binding IsUsingDifferentWeather}" Padding="5,0,5,0" Margin="7" Height="30" HorizontalAlignment="Center" Content="Initialize with zeroing weather" />
+                            <Button x:Name="ClearCurrentWeather" Padding="5,0,5,0" IsEnabled="{Binding IsUsingDifferentWeather}" Margin="7" Height="30" HorizontalAlignment="Center" Content="Clear to defaults" />
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
@@ -123,15 +133,15 @@
                     </GroupBox>
                     <GroupBox Header="Shooter Location" Grid.Column="1">
                         <StackPanel>
-                            <CheckBox Content="Use Coriolis force in calculations" Margin="5"/>
+                            <CheckBox x:Name="IsUsingCoriolis" Content="Use Coriolis force in calculations" Margin="5"/>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Orientation="Horizontal" Margin="5">
                                     <TextBlock Text="Lattitude: " />
-                                    <toolkit:DoubleUpDown Increment="1" Minimum="0" Maximum="90"/>
+                                    <toolkit:DoubleUpDown IsEnabled="{Binding IsUsingCoriolis}" Increment="1" Minimum="0" Maximum="90"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="15,5,5,5">
                                     <TextBlock Text="Shot Azimuth: " />
-                                    <toolkit:DoubleUpDown Increment="1" Minimum="0" Maximum="360"/>
+                                    <toolkit:DoubleUpDown IsEnabled="{Binding IsUsingCoriolis}" Increment="1" Minimum="0" Maximum="360"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

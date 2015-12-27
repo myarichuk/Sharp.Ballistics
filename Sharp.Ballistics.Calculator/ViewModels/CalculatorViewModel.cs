@@ -91,6 +91,86 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             }
         }
 
+        private WeatherCondition currentWeather;
+        public WeatherCondition CurrentWeather
+        {
+            get
+            {
+                if (currentWeather == null)
+                    currentWeather = WeatherCondition.Default;
+                return currentWeather;
+            }
+
+            set
+            {
+                currentWeather = value;
+                NotifyOfPropertyChange(() => CurrentWeather);
+            }
+        }
+
+        public void InitializeCurrentWeatherWithZeroingWeather()
+        {
+            CurrentWeather = new WeatherCondition
+            {
+                Altitude = SelectedRifle.ZeroingWeather.Altitude,
+                Barometer = SelectedRifle.ZeroingWeather.Barometer,
+                RelativeHumidity = SelectedRifle.ZeroingWeather.RelativeHumidity,
+                Temperature = SelectedRifle.ZeroingWeather.Temperature,
+            };
+        }
+
+        public void ClearCurrentWeather()
+        {
+            CurrentWeather = WeatherCondition.Default;
+        }
+
+        private ShotLocationInfo shotLocationInfo;
+        public ShotLocationInfo ShotLocationInfo
+        {
+            get
+            {
+                if (shotLocationInfo == null)
+                    shotLocationInfo = new ShotLocationInfo();
+                return shotLocationInfo;
+            }
+
+            set
+            {
+                shotLocationInfo = value;
+                NotifyOfPropertyChange(() => ShotLocationInfo);
+            }
+        }        
+
+        private bool isUsingCoriolis;
+        public bool IsUsingCoriolis
+        {
+            get
+            {
+                return isUsingCoriolis;
+            }
+
+            set
+            {
+                isUsingCoriolis = value;
+                NotifyOfPropertyChange(() => IsUsingCoriolis);
+            }
+        }
+
+        private bool isUsingDifferentWeather;
+        public bool IsUsingDifferentWeather
+        {
+            get
+            {
+                return isUsingDifferentWeather;
+            }
+
+            set
+            {
+                isUsingDifferentWeather = value;
+                NotifyOfPropertyChange(() => IsUsingDifferentWeather);
+            }
+        }
+
         private void SaveConfigurationSetting(Action<CalculatorSettings> settingsMutator)
         {
             settingsMutator?.Invoke(CalculatorSettings);
@@ -112,7 +192,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                 SaveConfigurationSetting(settings => settings.CurrentRifle = value);
                 NotifyOfPropertyChange(() => SelectedRifle);
             }
-        }
+        }       
 
         public void ResetToDefaults()
         {
