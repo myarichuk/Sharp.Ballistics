@@ -52,6 +52,8 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             }, selectedRifle.Scope, selectedCartridge);
 
         public CalculatorSettings CalculatorSettings => configurationModel.CalculatorSettings;
+        public UnitSettings Units => configurationModel.Units;
+
         public IEnumerable<Rifle> Rifles => riflesModel.All();
 
         public IEnumerable<Cartridge> RelevantCartridges
