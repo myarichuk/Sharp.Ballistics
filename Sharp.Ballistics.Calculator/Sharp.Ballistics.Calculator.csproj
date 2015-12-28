@@ -153,6 +153,7 @@
     <Compile Include="Converters\FieldValueConverter.cs" />
     <Compile Include="Converters\EnumPluralizeConverter.cs" />
     <Compile Include="Converters\PressureValueConverter.cs" />
+    <Compile Include="Converters\TargetSpeedValueConverter.cs" />
     <Compile Include="Converters\WindSpeedValueConverter.cs" />
     <Compile Include="Converters\TemperatureValueConverter.cs" />
     <Compile Include="Models\CalculatorSettings.cs" />

@@ -65,6 +65,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                     shotInfo = new ShotInfo
                     {
                         WindSpeed = Speed.FromKilometersPerHour(0),
+                        TargetSpeed = Speed.FromKilometersPerHour(0),
                         Range = Length.FromMeters(0)
                     };
                 return shotInfo;

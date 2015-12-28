@@ -8,5 +8,6 @@ namespace Sharp.Ballistics.Calculator.Models
         public double Angle { get; set; }
         public double WindDirection { get; set; }
         public Speed WindSpeed { get; set; }
+        public Speed TargetSpeed { get; set; }
     }
 }

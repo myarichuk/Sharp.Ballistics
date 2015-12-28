@@ -9,6 +9,8 @@ namespace Sharp.Ballistics.Calculator.Models
 
         public LengthUnit ScopeHeight { get; set; }
 
+        public SpeedUnit TargetSpeed { get; set; }
+
         public SpeedUnit WindSpeed { get; set; }
 
         public SpeedUnit MuzzleSpeed { get; set; }
@@ -33,6 +35,7 @@ namespace Sharp.Ballistics.Calculator.Models
             MuzzleSpeed = SpeedUnit.MeterPerSecond,
             ScopeHeight = LengthUnit.Centimeter,
             Temperature = TemperatureUnit.DegreeCelsius,
+            TargetSpeed = SpeedUnit.KilometerPerHour,
             WindSpeed = SpeedUnit.KilometerPerHour,
             Caliber = LengthUnit.Millimeter,
             BarrelTwist = LengthUnit.Inch
@@ -46,6 +49,7 @@ namespace Sharp.Ballistics.Calculator.Models
             MuzzleSpeed = SpeedUnit.FootPerSecond,
             ScopeHeight = LengthUnit.Inch,
             Temperature = TemperatureUnit.DegreeFahrenheit,
+            TargetSpeed = SpeedUnit.MilePerHour,
             WindSpeed = SpeedUnit.MilePerHour,
             Caliber = LengthUnit.Inch,
             BarrelTwist = LengthUnit.Inch

@@ -17,6 +17,7 @@
         <util:CaliberValueConverter x:Key="CaliberValueConverter" />
         <util:DistanceValueConverter x:Key="DistanceValueConverter" />
         <util:PressureValueConverter x:Key="PressureValueConverter" />
+        <util:TargetSpeedValueConverter x:Key="TargetSpeedValueConverter"/>
         <util:WindSpeedValueConverter x:Key="WindSpeedValueConverter"/>
         <util:TemperatureValueConverter x:Key="TemperatureValueConverter" />
     </UserControl.Resources>
@@ -138,11 +139,23 @@
                                     <toolkit:DoubleUpDown Value="{Binding ShotInfo.Angle}" Increment="1" Minimum="-89" Maximum="89"/>
                                 </StackPanel>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="Target Speed (" />
+                                    <TextBlock Text="{Binding Units.TargetSpeed,Converter={StaticResource SpeedUnitConverter}}" />
+                                    <TextBlock Text=") "/>
+                                    <toolkit:DoubleUpDown
+                                        Value="{Binding ShotInfo.TargetSpeed,
+                                            Converter={StaticResource TargetSpeedValueConverter}}"
+                                        Minimum="0"
+                                        Increment="1"/>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Shooter Location" Grid.Column="1">
                         <StackPanel>
-                            <CheckBox x:Name="IsUsingCoriolis" Content="Use Coriolis force in calculations" Margin="5"/>
+                            <CheckBox x:Name="IsUsingCoriolis" Content="Use Coriolis effects in calculations" Margin="5"/>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Orientation="Horizontal" Margin="5">
                                     <TextBlock Text="Lattitude: " />
