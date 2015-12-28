@@ -125,13 +125,27 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public override void CanClose(Action<bool> callback)
         {
-            if(cartridgesModel.ByName(rifle.Cartridge.Name) == null && !isCanceling)
+            if (isCanceling)
+                callback?.Invoke(true);
+            else if(string.IsNullOrWhiteSpace(rifle?.Name))
+            {
+                MessageBox.Show("Please fill out rifle name before saving",
+                            "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                callback?.Invoke(false);
+            }
+            else if(rifle.Cartridge == null || rifle.Scope == null)
+            {
+                MessageBox.Show("Please select a cartridge and scope before saving (perhaps you need to define them before configuring a rifle)",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                callback?.Invoke(false);
+            }
+            else if(cartridgesModel.ByName(rifle.Cartridge.Name) == null)
             {
                 MessageBox.Show("This rifle is using unlisted (deleted?) cartridge, please select one that is listed",
                     "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 callback?.Invoke(false);
             }
-            else if (scopesModel.ByName(rifle.Scope.Name) == null && !isCanceling)
+            else if (scopesModel.ByName(rifle.Scope.Name) == null)
             {
                 MessageBox.Show("This rifle is using unlisted (deleted?) scope, please select one that is listed",
                     "Warning", MessageBoxButton.OK, MessageBoxImage.Exclamation);

@@ -8,6 +8,7 @@ using GNUBallistics = GNUBallisticsLibrary;
 using Sharp.Ballistics.Calculator.Util;
 using System;
 using UnitsNet;
+using System.Windows;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
@@ -29,19 +30,22 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         {
             this.riflesModel = riflesModel;
             this.configurationModel = configurationModel;
+            this.cartridgeModel = cartridgeModel;
             selectedRifle = null;
             DisplayName = "Ballistic Calculation";
             configurationModel.Load();
             selectedRifle = configurationModel.CalculatorSettings.CurrentRifle;
 
-            if (string.IsNullOrWhiteSpace(selectedRifle?.Name))
-                SelectedRifle = Rifles.OrderByDescending(x => x.Name).FirstOrDefault();
-            this.cartridgeModel = cartridgeModel;
+            var rifles = Rifles.ToList();
+            if (string.IsNullOrWhiteSpace(selectedRifle?.Name) && rifles.Count > 0)
+                SelectedRifle = rifles.OrderByDescending(x => x.Name).FirstOrDefault();
 
-            selectedCartridge = configurationModel.CalculatorSettings.CurrentCartridge;
-            if (string.IsNullOrWhiteSpace(selectedCartridge?.Name))
-                selectedCartridge = SelectedRifle.Cartridge;
-
+            if (selectedRifle != null)
+            {
+                selectedCartridge = configurationModel.CalculatorSettings.CurrentCartridge;
+                if (string.IsNullOrWhiteSpace(selectedCartridge?.Name))
+                    selectedCartridge = selectedRifle.Cartridge;
+            }
         }
 
         protected GNUBallistics.Rifle RifleCalculator =>
@@ -99,8 +103,8 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(selectedCartridge.Name))
-                    selectedCartridge = SelectedRifle.Cartridge;
+                if (string.IsNullOrWhiteSpace(selectedCartridge?.Name))
+                    selectedCartridge = SelectedRifle?.Cartridge;
                 return selectedCartridge;
             }
             set
@@ -219,6 +223,11 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public void ResetToDefaults()
         {
+            if (SelectedRifle?.Cartridge == null)
+            {
+                MessageBox.Show("This will do nothing, since no rifle is configured.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             SelectedCartridge = SelectedRifle?.Cartridge;
         }
 
