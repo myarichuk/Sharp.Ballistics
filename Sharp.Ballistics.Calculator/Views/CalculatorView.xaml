@@ -17,6 +17,7 @@
         <util:CaliberValueConverter x:Key="CaliberValueConverter" />
         <util:DistanceValueConverter x:Key="DistanceValueConverter" />
         <util:PressureValueConverter x:Key="PressureValueConverter" />
+        <util:WindSpeedValueConverter x:Key="WindSpeedValueConverter"/>
         <util:TemperatureValueConverter x:Key="TemperatureValueConverter" />
     </UserControl.Resources>
     <Grid>
@@ -110,11 +111,15 @@
                                     <TextBlock Text="Wind Speed (" />
                                     <TextBlock Text="{Binding Units.WindSpeed,Converter={StaticResource SpeedUnitConverter}}" />
                                     <TextBlock Text=") "/>
-                                    <toolkit:DoubleUpDown Increment="1"/>
+                                    <toolkit:DoubleUpDown
+                                        Value="{Binding ShotInfo.WindSpeed,
+                                            Converter={StaticResource WindSpeedValueConverter}}"
+                                        Minimum="0"
+                                        Increment="1"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="15,5,5,5">
                                     <TextBlock Text="Wind Direction (degrees): " />
-                                    <toolkit:DoubleUpDown Increment="1" Minimum="0" Maximum="360"/>
+                                    <toolkit:DoubleUpDown Value="{Binding ShotInfo.WindDirection}" Increment="1" Minimum="0" Maximum="360"/>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
@@ -122,11 +127,15 @@
                                     <TextBlock Text="Range (" />
                                     <TextBlock Text="{Binding Units.Distance,Converter={StaticResource DistanceUnitConverter}}" />
                                     <TextBlock Text=") "/>
-                                    <toolkit:DoubleUpDown Increment="1"/>
+                                    <toolkit:DoubleUpDown 
+                                        Value="{Binding ShotInfo.Range, 
+                                            Converter={StaticResource DistanceValueConverter}}" 
+                                        Minimum="0"
+                                        Increment="1"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="15,5,5,5">
                                     <TextBlock Text="Shooting Angle (degrees) " />
-                                    <toolkit:DoubleUpDown Increment="1" Minimum="-89" Maximum="89"/>
+                                    <toolkit:DoubleUpDown Value="{Binding ShotInfo.Angle}" Increment="1" Minimum="-89" Maximum="89"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -137,11 +146,11 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Orientation="Horizontal" Margin="5">
                                     <TextBlock Text="Lattitude: " />
-                                    <toolkit:DoubleUpDown IsEnabled="{Binding IsUsingCoriolis}" Increment="1" Minimum="0" Maximum="90"/>
+                                    <toolkit:DoubleUpDown Value="{Binding ShotLocationInfo.Latitude}" IsEnabled="{Binding IsUsingCoriolis}" Increment="1" Minimum="0" Maximum="90"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="15,5,5,5">
                                     <TextBlock Text="Shot Azimuth: " />
-                                    <toolkit:DoubleUpDown IsEnabled="{Binding IsUsingCoriolis}" Increment="1" Minimum="0" Maximum="360"/>
+                                    <toolkit:DoubleUpDown Value="{Binding ShotLocationInfo.ShotAzimuth}" IsEnabled="{Binding IsUsingCoriolis}" Increment="1" Minimum="0" Maximum="360"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -152,8 +161,8 @@
                     HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                     Margin="5" Grid.Row="2" Width="100" Height="30" />
         </Grid>
-        <ListView Name="CalculatorOutput" Grid.Row="1">
+        <Grid Name="CalculatorOutput" Grid.Row="1">
             
-        </ListView>
+        </Grid>
     </Grid>
 </UserControl>

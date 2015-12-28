@@ -153,9 +153,11 @@
     <Compile Include="Converters\FieldValueConverter.cs" />
     <Compile Include="Converters\EnumPluralizeConverter.cs" />
     <Compile Include="Converters\PressureValueConverter.cs" />
+    <Compile Include="Converters\WindSpeedValueConverter.cs" />
     <Compile Include="Converters\TemperatureValueConverter.cs" />
     <Compile Include="Models\CalculatorSettings.cs" />
     <Compile Include="Models\Rifle.cs" />
+    <Compile Include="Models\ShotInfo.cs" />
     <Compile Include="Util\AppBootstrapper.cs" />
     <Compile Include="Util\AppEvent.cs" />
     <Compile Include="Util\EventRegistrationFacility.cs" />

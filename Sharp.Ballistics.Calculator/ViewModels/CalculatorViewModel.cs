@@ -7,6 +7,7 @@ using Sharp.Ballistics.Abstractions;
 using GNUBallistics = GNUBallisticsLibrary;
 using Sharp.Ballistics.Calculator.Util;
 using System;
+using UnitsNet;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
@@ -53,6 +54,27 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public CalculatorSettings CalculatorSettings => configurationModel.CalculatorSettings;
         public UnitSettings Units => configurationModel.Units;
+
+       
+        private ShotInfo shotInfo;
+        public ShotInfo ShotInfo
+        {
+            get
+            {
+                if (shotInfo == null)
+                    shotInfo = new ShotInfo
+                    {
+                        WindSpeed = Speed.FromKilometersPerHour(0),
+                        Range = Length.FromMeters(0)
+                    };
+                return shotInfo;
+            }
+            set
+            {
+                shotInfo = value;
+                NotifyOfPropertyChange(() => ShotInfo);
+            }
+        }
 
         public IEnumerable<Rifle> Rifles => riflesModel.All();
 
