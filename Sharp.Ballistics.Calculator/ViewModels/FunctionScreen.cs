@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
-    public abstract class FunctionScreen : Screen, IHandle<AppEvent>
+    public abstract class FunctionScreen : Screen, IHandle<AppEvent>, IHandle<ExportImportEvent>
     {
         public abstract string IconFilename { get; }
 
@@ -44,6 +44,11 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             {
                 Refresh();
             }            
+        }
+
+        public virtual void Handle(ExportImportEvent message)
+        {
+            Refresh();
         }
     }
 }

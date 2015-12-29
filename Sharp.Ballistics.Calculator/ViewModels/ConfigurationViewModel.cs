@@ -3,6 +3,8 @@ using Sharp.Ballistics.Calculator.Models;
 using System;
 using System.Windows;
 using Humanizer;
+using Microsoft.Win32;
+using System.Threading.Tasks;
 
 namespace Sharp.Ballistics.Calculator.ViewModels
 {
@@ -14,6 +16,26 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         {
             this.model = model;
             DisplayName = "Configuration";
+            model.ImportExportStarted += ImportExportStarted;
+            model.ImportExportEnded += ImportExportEnded;
+        }
+
+        private void ImportExportEnded()
+        {
+            Messenger.PublishOnBackgroundThread(new ExportImportEvent
+            {
+                IsInProgress = false,
+                Message = String.Empty
+            });
+        }
+
+        private void ImportExportStarted(string message)
+        {
+            Messenger.PublishOnBackgroundThread(new ExportImportEvent
+            {
+                IsInProgress = true,
+                Message = message
+            });
         }
 
         protected override void OnViewReady(object view)
@@ -26,6 +48,36 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         public override string IconFilename => "config.png";
 
         public UnitSettings Units => model.Units;      
+
+        public void Import()
+        {
+            var importSelectFile = new OpenFileDialog
+            {
+                DefaultExt = ".bc.config",
+                Filter = "Calculator Configuration (.bc.config)|*.bc.config",
+                Title = "Import Sharp.Ballistics Calculator Configuration",
+                ValidateNames = true,
+                CheckPathExists = true
+            };
+            
+            if (importSelectFile.ShowDialog() ?? false)
+               Task.Run(() => model.Import(importSelectFile.FileName));
+        }
+
+        public void Export()
+        {
+            var exportSelectFile = new SaveFileDialog
+            {
+                DefaultExt = ".bc.config",
+                Filter = "Calculator Configuration (.bc.config)|*.bc.config",
+                Title = "Export Sharp.Ballistics Calculator Configuration",
+                ValidateNames = true,
+                CheckPathExists = true
+            };
+            
+            if (exportSelectFile.ShowDialog() ?? false)
+                Task.Run(() => model.Export(exportSelectFile.FileName));
+        }
 
         public void Save()
         {

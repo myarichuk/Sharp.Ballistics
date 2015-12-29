@@ -1,6 +1,13 @@
-﻿using Raven.Client;
+﻿using Raven.Abstractions.Data;
+using Raven.Abstractions.Smuggler;
+using Raven.Client;
+using Raven.Client.Embedded;
+using Raven.Smuggler;
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace Sharp.Ballistics.Calculator.Models
 {
@@ -14,6 +21,23 @@ namespace Sharp.Ballistics.Calculator.Models
             this.documentStore = documentStore;
         }
 
+        public event Action<string> ImportExportStarted;
+        public event Action ImportExportEnded;
+
+        protected void OnImportExportStarted(string message)
+        {
+            var importExportStarted = ImportExportStarted;
+            if (importExportStarted != null)
+                importExportStarted(message);
+        }
+
+        protected void OnImportExportEnded()
+        {
+            var importExportEnded = ImportExportEnded;
+            if (importExportEnded != null)
+                importExportEnded();
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Initialize()
         {
@@ -22,6 +46,40 @@ namespace Sharp.Ballistics.Calculator.Models
                 return;
 
             Load();
+        }
+
+        public async Task Import(string dataFilePath)
+        {
+            var dataDumper = new SmugglerDatabaseApi();
+
+            OnImportExportStarted("Importing configuration...");
+            await dataDumper.ImportData(new SmugglerImportOptions<RavenConnectionStringOptions>
+            {
+                FromFile = dataFilePath,
+                To = new RavenConnectionStringOptions
+                {
+                    DefaultDatabase = Constants.DatabaseName,
+                    //dirty hack, TODO : make PR to RavenDB to make IDocumentStore::Url work
+                    Url = ((EmbeddableDocumentStore)documentStore).Configuration.ServerUrl
+                }
+            }).ContinueWith(t => OnImportExportEnded());
+        }
+
+        public async Task Export(string dataFilePath)
+        {
+            var dataDumper = new SmugglerDatabaseApi(new SmugglerDatabaseOptions());
+
+            OnImportExportStarted("Exporting configuration...");
+            await dataDumper.ExportData(new SmugglerExportOptions<RavenConnectionStringOptions>
+            {
+                From = new RavenConnectionStringOptions
+                {
+                    DefaultDatabase = Constants.DatabaseName,
+                    //dirty hack, TODO : make PR to RavenDB to make IDocumentStore::Url work
+                    Url = ((EmbeddableDocumentStore)documentStore).Configuration.ServerUrl
+                },
+                ToFile = dataFilePath
+            }).ContinueWith(t => OnImportExportEnded());
         }
 
         public void Load()

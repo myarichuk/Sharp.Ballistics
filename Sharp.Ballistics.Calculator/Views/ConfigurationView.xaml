@@ -197,11 +197,21 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
-
-            <Button Grid.Row="5" Grid.ColumnSpan="2" x:Name="Save" DockPanel.Dock="Bottom"                   
-                Content="Save"
-                MaxWidth="150"
-                MinHeight="25" Margin="15" Height="25" Width="100" />
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal"  Grid.Row="5" Grid.ColumnSpan="2">
+                <Button x:Name="Save"                  
+                    Content="Save"
+                    MaxWidth="150"
+                    MinHeight="25" Margin="15" Height="25" Width="120" />
+                <Button x:Name="Import"                  
+                    Content="Import Settings"
+                    MaxWidth="150"
+                    MinHeight="25" Margin="15" Height="25" Width="120" />
+                <Button x:Name="Export"                  
+                    Content="Export Settings"
+                    MaxWidth="150"
+                    MinHeight="25" Margin="15" Height="25" Width="120" />
+            </StackPanel>
+            
 
         </Grid>
     </Grid>

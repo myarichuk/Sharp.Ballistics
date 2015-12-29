@@ -2,33 +2,35 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:cal="http://www.caliburnproject.org"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         Width="750" Height="550"     
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         x:Name="MainWindow">
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="75" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding FunctionScreens}" x:Name="Functions" Grid.Row="0" Margin="5 0 0 0">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Width="65" Height="65" Margin="5" cal:Message.Attach="[Event Click] = [Action ActivateItem($dataContext)]">
-                        <Image Source="{Binding Path=Icon}" Width="55" Height="55"/>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <StackPanel  Grid.Row="1" Margin="5" Orientation="Vertical">
-            <TextBlock FontSize="15" x:Name="ActiveItem_DisplayName" Margin="5" />
-            <ContentControl x:Name="ActiveItem"/>
-        </StackPanel>
-    </Grid>
-
+    <toolkit:BusyIndicator BusyContent="{Binding ExportImportMessage}" IsBusy="{Binding IsInExportImport}">
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding FunctionScreens}" x:Name="Functions" Grid.Row="0" Margin="5 0 0 0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Width="65" Height="65" Margin="5" cal:Message.Attach="[Event Click] = [Action ActivateItem($dataContext)]">
+                            <Image Source="{Binding Path=Icon}" Width="55" Height="55"/>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel  Grid.Row="1" Margin="5" Orientation="Vertical">
+                <TextBlock FontSize="15" x:Name="ActiveItem_DisplayName" Margin="5" />
+                <ContentControl x:Name="ActiveItem"/>
+            </StackPanel>
+        </Grid>
+    </toolkit:BusyIndicator>
 </Window>

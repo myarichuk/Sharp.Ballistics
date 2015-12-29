@@ -218,6 +218,8 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                 selectedRifle = value;
                 SaveConfigurationSetting(settings => settings.CurrentRifle = value);
                 NotifyOfPropertyChange(() => SelectedRifle);
+                NotifyOfPropertyChange(() => RelevantCartridges);
+                NotifyOfPropertyChange(() => SelectedCartridge);
             }
         }       
 

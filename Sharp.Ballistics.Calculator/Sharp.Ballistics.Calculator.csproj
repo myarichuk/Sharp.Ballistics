@@ -78,16 +78,20 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Database.3.0.30015-Unstable\lib\net45\Raven.Abstractions.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Database.3.0.30020-Unstable\lib\net45\Raven.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Raven.Client.Lightweight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.3.0.30015-Unstable\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client.3.0.30020-Unstable\lib\net45\Raven.Client.Lightweight.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Raven.Database, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Database.3.0.30015-Unstable\lib\net45\Raven.Database.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Database.3.0.30020-Unstable\lib\net45\Raven.Database.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Raven.Smuggler, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Tools\Smuggler\Raven.Smuggler.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -156,13 +160,14 @@
     <Compile Include="Converters\TargetSpeedValueConverter.cs" />
     <Compile Include="Converters\WindSpeedValueConverter.cs" />
     <Compile Include="Converters\TemperatureValueConverter.cs" />
+    <Compile Include="Messages\ExportImportEvent.cs" />
     <Compile Include="Models\CalculatorSettings.cs" />
     <Compile Include="Models\Rifle.cs" />
     <Compile Include="Models\ShotInfo.cs" />
     <Compile Include="Util\AppBootstrapper.cs" />
-    <Compile Include="Util\AppEvent.cs" />
+    <Compile Include="Messages\AppEvent.cs" />
     <Compile Include="Util\EventRegistrationFacility.cs" />
-    <Compile Include="Util\RifleChangedEvent.cs" />
+    <Compile Include="Messages\RifleChangedEvent.cs" />
     <Compile Include="Util\RoutedEventTrigger.cs" />
     <Compile Include="Util\UnitsNetJsonNetConverter.cs" />
     <Compile Include="Util\ValidationBehavior.cs" />
