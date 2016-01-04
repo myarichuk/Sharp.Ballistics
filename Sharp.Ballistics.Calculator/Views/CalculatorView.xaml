@@ -150,6 +150,7 @@
                                             Converter={StaticResource TargetSpeedValueConverter}}"
                                         Minimum="0"
                                         Increment="1"/>
+                                    <TextBlock Margin="8,0,0,0"  Text="(assuming horizontal movement)"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

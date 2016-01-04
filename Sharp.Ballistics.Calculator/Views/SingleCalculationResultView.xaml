@@ -70,6 +70,14 @@
         </StackPanel>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+            <TextBlock Margin="0,5,0,5" Text="Bullet drop ("/>
+            <TextBlock VerticalAlignment="Center" Text="{Binding Units.BulletOffsets,Converter={StaticResource DistanceUnitConverter}}" />
+            <TextBlock Margin="0,5,0,5" Text="): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.BulletDrop,StringFormat=0.##, Converter={StaticResource BulletOffsetsValueConverter}}"/>
+        </StackPanel>
+        
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                     Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
             <TextBlock Margin="0,5,0,5" Text="Spin drift ("/>
             <TextBlock VerticalAlignment="Center" Text="{Binding Units.BulletOffsets,Converter={StaticResource DistanceUnitConverter}}" />
