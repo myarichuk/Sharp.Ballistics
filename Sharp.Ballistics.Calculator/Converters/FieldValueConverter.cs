@@ -42,11 +42,25 @@ namespace Sharp.Ballistics.Calculator
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double numeric;
-            if (value is string)
-                numeric = double.Parse((string)value);
+
+            if (value == null || 
+                !(value is string) || 
+                string.IsNullOrWhiteSpace((string)value))
+            {
+                MessageBox.Show("Could not convert value from empty string. Assuming it is equal zero.",
+                    "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                numeric = 0;
+            }
             else
-                numeric = (double)value;
-            
+            {
+                if (value is string)
+                {
+                    numeric = double.Parse((string)value);
+                }
+                else
+                    numeric = (double)value;
+            }
+
             var staticContext = InvokeContext.CreateStatic;
             
             var converted = Dynamic.InvokeMember(staticContext(typeof(UnitValueType)),
