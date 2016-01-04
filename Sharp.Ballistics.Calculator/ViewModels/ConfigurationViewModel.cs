@@ -11,7 +11,8 @@ namespace Sharp.Ballistics.Calculator.ViewModels
     public class ConfigurationViewModel : FunctionScreen
     {
         private readonly ConfigurationModel model;
-        public ConfigurationViewModel(ConfigurationModel model, IEventAggregator eventsAggregator)
+        public ConfigurationViewModel(ConfigurationModel model, 
+            IEventAggregator eventsAggregator)
             :base(eventsAggregator)
         {
             this.model = model;
@@ -22,7 +23,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         private void ImportExportEnded()
         {
-            Messenger.PublishOnBackgroundThread(new ExportImportEvent
+            eventAggregator.PublishOnBackgroundThread(new ExportImportEvent
             {
                 IsInProgress = false,
                 Message = String.Empty
@@ -31,7 +32,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         private void ImportExportStarted(string message)
         {
-            Messenger.PublishOnBackgroundThread(new ExportImportEvent
+            eventAggregator.PublishOnBackgroundThread(new ExportImportEvent
             {
                 IsInProgress = true,
                 Message = message
@@ -59,9 +60,9 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                 ValidateNames = true,
                 CheckPathExists = true
             };
-            
+
             if (importSelectFile.ShowDialog() ?? false)
-               Task.Run(() => model.Import(importSelectFile.FileName));
+                Task.Run(() => model.Import(importSelectFile.FileName));
         }
 
         public void Export()
@@ -86,7 +87,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                 model.Save();
 
                 //signal about changes to all who might be interested
-                Messenger.PublishOnBackgroundThread(new AppEvent
+                eventAggregator.PublishOnBackgroundThread(new AppEvent
                 {
                     Type = Constants.ConfigurationChangedMessage
                 });

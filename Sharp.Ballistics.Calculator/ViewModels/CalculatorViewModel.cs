@@ -32,7 +32,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             this.configurationModel = configurationModel;
             this.cartridgeModel = cartridgeModel;
             selectedRifle = null;
-            DisplayName = "Ballistic Calculation";
+             DisplayName = "Ballistic Calculation";
             configurationModel.Load();
             selectedRifle = configurationModel.CalculatorSettings.CurrentRifle;
 
@@ -56,9 +56,44 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                 ZeroingConditions = selectedRifle.ZeroingWeather
             }, selectedRifle.Scope, selectedCartridge);
 
+        private object calculationResults;
+        public object CalculationResults
+        {
+            get
+            {
+                return calculationResults;
+            }
+        }
+
+        public bool CanCalculate => ShotInfo.Range.Meters > 0;
+
+        public void CalculateSingle()
+        {
+            calculationResults = new SingleCalculationResultViewModel(RifleCalculator,
+                ShotInfo,
+                SelectedRifle,
+                SelectedCartridge,
+                IsUsingDifferentWeather,
+                IsUsingCoriolis,
+                ShotLocationInfo,
+                CurrentWeather,
+                configurationModel);
+            NotifyOfPropertyChange(() => CalculationResults);
+        }
+
+        public void CalculateMultiple()
+        {
+            calculationResults = new MultipleCalculationResultsViewModel(ShotInfo, 
+                SelectedRifle,
+                SelectedCartridge ,
+                IsUsingDifferentWeather, 
+                IsUsingCoriolis , 
+                ShotLocationInfo);
+            NotifyOfPropertyChange(() => CalculationResults);
+        }
+
         public CalculatorSettings CalculatorSettings => configurationModel.CalculatorSettings;
         public UnitSettings Units => configurationModel.Units;
-
        
         private ShotInfo shotInfo;
         public ShotInfo ShotInfo
@@ -165,6 +200,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             {
                 shotLocationInfo = value;
                 NotifyOfPropertyChange(() => ShotLocationInfo);
+                NotifyOfPropertyChange(() => CanCalculate);
             }
         }        
 
@@ -231,6 +267,11 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                 return;
             }
             SelectedCartridge = SelectedRifle?.Cartridge;
+        }
+
+        public void CanCalculateRelatedValueChanged()
+        {
+            NotifyOfPropertyChange(() => CanCalculate);
         }
 
         public override void Handle(AppEvent message)

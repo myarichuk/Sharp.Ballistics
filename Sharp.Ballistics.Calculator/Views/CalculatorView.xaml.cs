@@ -10,6 +10,6 @@ namespace Sharp.Ballistics.Calculator.Views
         public CalculatorView()
         {
             InitializeComponent();
-        }
+        }    
     }
 }

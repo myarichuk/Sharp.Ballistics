@@ -50,6 +50,8 @@ namespace Sharp.Ballistics.Calculator.Models
 
         public async Task Import(string dataFilePath)
         {
+            //dirty hack, TODO : make PR to RavenDB to make IDocumentStore::Url work
+            var store = (EmbeddableDocumentStore)documentStore;
             var dataDumper = new SmugglerDatabaseApi();
 
             OnImportExportStarted("Importing configuration...");
@@ -59,14 +61,15 @@ namespace Sharp.Ballistics.Calculator.Models
                 To = new RavenConnectionStringOptions
                 {
                     DefaultDatabase = Constants.DatabaseName,
-                    //dirty hack, TODO : make PR to RavenDB to make IDocumentStore::Url work
-                    Url = ((EmbeddableDocumentStore)documentStore).Configuration.ServerUrl
+                    Url = store.Configuration.ServerUrl
                 }
-            }).ContinueWith(t => OnImportExportEnded());
+            }).ContinueWith(t => OnImportExportEnded()).ConfigureAwait(false);
         }
 
         public async Task Export(string dataFilePath)
         {
+            //dirty hack, TODO : make PR to RavenDB to make IDocumentStore::Url work
+            var store = (EmbeddableDocumentStore)documentStore;
             var dataDumper = new SmugglerDatabaseApi(new SmugglerDatabaseOptions());
 
             OnImportExportStarted("Exporting configuration...");
@@ -75,11 +78,10 @@ namespace Sharp.Ballistics.Calculator.Models
                 From = new RavenConnectionStringOptions
                 {
                     DefaultDatabase = Constants.DatabaseName,
-                    //dirty hack, TODO : make PR to RavenDB to make IDocumentStore::Url work
-                    Url = ((EmbeddableDocumentStore)documentStore).Configuration.ServerUrl
+                    Url = store.Configuration.ServerUrl
                 },
                 ToFile = dataFilePath
-            }).ContinueWith(t => OnImportExportEnded());
+            }).ContinueWith(t => OnImportExportEnded()).ConfigureAwait(false);
         }
 
         public void Load()

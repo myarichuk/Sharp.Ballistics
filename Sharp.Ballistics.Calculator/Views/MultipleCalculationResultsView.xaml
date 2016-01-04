@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Sharp.Ballistics.Calculator.Views.MultipleCalculationResultsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
+             mc:Ignorable="d" 
+             Width="Auto" MinWidth="600" MinHeight="100">
+    <Grid Background="Blue">
+            
+    </Grid>
+</UserControl>

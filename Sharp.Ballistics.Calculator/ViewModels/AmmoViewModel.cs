@@ -112,7 +112,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             };
             appEvent.Parameters.Add(Constants.ChangedItemName, cartridge.Name);
 
-            Messenger.PublishOnBackgroundThread(appEvent);
+            eventAggregator.PublishOnBackgroundThread(appEvent);
         }
 
        

@@ -151,6 +151,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BulletOffsetsValueConverter.cs" />
     <Compile Include="Converters\DistanceValueConverter.cs" />
     <Compile Include="Converters\CaliberValueConverter.cs" />
     <Compile Include="Converters\EnumHumanizeConverter.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="ViewModels\EditScopeViewModel.cs" />
     <Compile Include="ViewModels\FunctionScreen.cs" />
     <Compile Include="ViewModels\EditCartridgeViewModel.cs" />
+    <Compile Include="ViewModels\MultipleCalculationResultsViewModel.cs" />
     <Compile Include="ViewModels\RiflesViewModel.cs" />
     <Compile Include="ViewModels\ScopesViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -201,6 +203,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\SingleCalculationResultViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -222,11 +225,17 @@
     <Compile Include="Views\EditScopeView.xaml.cs">
       <DependentUpon>EditScopeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MultipleCalculationResultsView.xaml.cs">
+      <DependentUpon>MultipleCalculationResultsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RiflesView.xaml.cs">
       <DependentUpon>RiflesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScopesView.xaml.cs">
       <DependentUpon>ScopesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SingleCalculationResultView.xaml.cs">
+      <DependentUpon>SingleCalculationResultView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
@@ -256,6 +265,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MultipleCalculationResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RiflesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -267,6 +280,10 @@
     <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SingleCalculationResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

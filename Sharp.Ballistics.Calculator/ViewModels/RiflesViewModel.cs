@@ -62,11 +62,11 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                     NotifyOfPropertyChange(() => Rifles);
 
                     Refresh();
-                    Messenger.PublishOnBackgroundThread(new AppEvent
+                    eventAggregator.PublishOnBackgroundThread(new AppEvent
                     {
                         Type = Constants.ConfigurationChangedMessage
                     });
-                    Messenger.PublishOnBackgroundThread(new RifleChangedEvent
+                    eventAggregator.PublishOnBackgroundThread(new RifleChangedEvent
                     {
                         ChangedRifle = newRifleViewModel.Rifle
                     });
@@ -100,12 +100,12 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                     NotifyOfPropertyChange(() => Rifles);
                     Refresh();
 
-                    Messenger.PublishOnBackgroundThread(new AppEvent
+                    eventAggregator.PublishOnBackgroundThread(new AppEvent
                     {
                         Type = Constants.ConfigurationChangedMessage
                     });
 
-                    Messenger.PublishOnBackgroundThread(new RifleChangedEvent
+                    eventAggregator.PublishOnBackgroundThread(new RifleChangedEvent
                     {
                         ChangedRifle = editRifleViewModel.Rifle
                     });
@@ -147,7 +147,7 @@ namespace Sharp.Ballistics.Calculator.ViewModels
         {
             riflesModel.Delete(rifle);
             NotifyOfPropertyChange(() => Rifles);
-            Messenger.PublishOnBackgroundThread(new AppEvent
+            eventAggregator.PublishOnBackgroundThread(new AppEvent
             {
                 Type = Constants.RifleRemovedMessage
             });

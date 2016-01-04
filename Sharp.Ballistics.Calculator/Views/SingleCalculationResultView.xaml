@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="Sharp.Ballistics.Calculator.Views.SingleCalculationResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sharp.Ballistics.Calculator.Views"
+             xmlns:util="clr-namespace:Sharp.Ballistics.Calculator"
+             mc:Ignorable="d" 
+             Width="Auto" MinWidth="600" MinHeight="100">
+    <UserControl.Resources>
+        <util:EnumHumanizeConverter x:Key="EnumHumanizeConverter"/>
+        <util:SpeedConverter x:Key="SpeedUnitConverter"/>
+        <util:LengthConverter x:Key="DistanceUnitConverter" />
+        <util:DistanceValueConverter x:Key="DistanceValueConverter" />
+        <util:TargetSpeedValueConverter x:Key="TargetSpeedValueConverter"/>
+        <util:WindSpeedValueConverter x:Key="WindSpeedValueConverter"/>
+        <util:BulletOffsetsValueConverter x:Key="BulletOffsetsValueConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <TextBlock Margin="5" Text="Range (clicks): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.VerticalClicks,StringFormat=0.##}"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+            <TextBlock Margin="5" Text="Windage (clicks): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.HorizontalClicks,StringFormat=0.##}"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+            <TextBlock Margin="5" Text="Range (mils): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.VerticalMils,StringFormat=0.##}"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+            <TextBlock Margin="5" Text="Windage (mils): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.HorizontalMils,StringFormat=0.##}"/>
+        </StackPanel>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+            <TextBlock Margin="0,5,0,5" Text="Wind drift ("/>
+            <TextBlock VerticalAlignment="Center" Text="{Binding Units.BulletOffsets,Converter={StaticResource DistanceUnitConverter}}" />
+            <TextBlock Margin="0,5,0,5" Text="): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.WindDrift,StringFormat=0.##, Converter={StaticResource BulletOffsetsValueConverter}}"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
+            <TextBlock Margin="0,5,0,5" Text="Spin drift ("/>
+            <TextBlock VerticalAlignment="Center" Text="{Binding Units.BulletOffsets,Converter={StaticResource DistanceUnitConverter}}" />
+            <TextBlock Margin="0,5,0,5" Text="): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.SpinDrift,StringFormat=0.##, Converter={StaticResource BulletOffsetsValueConverter}}"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
+            <TextBlock Margin="5" Text="Time-to-target (sec): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.TimeToTargetSec,StringFormat=0.##}"/>
+        </StackPanel>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
+            <TextBlock Margin="0,5,0,5" Text="Spin drift ("/>
+            <TextBlock VerticalAlignment="Center" Text="{Binding Units.BulletOffsets,Converter={StaticResource DistanceUnitConverter}}" />
+            <TextBlock Margin="0,5,0,5" Text="): "/>
+            <TextBlock Margin="5" Text="{Binding Path=BallisticSolution.SpinDrift,StringFormat=0.##, Converter={StaticResource BulletOffsetsValueConverter}}"/>
+        </StackPanel>
+       
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="3" Grid.Column="0">
+            <TextBlock Margin="5" Text="Movement offset (MOA): "/>
+            <TextBlock Margin="5" Text="{Binding Path=MovingTargetOffsetMOA,StringFormat=0.##}"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+            <TextBlock Margin="5" Text="Movement offset (clicks): "/>
+            <TextBlock Margin="5" Text="{Binding Path=MovingTargetOffsetClicks,StringFormat=0.##}"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Orientation="Horizontal" Grid.Row="3" Grid.Column="2">
+            <TextBlock Margin="5" Text="Movement offset (mils): "/>
+            <TextBlock Margin="5" Text="{Binding Path=MovingTargetOffsetMils,StringFormat=0.##}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

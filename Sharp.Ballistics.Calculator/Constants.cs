@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const double InchesInMOA = 1.047197580733;
+
         public const string DatabaseName = "Ballistics.Calculator";
 
         public const string UnitsConfigurationId = "Configuration/Units";

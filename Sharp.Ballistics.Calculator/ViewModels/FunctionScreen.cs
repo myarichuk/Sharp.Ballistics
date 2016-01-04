@@ -30,11 +30,11 @@ namespace Sharp.Ballistics.Calculator.ViewModels
 
         public abstract int Order { get; }
 
-        protected IEventAggregator Messenger { get; }
+        protected IEventAggregator eventAggregator { get; }
 
         protected FunctionScreen(IEventAggregator eventsAggregator)
         {
-            this.Messenger = eventsAggregator;
+            this.eventAggregator = eventsAggregator;
             eventsAggregator.Subscribe(this);
         }
 

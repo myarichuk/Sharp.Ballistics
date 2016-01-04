@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Width="750" Height="550"     
+        MaxWidth="900" MaxHeight="750" Height="Auto"  
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         x:Name="MainWindow">
@@ -27,7 +27,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <StackPanel  Grid.Row="1" Margin="5" Orientation="Vertical">
+            <StackPanel  Grid.Row="1" Margin="3" Orientation="Vertical">
                 <TextBlock FontSize="15" x:Name="ActiveItem_DisplayName" Margin="5" />
                 <ContentControl x:Name="ActiveItem"/>
             </StackPanel>
