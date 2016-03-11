@@ -195,7 +195,6 @@ namespace Sharp.Ballistics.Calculator.ViewModels
                     shotLocationInfo = new ShotLocationInfo();
                 return shotLocationInfo;
             }
-
             set
             {
                 shotLocationInfo = value;
@@ -226,7 +225,6 @@ namespace Sharp.Ballistics.Calculator.ViewModels
             {
                 return isUsingDifferentWeather;
             }
-
             set
             {
                 isUsingDifferentWeather = value;

@@ -38,8 +38,8 @@ namespace Sharp.Ballistics.Calculator
             double numeric;
 
             if (value == null || 
-                !(value is string) || 
-                string.IsNullOrWhiteSpace((string)value))
+                ((value is string) &&
+                string.IsNullOrWhiteSpace((string)value)))
             {
                 MessageBox.Show("Could not convert value from empty string. Assuming it is equal zero.",
                     "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);

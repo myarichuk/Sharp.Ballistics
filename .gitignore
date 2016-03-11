@@ -195,3 +195,20 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+/Calculator Setup/Output/setup.exe
+/Calculator Setup/Output
+/Sharp.Ballistics.Training/App_Data/system/RVN.chk
+/Sharp.Ballistics.Training/App_Data/raven-data.ico
+/Sharp.Ballistics.Training/App_Data/logs/RVNres00002.jrs
+/Sharp.Ballistics.Training/App_Data/logs/RVNres00001.jrs
+/Sharp.Ballistics.Training/App_Data/desktop.ini
+/Sharp.Ballistics.Training/App_Data/Data
+/Sharp.Ballistics.Training/Assemblies
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/system/RVN.chk
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/system
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/raven-data.ico
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/logs/RVNres00002.jrs
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/logs/RVNres00001.jrs
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/logs
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/desktop.ini
+/Sharp.Ballistics.Training/Sharp.Ballistics.Training/Data
